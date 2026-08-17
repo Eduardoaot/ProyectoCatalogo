@@ -1,0 +1,24 @@
+/* Estilos base de la página de detalle. */
+/* TODO (compañero): ampliar estos estilos junto con el diseño final de la vista. */
+
+.producto-detalle {
+  flex: 1;
+  padding: 32px;
+  text-align: left;
+
+  @media (max-width: 1024px) {
+    padding: 20px;
+  }
+}
+
+.producto-detalle__volver {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.producto-detalle__volver:hover {
+  text-decoration: underline;
+}
