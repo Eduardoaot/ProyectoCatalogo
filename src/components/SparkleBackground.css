@@ -25,14 +25,20 @@
   animation-iteration-count: infinite;
 }
 
+/* La estrella pasa un tramo del ciclo totalmente apagada (0%-8% y 85%-100%):
+   ahí es donde SparkleBackground la reubica, así el salto de posición
+   ocurre mientras es invisible. */
 @keyframes destello {
   0%,
+  8%,
+  85%,
   100% {
     opacity: 0;
-    transform: scale(0.3) rotate(0deg);
+    transform: scale(0.2) rotate(0deg);
   }
-  50% {
-    opacity: 0.85;
+  30%,
+  60% {
+    opacity: 1;
     transform: scale(1) rotate(45deg);
   }
 }
