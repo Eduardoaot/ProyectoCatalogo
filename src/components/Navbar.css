@@ -13,16 +13,31 @@
 .navbar__brand {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 24px;
-  font-weight: 700;
+  gap: 12px;
   color: var(--accent);
   text-decoration: none;
-  letter-spacing: -0.4px;
 }
 
 .navbar__logo {
-  font-size: 26px;
+  height: 64px;
+  width: auto;
+  filter: drop-shadow(0 2px 4px var(--accent-border));
+
+  @media (max-width: 1024px) {
+    height: 48px;
+  }
+}
+
+.navbar__brand-texto {
+  font-family: var(--font-brand);
+  font-size: 42px;
+  line-height: 1;
+  color: var(--accent);
+  padding-top: 8px;
+
+  @media (max-width: 1024px) {
+    font-size: 32px;
+  }
 }
 
 .navbar__links {
