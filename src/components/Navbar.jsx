@@ -1,12 +1,13 @@
 import { NavLink } from 'react-router-dom'
+import rosaLogo from '../assets/RosaLogo.webp'
 import './Navbar.css'
 
 function Navbar() {
   return (
     <header className="navbar">
       <NavLink to="/" className="navbar__brand">
-        <span className="navbar__logo" aria-hidden="true">🌸</span>
-        Rosamark
+        <img className="navbar__logo" src={rosaLogo} alt="" />
+        <span className="navbar__brand-texto">Rosamark</span>
       </NavLink>
       <nav className="navbar__links">
         <NavLink
