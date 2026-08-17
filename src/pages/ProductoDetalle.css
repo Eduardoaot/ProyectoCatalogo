@@ -22,3 +22,57 @@
 .producto-detalle__volver:hover {
   text-decoration: underline;
 }
+
+.details {
+  display: flex;
+  gap: 32px;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.detail-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1/1;
+  height: 456px;
+
+  border: 2px solid var(--border);
+  border-radius: 12px;
+
+  font-size: 96px;
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+}
+
+.detail-category {
+  color: #fff;
+  background-color: var(--accent);
+  padding: 8px 16px;
+  border-radius: 999px;
+  display: inline;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.detail-price {
+  display: inline;
+  font-size: 36px;
+  font-weight: 800;
+  margin: 16px 0;
+}
+
+.detail-unit {
+  display: inline;
+  font-size: 16px;
+  color: var(--text);
+  margin-bottom: 16px;
+  margin-left: 8px;
+}

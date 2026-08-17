@@ -38,8 +38,24 @@ function ProductoDetalle() {
       </Link>
 
       {/* TODO (compañero): reemplazar este contenido mínimo por el diseño final */}
-      <h1>{producto.nombre}</h1>
-      <p>{producto.categoria}</p>
+      
+      <div className="details">
+        <div className = "detail-img">
+          {/*<img src={producto.emoji} alt="Imagen del producto" /> */}
+          <p>{producto.emoji}</p>
+        </div>
+        <div className="detail-info">
+          <h1>{producto.nombre}</h1>
+          <div>
+            <p className="detail-category">{producto.categoria}</p>
+          </div>
+          <div>
+            <h2 className="detail-price">${producto.precio}</h2>
+            <h4 className="detail-unit">por {producto.unidad}</h4>
+          </div>
+          <p>{producto.descripcion}</p>
+        </div>
+      </div>
     </section>
   )
 }
