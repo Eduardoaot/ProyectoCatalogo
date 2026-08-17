@@ -1,25 +1,37 @@
-import { useMemo } from 'react'
+import { useCallback, useState } from 'react'
 import './SparkleBackground.css'
 
 const CANTIDAD_DESTELLOS = 26
 
-// Genera una sola vez (por montaje) una lista de destellos con
-// posición, tamaño y tiempos de animación aleatorios.
-function generarDestellos() {
-  return Array.from({ length: CANTIDAD_DESTELLOS }, (_, index) => ({
-    id: index,
+// Cada destello dura ~3s de forma dispareja (no todos sincronizados),
+// aparece, se mantiene un momento y se desvanece.
+function crearDestello(id) {
+  return {
+    id,
     top: Math.random() * 100,
     left: Math.random() * 100,
     size: 6 + Math.random() * 12,
-    duration: 2.2 + Math.random() * 3,
-    delay: Math.random() * 4,
-  }))
+    duration: 2.4 + Math.random() * 1.4,
+    delay: Math.random() * 3,
+  }
+}
+
+function crearDestellosIniciales() {
+  return Array.from({ length: CANTIDAD_DESTELLOS }, (_, index) => crearDestello(index))
 }
 
 // Fondo decorativo de destellos tipo "estrellas" que titilan.
+// Cada vez que un destello termina su ciclo de animación se reubica al azar,
+// dando la sensación de que desaparece y aparece otro en un lugar distinto.
 // Puramente visual: no interactúa con el usuario (aria-hidden + pointer-events: none).
 function SparkleBackground() {
-  const destellos = useMemo(() => generarDestellos(), [])
+  const [destellos, setDestellos] = useState(crearDestellosIniciales)
+
+  const reubicar = useCallback((id) => {
+    setDestellos((actuales) =>
+      actuales.map((destello) => (destello.id === id ? crearDestello(id) : destello)),
+    )
+  }, [])
 
   return (
     <div className="sparkle-bg" aria-hidden="true">
@@ -35,6 +47,7 @@ function SparkleBackground() {
             animationDuration: `${destello.duration}s`,
             animationDelay: `${destello.delay}s`,
           }}
+          onAnimationIteration={() => reubicar(destello.id)}
         />
       ))}
     </div>
