@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import Carousel from '../components/Carousel'
 import ProductCard from '../components/ProductCard'
 import { CATEGORIAS, PRODUCTOS } from '../data/productos'
 import './Home.css'
@@ -27,6 +28,8 @@ function Home() {
 
   return (
     <section className="home">
+      <Carousel />
+
       <div className="home__intro">
         <h1>Catálogo Rosamark</h1>
         <p>Todo lo que necesitas para tu hogar, a un clic de distancia.</p>
