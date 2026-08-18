@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import ImagenProducto from './ImagenProducto'
 import './ProductCard.css'
 
 function ProductCard({ producto }) {
@@ -7,8 +8,8 @@ function ProductCard({ producto }) {
   return (
     <Link to={`/producto/${id}`} className="product-card">
       {destacado && <span className="product-card__badge">Destacado</span>}
-      <div className="product-card__image" aria-hidden="true">
-        {emoji}
+      <div className="product-card__image">
+        <ImagenProducto valor={emoji} alt={nombre} />
       </div>
       <span className="product-card__categoria">{categoria}</span>
       <h3 className="product-card__nombre">{nombre}</h3>
