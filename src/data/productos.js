@@ -164,7 +164,7 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 75,
     unidad: 'kg',
-    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Chickens_in_market.jpg/960px-Chickens_in_market.jpg',
+    emoji: 'https://kosherhouse.mx/cdn/shop/files/pechugadepollosinhueso.jpg?v=1691773142',
     descripcion:
       'Pechuga de pollo fresca y lista para preparar.',
     destacado: false,
@@ -227,7 +227,7 @@ export const PRODUCTOS = [
     categoria: 'Limpieza',
     precio: 40,
     unidad: 'pieza',
-    emoji: 'https://upload.wikimedia.org/wikipedia/commons/4/4f/Broom_%28PSF%29.jpg',
+    emoji: 'https://orvagclf.com/cdn/shop/products/12fd7adaa7fd9d328a905abc61103b38.png?v=1692165820',
     descripcion:
       'Escoba tradicional para el aseo de tu hogar.',
     destacado: true,
