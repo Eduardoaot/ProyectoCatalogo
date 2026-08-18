@@ -89,3 +89,13 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.font-dmsans {
+  font-family: 'DM Sans', sans-serif;
+}
+.font -google-sans {
+  font-family: 'Google Sans', sans-serif;
+}
+.font-outfit {
+  font-family: 'Outfit', sans-serif;
+}

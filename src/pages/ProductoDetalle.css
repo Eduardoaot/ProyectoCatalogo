@@ -44,12 +44,27 @@
   border-radius: 12px;
 
   font-size: 96px;
+  overflow: hidden;
+}
+
+.detail-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .detail-info {
   display: flex;
   flex-direction: column;
-  margin-top: 24px;
+  margin-top: 2px;
+  gap: 4px;
+}
+
+.detail-name {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  margin-top: 16px;
 }
 
 .detail-category {
@@ -65,7 +80,7 @@
 .detail-price {
   display: inline;
   font-size: 36px;
-  font-weight: 800;
+  font-weight: 700;
   margin: 16px 0;
 }
 
@@ -74,5 +89,16 @@
   font-size: 16px;
   color: var(--text);
   margin-bottom: 16px;
-  margin-left: 8px;
+  margin-left: 4px;
+}
+
+.detail-description-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+
+.detail-description {
+  font-size: 18px;
+  color: var(--text);
 }
