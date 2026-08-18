@@ -42,7 +42,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 1.5,
     unidad: 'kg',
-    emoji: 'https://th.bing.com/th/id/R.0e171c6d47d6f1b504c777c1a8308983?rik=c9jQ6sAvtFiIDw&riu=http%3a%2f%2f3.bp.blogspot.com%2f-wbO46JPH0y0%2fUrT88uFtw0I%2fAAAAAAAAHNU%2f6DPRUQ_5qaM%2fs1600%2fplatanos.jpg&ehk=rQsOzXxdo1k3gD%2bj6NedspVgXC754xThYbWRUhCYTp0%3d&risl=&pid=ImgRaw&r=0',
+    emoji: 'https://saludinteractiva.mx/blog/wp-content/uploads/2022/05/beneficios_del_platano_istock.webp',
     descripcion:
       'Plátanos frescos y dulces, perfectos para desayunos y licuados.',
     destacado: false,
@@ -153,7 +153,7 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 50,
     unidad: 'kg',
-    emoji: '🥩',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/T-bone-raw-MCB.jpg/960px-T-bone-raw-MCB.jpg',
     descripcion:
       'Corte T-Bone preparado y listo para cocinar.',
     destacado: true,
@@ -164,7 +164,7 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 75,
     unidad: 'kg',
-    emoji: '🍗',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Chickens_in_market.jpg/960px-Chickens_in_market.jpg',
     descripcion:
       'Pechuga de pollo fresca y lista para preparar.',
     destacado: false,
@@ -175,7 +175,7 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 95,
     unidad: 'kg',
-    emoji: '🥩',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Hackfleisch-1.jpg/960px-Hackfleisch-1.jpg',
     descripcion:
       'Carne molida de res fresca para hamburguesas y guisos.',
     destacado: true,
@@ -190,7 +190,7 @@ export const PRODUCTOS = [
     categoria: 'Bebidas',
     precio: 100,
     unidad: 'botella',
-    emoji: '🍾',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Champagne_bottles_in_a_bucket_-_8439.jpg/960px-Champagne_bottles_in_a_bucket_-_8439.jpg',
     descripcion:
       'Champagne para disfrutar en una ocasión especial.',
     destacado: true,
@@ -201,7 +201,7 @@ export const PRODUCTOS = [
     categoria: 'Bebidas',
     precio: 25,
     unidad: 'litro',
-    emoji: '🥤',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Big-Cola-3L.jpg',
     descripcion:
       'Refresco de cola frío y refrescante.',
     destacado: false,
@@ -212,7 +212,7 @@ export const PRODUCTOS = [
     categoria: 'Bebidas',
     precio: 15,
     unidad: 'botella',
-    emoji: '💧',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Bottle_of_Water.jpg/960px-Bottle_of_Water.jpg',
     descripcion:
       'Agua natural para mantenerte hidratado durante el día.',
     destacado: false,
@@ -227,7 +227,7 @@ export const PRODUCTOS = [
     categoria: 'Limpieza',
     precio: 40,
     unidad: 'pieza',
-    emoji: '🧹',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/4/4f/Broom_%28PSF%29.jpg',
     descripcion:
       'Escoba tradicional para el aseo de tu hogar.',
     destacado: true,
@@ -238,7 +238,7 @@ export const PRODUCTOS = [
     categoria: 'Limpieza',
     precio: 32,
     unidad: 'litro',
-    emoji: '🧽',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Joy_pot_and_pan_detergent.jpg/960px-Joy_pot_and_pan_detergent.jpg',
     descripcion:
       'Jabón líquido para eliminar grasa y suciedad de los trastes.',
     destacado: false,
@@ -253,7 +253,7 @@ export const PRODUCTOS = [
     categoria: 'Abarrotes',
     precio: 28,
     unidad: 'kg',
-    emoji: '🍚',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Ceramic_bowl_full_of_white_rice.jpg/960px-Ceramic_bowl_full_of_white_rice.jpg',
     descripcion:
       'Arroz blanco de grano largo para acompañar tus comidas.',
     destacado: true,
@@ -264,9 +264,132 @@ export const PRODUCTOS = [
     categoria: 'Abarrotes',
     precio: 35,
     unidad: 'kg',
-    emoji: '🫘',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Black_beans_%281126927794%29.jpg/960px-Black_beans_%281126927794%29.jpg',
     descripcion:
       'Frijol de excelente calidad para preparar tus comidas favoritas.',
     destacado: false,
+  },
+
+  // =========================
+  // MÁS FRUTAS Y VERDURAS
+  // =========================
+  {
+    id: 21,
+    nombre: 'Fresa',
+    categoria: 'Frutas y Verduras',
+    precio: 45,
+    unidad: 'kg',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Strawberry_image.jpg',
+    descripcion:
+      'Fresas frescas y dulces, perfectas para postres y licuados.',
+    destacado: true,
+  },
+  {
+    id: 22,
+    nombre: 'Uva',
+    categoria: 'Frutas y Verduras',
+    precio: 55,
+    unidad: 'kg',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Grapes%2C_Rostov-on-Don%2C_Russia.jpg/960px-Grapes%2C_Rostov-on-Don%2C_Russia.jpg',
+    descripcion:
+      'Uvas frescas y jugosas, ideales para picar o preparar postres.',
+    destacado: false,
+  },
+  {
+    id: 23,
+    nombre: 'Papa',
+    categoria: 'Frutas y Verduras',
+    precio: 18,
+    unidad: 'kg',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/960px-Patates.jpg',
+    descripcion:
+      'Papas frescas, versátiles para freír, hornear o hacer puré.',
+    destacado: false,
+  },
+  {
+    id: 24,
+    nombre: 'Cebolla',
+    categoria: 'Frutas y Verduras',
+    precio: 16,
+    unidad: 'kg',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Mixed_onions.jpg/960px-Mixed_onions.jpg',
+    descripcion:
+      'Cebollas frescas, infaltables para dar sabor a tus platillos.',
+    destacado: false,
+  },
+
+  // =========================
+  // MÁS PANADERÍA
+  // =========================
+  {
+    id: 25,
+    nombre: 'Galletas de Chispas de Chocolate',
+    categoria: 'Panadería',
+    precio: 22,
+    unidad: 'paquete',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Choc-Chip-Cookie.jpg/960px-Choc-Chip-Cookie.jpg',
+    descripcion:
+      'Galletas horneadas con chispas de chocolate, crujientes por fuera y suaves por dentro.',
+    destacado: true,
+  },
+
+  // =========================
+  // MÁS CARNES
+  // =========================
+  {
+    id: 26,
+    nombre: 'Salchicha',
+    categoria: 'Carnes',
+    precio: 48,
+    unidad: 'kg',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Cervelat.jpg/960px-Cervelat.jpg',
+    descripcion:
+      'Salchichas ahumadas, listas para asar o cocinar.',
+    destacado: false,
+  },
+
+  // =========================
+  // MÁS BEBIDAS
+  // =========================
+  {
+    id: 27,
+    nombre: 'Café en Grano',
+    categoria: 'Bebidas',
+    precio: 65,
+    unidad: 'paquete',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Coffee_Robusta_Arabica.jpg/960px-Coffee_Robusta_Arabica.jpg',
+    descripcion:
+      'Café en grano tostado, ideal para preparar un buen café recién molido.',
+    destacado: true,
+  },
+
+  // =========================
+  // MÁS LIMPIEZA
+  // =========================
+  {
+    id: 28,
+    nombre: 'Cloro',
+    categoria: 'Limpieza',
+    precio: 24,
+    unidad: 'litro',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/d/d3/Clorox_Bleach_products.jpg',
+    descripcion:
+      'Cloro desinfectante para limpieza y desinfección del hogar.',
+    destacado: false,
+  },
+
+  // =========================
+  // MÁS ABARROTES
+  // =========================
+  {
+    id: 29,
+    nombre: 'Miel de Abeja',
+    categoria: 'Abarrotes',
+    precio: 60,
+    unidad: 'frasco',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Runny_hunny.jpg/960px-Runny_hunny.jpg',
+    descripcion:
+      'Miel de abeja pura, natural y endulzante ideal para tus recetas.',
+    destacado: true,
   },
 ]
