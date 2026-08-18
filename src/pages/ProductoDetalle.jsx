@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+import ImagenProducto from '../components/ImagenProducto'
 import { PRODUCTOS } from '../data/productos'
 import './ProductoDetalle.css'
 
@@ -37,12 +38,9 @@ function ProductoDetalle() {
         &larr; Volver al catálogo
       </Link>
 
-      {/* TODO (compañero): reemplazar este contenido mínimo por el diseño final */}
-      
       <div className="details">
-        <div className = "detail-img">
-          {/*<img src={producto.emoji} alt="Imagen del producto" /> */}
-          <p>{producto.emoji}</p>
+        <div className="detail-img">
+          <ImagenProducto valor={producto.emoji} alt={producto.nombre} />
         </div>
         <div className="detail-info">
           <h1>{producto.nombre}</h1>
