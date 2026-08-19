@@ -11,7 +11,7 @@ function crearDestello(id) {
     top: Math.random() * 100,
     left: Math.random() * 100,
     size: 6 + Math.random() * 12,
-    duration: 2.4 + Math.random() * 1.4,
+    duration: 4.4 + Math.random() * 1.4,
     delay: Math.random() * 3,
   }
 }
