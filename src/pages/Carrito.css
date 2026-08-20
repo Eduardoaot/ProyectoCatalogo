@@ -41,6 +41,32 @@
   }
 }
 
+.carrito__columna-izquierda {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.carrito__acciones {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.carrito__vaciar {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.carrito__vaciar:hover {
+  color: #d92d20;
+}
+
 .carrito__lista {
   list-style: none;
   margin: 0;
@@ -110,6 +136,13 @@
 .carrito__item-precio {
   font-size: 13px;
   color: var(--text);
+}
+
+.carrito__item-precio-original {
+  margin-left: 6px;
+  color: #d92d20;
+  opacity: 0.65;
+  text-decoration: line-through;
 }
 
 .carrito__item-stock {
@@ -196,10 +229,99 @@
   margin: 0;
 }
 
+.carrito__codigo {
+  padding-bottom: 12px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.carrito__codigo-etiqueta {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+.carrito__codigo-input {
+  display: flex;
+  gap: 6px;
+}
+
+.carrito__codigo-input input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  font: inherit;
+  font-size: 13px;
+  color: var(--text-h);
+  outline: none;
+  text-transform: uppercase;
+}
+
+.carrito__codigo-input input:focus {
+  border-color: var(--accent);
+}
+
+.carrito__codigo-input button {
+  padding: 9px 14px;
+  background: var(--text-h);
+  color: var(--card-bg);
+  border: none;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.carrito__codigo-input button:hover {
+  filter: brightness(1.15);
+}
+
+.carrito__codigo-aplicado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--accent-bg);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.carrito__codigo-aplicado button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.carrito__codigo-mensaje {
+  margin: 0;
+  font-size: 12px;
+  color: #d92d20;
+}
+
 .carrito__resumen-linea {
   display: flex;
   justify-content: space-between;
   color: var(--text);
+}
+
+.carrito__resumen-linea--descuento {
+  color: #1a7f37;
+  font-size: 14px;
 }
 
 .carrito__resumen-linea--total {
