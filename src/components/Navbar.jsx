@@ -1,24 +1,114 @@
-import { NavLink } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import rosaLogo from '../assets/RosaLogo.webp'
+import { useAuth } from '../context/AuthContext'
+import { useTienda } from '../context/TiendaContext'
+import { IconoBuscar, IconoCarrito, IconoMenu } from './iconos'
+import MenuLateral from './MenuLateral'
 import './Navbar.css'
 
+// A partir de qué tanto scroll hacia abajo empieza a poder ocultarse la
+// navbar (evita que "parpadee" con pequeños scrolls cerca del tope).
+const UMBRAL_SCROLL_PX = 80
+
 function Navbar() {
+  const { usuario } = useAuth()
+  const { totalUnidades } = useTienda()
+  const navigate = useNavigate()
+
+  const [menuAbierto, setMenuAbierto] = useState(false)
+  const [oculta, setOculta] = useState(false)
+  const [busqueda, setBusqueda] = useState('')
+  const ultimoScrollRef = useRef(0)
+  const navRef = useRef(null)
+
+  // Comportamiento tipo Amazon: al bajar se oculta, al subir reaparece.
+  useEffect(() => {
+    const alHacerScroll = () => {
+      const actual = window.scrollY
+      const anterior = ultimoScrollRef.current
+      setOculta(actual > anterior && actual > UMBRAL_SCROLL_PX)
+      ultimoScrollRef.current = actual
+    }
+    window.addEventListener('scroll', alHacerScroll, { passive: true })
+    return () => window.removeEventListener('scroll', alHacerScroll)
+  }, [])
+
+  // Expone la altura real de la navbar como variable CSS para que el
+  // contenido de la página deje el espacio justo (la navbar es fixed).
+  useEffect(() => {
+    const actualizarAltura = () => {
+      if (navRef.current) {
+        document.documentElement.style.setProperty(
+          '--navbar-alto',
+          `${navRef.current.offsetHeight}px`,
+        )
+      }
+    }
+    actualizarAltura()
+    window.addEventListener('resize', actualizarAltura)
+    return () => window.removeEventListener('resize', actualizarAltura)
+  }, [])
+
+  const buscar = (e) => {
+    e.preventDefault()
+    const texto = busqueda.trim()
+    navigate(texto ? `/?buscar=${encodeURIComponent(texto)}` : '/')
+  }
+
   return (
-    <header className="navbar">
-      <NavLink to="/" className="navbar__brand">
-        <img className="navbar__logo" src={rosaLogo} alt="" />
-        <span className="navbar__brand-texto">Rosamark</span>
-      </NavLink>
-      <nav className="navbar__links">
-        <NavLink
-          to="/"
-          end
-          className={({ isActive }) => (isActive ? 'navbar__link is-active' : 'navbar__link')}
-        >
-          Catálogo
-        </NavLink>
-      </nav>
-    </header>
+    <>
+      <header ref={navRef} className={oculta ? 'navbar navbar--oculta' : 'navbar'}>
+        <div className="navbar__inner">
+          <div className="navbar__izquierda">
+            <Link to="/" className="navbar__brand">
+              <img className="navbar__logo" src={rosaLogo} alt="" />
+              <span className="navbar__brand-texto">Rosamark</span>
+            </Link>
+            <button
+              type="button"
+              className="navbar__hamburguesa"
+              aria-label="Abrir menú"
+              onClick={() => setMenuAbierto(true)}
+            >
+              <IconoMenu className="navbar__icono" />
+            </button>
+          </div>
+
+          <form className="navbar__busqueda" onSubmit={buscar} role="search">
+            <IconoBuscar className="navbar__icono-buscar" />
+            <input
+              type="search"
+              className="navbar__input-busqueda"
+              placeholder="Buscar productos en Rosamark..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+            />
+          </form>
+
+          <div className="navbar__derecha">
+            <Link to={usuario ? '/cuenta' : '/login'} className="navbar__link">
+              {usuario ? `Hola, ${usuario.nombre}` : 'Iniciar sesión'}
+            </Link>
+            <Link
+              to={usuario ? '/ordenes' : '/login'}
+              state={usuario ? undefined : { from: '/ordenes' }}
+              className="navbar__link"
+            >
+              Órdenes
+            </Link>
+            <Link to="/carrito" className="navbar__carrito" aria-label="Ver carrito">
+              <IconoCarrito className="navbar__icono" />
+              {totalUnidades > 0 && (
+                <span className="navbar__carrito-badge">{totalUnidades}</span>
+              )}
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <MenuLateral abierto={menuAbierto} onCerrar={() => setMenuAbierto(false)} />
+    </>
   )
 }
 
