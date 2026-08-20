@@ -3,48 +3,99 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import './Login.css'
 
-// Inicio de sesión de demostración: no hay backend, así que solo se pide
-// nombre + correo (la contraseña no se valida contra nada). Si se llegó
-// aquí desde un enlace que necesitaba sesión (ej. "Órdenes"), al iniciar
-// sesión se redirige de vuelta a esa página gracias a location.state.from.
+// Pantalla de acceso con dos modos: iniciar sesión (contra el seed de
+// usuarios + los registrados) o crear cuenta nueva. Si se llegó aquí desde
+// un enlace que necesitaba sesión (ej. "Órdenes" o "Generar orden" sin
+// login), al autenticarse se redirige de vuelta a esa página gracias a
+// location.state.from.
 function Login() {
-  const { iniciarSesion } = useAuth()
+  const { iniciarSesion, registrarUsuario } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
+  const [modo, setModo] = useState('login') // 'login' | 'registro'
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
   const destino = location.state?.from || '/'
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!nombre.trim() || !email.trim()) return
-    iniciarSesion({ nombre: nombre.trim(), email: email.trim() })
+    setError('')
+
+    if (modo === 'registro') {
+      if (!nombre.trim() || !email.trim() || !password) {
+        setError('Completa nombre, correo y contraseña.')
+        return
+      }
+      const resultado = registrarUsuario({ nombre, email, password })
+      if (!resultado.ok) {
+        setError(resultado.error)
+        return
+      }
+    } else {
+      if (!email.trim() || !password) {
+        setError('Ingresa tu correo y contraseña.')
+        return
+      }
+      const resultado = iniciarSesion({ email, password })
+      if (!resultado.ok) {
+        setError(resultado.error)
+        return
+      }
+    }
+
     navigate(destino, { replace: true })
+  }
+
+  const cambiarModo = (nuevoModo) => {
+    setModo(nuevoModo)
+    setError('')
   }
 
   return (
     <section className="login">
       <div className="login__tarjeta">
-        <h1>Iniciar sesión</h1>
+        <div className="login__tabs">
+          <button
+            type="button"
+            className={modo === 'login' ? 'login__tab is-active' : 'login__tab'}
+            onClick={() => cambiarModo('login')}
+          >
+            Iniciar sesión
+          </button>
+          <button
+            type="button"
+            className={modo === 'registro' ? 'login__tab is-active' : 'login__tab'}
+            onClick={() => cambiarModo('registro')}
+          >
+            Registrarse
+          </button>
+        </div>
+
+        <h1>{modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta'}</h1>
         <p className="login__nota">
-          Inicio de sesión de demostración: solo necesitas un nombre y un correo, no se valida
-          contra ningún servidor.
+          {modo === 'login'
+            ? 'Demostración: prueba con diana@rosamark.com / rosamark123, o crea tu propia cuenta en la pestaña "Registrarse".'
+            : 'Solo se guarda en este navegador (no hay servidor real detrás).'}
         </p>
+
         <form onSubmit={handleSubmit} className="login__formulario">
-          <label className="login__campo">
-            Nombre
-            <input
-              type="text"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              placeholder="Tu nombre"
-              autoComplete="name"
-              required
-            />
-          </label>
+          {modo === 'registro' && (
+            <label className="login__campo">
+              Nombre
+              <input
+                type="text"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                placeholder="Tu nombre"
+                autoComplete="name"
+                required
+              />
+            </label>
+          )}
           <label className="login__campo">
             Correo electrónico
             <input
@@ -63,11 +114,15 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              autoComplete="current-password"
+              autoComplete={modo === 'login' ? 'current-password' : 'new-password'}
+              required
             />
           </label>
+
+          {error && <p className="login__error">{error}</p>}
+
           <button type="submit" className="login__boton">
-            Iniciar sesión
+            {modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta'}
           </button>
         </form>
       </div>

@@ -17,6 +17,34 @@
   text-align: left;
 }
 
+.login__tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  padding: 4px;
+  background: var(--bg);
+  border-radius: 999px;
+}
+
+.login__tab {
+  flex: 1;
+  padding: 8px;
+  background: none;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.login__tab.is-active {
+  background: var(--accent);
+  color: #fff;
+}
+
 .login__tarjeta h1 {
   margin: 0 0 12px;
   text-align: left;
@@ -59,6 +87,16 @@
 .login__campo input:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.login__error {
+  margin: 0;
+  padding: 10px 12px;
+  background: rgba(217, 45, 32, 0.1);
+  color: #b42318;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .login__boton {
