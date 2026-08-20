@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Carousel from '../components/Carousel'
 import ProductCard from '../components/ProductCard'
 import { CATEGORIAS, PRODUCTOS } from '../data/productos'
@@ -8,23 +9,61 @@ import './Home.css'
 const DURACION_TRANSICION_MS = 200
 
 function Home() {
-  const [categoriaActiva, setCategoriaActiva] = useState('Todas')
+  // La URL es la única fuente de verdad del filtro: ?categoria=... permite
+  // que el dropdown del menú lateral enlace directo a un filtro aplicado,
+  // y ?buscar=... conecta la barra de búsqueda del navbar.
+  const [searchParams, setSearchParams] = useSearchParams()
+  const categoriaActiva = searchParams.get('categoria') || 'Todas'
+  const busqueda = searchParams.get('buscar') || ''
+
   const [transicionando, setTransicionando] = useState(false)
+  const catalogoRef = useRef(null)
 
+  // El filtro por categoría tiene prioridad sobre la búsqueda de texto: si
+  // hay una categoría activa, la búsqueda se ignora por completo.
   const productosFiltrados = useMemo(() => {
-    if (categoriaActiva === 'Todas') return PRODUCTOS
-    return PRODUCTOS.filter((producto) => producto.categoria === categoriaActiva)
-  }, [categoriaActiva])
+    if (categoriaActiva !== 'Todas') {
+      return PRODUCTOS.filter((producto) => producto.categoria === categoriaActiva)
+    }
+    if (busqueda) {
+      const texto = busqueda.toLowerCase()
+      return PRODUCTOS.filter((producto) => producto.nombre.toLowerCase().includes(texto))
+    }
+    return PRODUCTOS
+  }, [categoriaActiva, busqueda])
 
-  // Al cambiar de categoría, primero se desvanece la grilla (fade out) y,
-  // una vez invisible, se actualiza el filtro y vuelve a aparecer (fade in).
+  // Al llegar desde una búsqueda del navbar (Enter sin elegir del
+  // dropdown), baja la vista hacia el catálogo en vez de dejar al usuario
+  // arriba del todo, tapado por el carrusel.
+  useEffect(() => {
+    if (busqueda && catalogoRef.current) {
+      catalogoRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [busqueda])
+
+  // Al cambiar de categoría desde los botones de filtro, primero se
+  // desvanece la grilla (fade out) y, una vez invisible, se actualiza la
+  // URL (lo que a su vez cambia productosFiltrados) y vuelve a aparecer.
   const cambiarCategoria = (categoria) => {
     if (categoria === categoriaActiva) return
     setTransicionando(true)
     setTimeout(() => {
-      setCategoriaActiva(categoria)
+      const params = new URLSearchParams(searchParams)
+      if (categoria === 'Todas') {
+        params.delete('categoria')
+      } else {
+        params.set('categoria', categoria)
+      }
+      setSearchParams(params)
       setTransicionando(false)
     }, DURACION_TRANSICION_MS)
+  }
+
+  let mensajeIntro = 'Todo lo que necesitas para tu hogar, a un clic de distancia.'
+  if (categoriaActiva !== 'Todas') {
+    mensajeIntro = `Categoría: ${categoriaActiva}`
+  } else if (busqueda) {
+    mensajeIntro = `Resultados para "${busqueda}"`
   }
 
   return (
@@ -33,10 +72,10 @@ function Home() {
 
       <div className="home__intro">
         <h1>Catálogo Rosamark</h1>
-        <p>Todo lo que necesitas para tu hogar, a un clic de distancia.</p>
+        <p>{mensajeIntro}</p>
       </div>
 
-      <div className="home__filtros">
+      <div className="home__filtros" ref={catalogoRef}>
         <button
           type="button"
           className={categoriaActiva === 'Todas' ? 'filtro is-active' : 'filtro'}
@@ -58,11 +97,15 @@ function Home() {
         ))}
       </div>
 
-      <div className={transicionando ? 'home__grid home__grid--transicion' : 'home__grid'}>
-        {productosFiltrados.map((producto) => (
-          <ProductCard key={producto.id} producto={producto} />
-        ))}
-      </div>
+      {productosFiltrados.length === 0 ? (
+        <p className="home__sin-resultados">No encontramos productos que coincidan.</p>
+      ) : (
+        <div className={transicionando ? 'home__grid home__grid--transicion' : 'home__grid'}>
+          {productosFiltrados.map((producto) => (
+            <ProductCard key={producto.id} producto={producto} />
+          ))}
+        </div>
+      )}
     </section>
   )
 }

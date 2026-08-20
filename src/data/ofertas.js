@@ -4,7 +4,7 @@ export const OFERTAS = [
   {
     id: 1,
     titulo: 'Frutas y verduras frescas',
-    texto: 'Hasta 20% de descuento esta semana',
+    texto: 'Usa el código FRESCUERA en tu carrito: 20% de descuento',
     imagen: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Produce_section_at_Publix.jpg/1280px-Produce_section_at_Publix.jpg',
   },
   {
@@ -16,7 +16,7 @@ export const OFERTAS = [
   {
     id: 3,
     titulo: 'Lácteos y quesos',
-    texto: 'Lleva 2 y paga 1 en productos seleccionados',
+    texto: 'Código LLEVATEUNAVACA en tu carrito: 2x1 en lácteos',
     imagen: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Cheese_platter.jpg',
   },
   {

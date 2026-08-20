@@ -78,19 +78,33 @@
   font-weight: 500;
 }
 
-.detail-price {
-  display: inline;
-  font-size: 36px;
-  font-weight: 700;
+.detail-precio-fila {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px;
   margin: 16px 0;
 }
 
+.detail-price {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.detail-price-original {
+  font-size: 15px;
+  font-weight: 500;
+  color: #d92d20;
+  opacity: 0.65;
+  text-decoration: line-through;
+  margin-left: 4px;
+}
+
 .detail-unit {
-  display: inline;
   font-size: 16px;
   color: var(--text);
-  margin-bottom: 16px;
-  margin-left: 4px;
+  margin-left: 6px;
 }
 
 .detail-description-title {
@@ -102,4 +116,102 @@
 .detail-description {
   font-size: 18px;
   color: var(--text);
+}
+
+.detail-stock {
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.detail-agregar {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.detail-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.detail-cantidad-input {
+  width: 46px;
+  border: none;
+  outline: none;
+  background: none;
+  text-align: center;
+  font: inherit;
+  font-weight: 700;
+  color: var(--text-h);
+  /* Quita las flechitas nativas del <input type="number"> para que se vea
+     igual que el "span" que reemplaza, ya que los botones +/- ya cumplen
+     esa función. */
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.detail-cantidad-input::-webkit-outer-spin-button,
+.detail-cantidad-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.detail-cantidad button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.detail-cantidad button:hover:not(:disabled) {
+  background: var(--accent);
+  color: #fff;
+}
+
+.detail-cantidad button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.detail-agregar-boton {
+  flex: 1;
+  padding: 12px 24px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.detail-agregar-boton:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.detail-agregar-boton:disabled {
+  background: var(--border);
+  color: var(--text);
+  cursor: not-allowed;
+}
+
+.detail-cantidad-error {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #d92d20;
 }

@@ -7,6 +7,11 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  /* El navbar es "position: fixed" (para poder ocultarse/mostrarse al
+     hacer scroll), así que este padding deja el espacio justo para que
+     no tape el contenido. Navbar.jsx mide su propia altura real y la
+     expone en --navbar-alto; el valor de respaldo es solo por si acaso. */
+  padding-top: var(--navbar-alto, 96px);
 }
 
 .page-transicion {
