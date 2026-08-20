@@ -4,9 +4,10 @@ import ImagenProducto from './ImagenProducto'
 import './ProductCard.css'
 
 function ProductCard({ producto }) {
-  const { id, nombre, categoria, precio, unidad, emoji, destacado } = producto
+  const { id, nombre, categoria, precio, precioOriginal, unidad, emoji, destacado } = producto
   const { agregarAlCarrito, obtenerStockRestante } = useTienda()
   const stockRestante = obtenerStockRestante(id)
+  const tieneDescuentoPropio = precioOriginal > precio
 
   // El botón vive dentro del <Link> de la tarjeta: hay que frenar la
   // navegación y la propagación para que "Agregar" no abra el detalle.
@@ -26,6 +27,9 @@ function ProductCard({ producto }) {
       <h3 className="product-card__nombre">{nombre}</h3>
       <p className="product-card__precio">
         ${precio.toFixed(2)} <span>/ {unidad}</span>
+        {tieneDescuentoPropio && (
+          <span className="product-card__precio-original">${precioOriginal.toFixed(2)}</span>
+        )}
       </p>
       <button
         type="button"

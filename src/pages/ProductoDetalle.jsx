@@ -10,6 +10,7 @@ function ProductoDetalle() {
   const producto = PRODUCTOS.find((item) => item.id === Number(id))
   const { agregarAlCarrito, obtenerStockRestante } = useTienda()
   const [cantidad, setCantidad] = useState(1)
+  const [errorCantidad, setErrorCantidad] = useState('')
 
   if (!producto) {
     return (
@@ -21,10 +22,39 @@ function ProductoDetalle() {
   }
 
   const stockRestante = obtenerStockRestante(producto.id)
+  const tieneDescuentoPropio = producto.precioOriginal > producto.precio
+
+  // Permite escribir la cantidad a mano (no solo +/-), validando que nunca
+  // supere el stock disponible ni baje de 1.
+  const handleCantidadInput = (e) => {
+    const valor = e.target.value
+    if (valor === '') {
+      setCantidad('')
+      setErrorCantidad('')
+      return
+    }
+    const numero = Math.floor(Number(valor))
+    if (Number.isNaN(numero)) return
+    if (numero > stockRestante) {
+      setCantidad(stockRestante)
+      setErrorCantidad(`Solo hay ${stockRestante} unidades disponibles.`)
+      return
+    }
+    setErrorCantidad('')
+    setCantidad(Math.max(1, numero))
+  }
+
+  const handleCantidadBlur = () => {
+    if (cantidad === '' || cantidad < 1) {
+      setCantidad(1)
+      setErrorCantidad('')
+    }
+  }
 
   const handleAgregar = () => {
-    agregarAlCarrito(producto, cantidad)
+    agregarAlCarrito(producto, cantidad === '' ? 1 : cantidad)
     setCantidad(1)
+    setErrorCantidad('')
   }
 
   return (
@@ -42,8 +72,11 @@ function ProductoDetalle() {
             <p className="detail-category">{producto.categoria}</p>
           </div>
           <h1 className="detail-name font-outfit">{producto.nombre}</h1>
-          <div>
-            <h2 className="detail-price font-outfit">${producto.precio}</h2>
+          <div className="detail-precio-fila">
+            <h2 className="detail-price font-outfit">${producto.precio.toFixed(2)}</h2>
+            {tieneDescuentoPropio && (
+              <span className="detail-price-original">${producto.precioOriginal.toFixed(2)}</span>
+            )}
             <h4 className="detail-unit font-dmsans">por {producto.unidad}</h4>
           </div>
           <h4 className="detail-description-title font-dmsans">Descripción</h4>
@@ -57,17 +90,26 @@ function ProductoDetalle() {
             <div className="detail-cantidad">
               <button
                 type="button"
-                onClick={() => setCantidad((c) => Math.max(1, c - 1))}
+                onClick={() => setCantidad((c) => Math.max(1, (c === '' ? 1 : c) - 1))}
                 disabled={cantidad <= 1}
                 aria-label="Disminuir cantidad"
               >
                 −
               </button>
-              <span>{cantidad}</span>
+              <input
+                type="number"
+                className="detail-cantidad-input"
+                min={1}
+                max={stockRestante || 1}
+                value={cantidad}
+                onChange={handleCantidadInput}
+                onBlur={handleCantidadBlur}
+                aria-label="Cantidad"
+              />
               <button
                 type="button"
-                onClick={() => setCantidad((c) => Math.min(stockRestante, c + 1))}
-                disabled={cantidad >= stockRestante}
+                onClick={() => setCantidad((c) => Math.min(stockRestante, (c === '' ? 0 : c) + 1))}
+                disabled={cantidad !== '' && cantidad >= stockRestante}
                 aria-label="Aumentar cantidad"
               >
                 +
@@ -77,11 +119,12 @@ function ProductoDetalle() {
               type="button"
               className="detail-agregar-boton"
               onClick={handleAgregar}
-              disabled={stockRestante <= 0}
+              disabled={stockRestante <= 0 || cantidad === '' || cantidad < 1}
             >
               {stockRestante <= 0 ? 'Sin stock' : 'Agregar al carrito'}
             </button>
           </div>
+          {errorCantidad && <p className="detail-cantidad-error">{errorCantidad}</p>}
         </div>
       </div>
     </section>

@@ -12,6 +12,13 @@
 //   emoji: string          -> ícono representativo (se usa en vez de una foto)
 //   descripcion: string    -> breve descripción del producto
 //   destacado: boolean     -> si aparece marcado como oferta/destacado
+//
+// Campos opcionales:
+//   stock: number           -> unidades disponibles (si no se define, se usa
+//                              un valor por defecto, ver TiendaProvider.jsx)
+//   precioOriginal: number  -> si es mayor que "precio", el producto se
+//                              muestra con el precio original tachado (el
+//                              producto ya trae su propio descuento)
 // }
 
 export const CATEGORIAS = [
@@ -30,6 +37,7 @@ export const PRODUCTOS = [
     nombre: 'Manzana Roja',
     categoria: 'Frutas y Verduras',
     precio: 1.2,
+    precioOriginal: 1.5,
     unidad: 'kg',
     emoji: 'https://elegifruta.com.ar/wp-content/uploads/2017/07/manzana_roja.jpg',
     descripcion:
@@ -78,6 +86,7 @@ export const PRODUCTOS = [
     nombre: 'Nutri-leche',
     categoria: 'Lácteos',
     precio: 30,
+    precioOriginal: 38,
     unidad: 'litro',
     emoji: 'https://cdn.shopify.com/s/files/1/0080/1076/0255/products/LECHE-NUTRILECHE-1-LT_4fb01653-6ed2-4ad6-a784-bba71e7c0171_1200x1200_crop_center.jpg?v=1654034176',
     descripcion:
@@ -115,6 +124,7 @@ export const PRODUCTOS = [
     nombre: 'Pan Francés',
     categoria: 'Panadería',
     precio: 9,
+    precioOriginal: 12,
     unidad: 'pieza',
     emoji: 'https://media.istockphoto.com/id/485821784/photo/various-of-french-baguette-isolated-on-white-background.jpg?s=170667a&w=0&k=20&c=HYhQoHiNnS5HpHEQZQSsD05yNLwJ-97bjgII7_46jws=',
     descripcion:
@@ -152,6 +162,7 @@ export const PRODUCTOS = [
     nombre: 'Carne T-Bone',
     categoria: 'Carnes',
     precio: 50,
+    precioOriginal: 65,
     unidad: 'kg',
     emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/T-bone-raw-MCB.jpg/960px-T-bone-raw-MCB.jpg',
     descripcion:
