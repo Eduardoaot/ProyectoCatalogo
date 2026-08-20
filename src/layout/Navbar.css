@@ -264,3 +264,20 @@
   border-radius: 999px;
   line-height: 1;
 }
+
+.navbar__abrir-panel {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-h);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar__abrir-panel:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}

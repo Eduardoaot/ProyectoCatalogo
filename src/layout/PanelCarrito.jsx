@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import ModalConfirmacion from '../common/ModalConfirmacion'
 import { useTienda } from '../context/TiendaContext'
 import ImagenProducto from '../common/ImagenProducto'
 import { IconoX } from '../common/iconos'
@@ -10,6 +12,13 @@ import './PanelCarrito.css'
 function PanelCarrito() {
   const { carrito, totalUnidades, total, panelAbierto, cerrarPanel, cambiarCantidad, eliminarDelCarrito } =
     useTienda()
+  // null o { productoId, nombre } del producto que se va a eliminar
+  const [aEliminar, setAEliminar] = useState(null)
+
+  const confirmarEliminar = () => {
+    if (aEliminar) eliminarDelCarrito(aEliminar.productoId)
+    setAEliminar(null)
+  }
 
   return (
     <>
@@ -69,7 +78,9 @@ function PanelCarrito() {
                     <button
                       type="button"
                       className="panel-carrito__item-eliminar"
-                      onClick={() => eliminarDelCarrito(item.productoId)}
+                      onClick={() =>
+                        setAEliminar({ productoId: item.productoId, nombre: item.producto.nombre })
+                      }
                     >
                       Eliminar
                     </button>
@@ -92,6 +103,15 @@ function PanelCarrito() {
           </div>
         )}
       </aside>
+
+      <ModalConfirmacion
+        abierto={aEliminar !== null}
+        titulo="¿Eliminar producto?"
+        mensaje={`Se quitará "${aEliminar?.nombre}" de tu carrito.`}
+        textoConfirmar="Eliminar"
+        onConfirmar={confirmarEliminar}
+        onCancelar={() => setAEliminar(null)}
+      />
     </>
   )
 }

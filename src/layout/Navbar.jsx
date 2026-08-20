@@ -4,7 +4,7 @@ import rosaLogo from '../assets/RosaLogo.webp'
 import { useAuth } from '../context/AuthContext'
 import { useTienda } from '../context/TiendaContext'
 import { PRODUCTOS } from '../data/productos'
-import { IconoBuscar, IconoCarrito, IconoMenu, IconoX } from '../common/iconos'
+import { IconoBuscar, IconoCarrito, IconoMenu, IconoPanelLateral, IconoX } from '../common/iconos'
 import MenuLateral from './MenuLateral'
 import './Navbar.css'
 
@@ -15,7 +15,7 @@ const MAX_SUGERENCIAS = 6
 
 function Navbar() {
   const { usuario } = useAuth()
-  const { totalUnidades } = useTienda()
+  const { totalUnidades, abrirPanel } = useTienda()
   const navigate = useNavigate()
   const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -178,6 +178,15 @@ function Navbar() {
                 <span className="navbar__carrito-badge">{totalUnidades}</span>
               )}
             </Link>
+            <button
+              type="button"
+              className="navbar__abrir-panel"
+              aria-label="Abrir vista rápida del carrito"
+              title="Vista rápida del carrito"
+              onClick={abrirPanel}
+            >
+              <IconoPanelLateral className="navbar__icono" />
+            </button>
           </div>
         </div>
       </header>

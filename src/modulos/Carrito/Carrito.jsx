@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import ImagenProducto from '../../common/ImagenProducto'
+import ModalConfirmacion from '../../common/ModalConfirmacion'
 import { useAuth } from '../../context/AuthContext'
 import { useTienda } from '../../context/TiendaContext'
 import './Carrito.css'
@@ -29,6 +30,17 @@ function Carrito() {
 
   const [codigoTexto, setCodigoTexto] = useState('')
   const [mensajeCodigo, setMensajeCodigo] = useState('')
+  // null, { tipo: 'vaciar' } o { tipo: 'eliminar', productoId, nombre }
+  const [confirmacion, setConfirmacion] = useState(null)
+
+  const confirmar = () => {
+    if (confirmacion?.tipo === 'vaciar') {
+      vaciarCarrito()
+    } else if (confirmacion?.tipo === 'eliminar') {
+      eliminarDelCarrito(confirmacion.productoId)
+    }
+    setConfirmacion(null)
+  }
 
   const handleAplicarCodigo = (e) => {
     e.preventDefault()
@@ -75,7 +87,11 @@ function Carrito() {
       <div className="carrito__contenido">
         <div className="carrito__columna-izquierda">
           <div className="carrito__acciones">
-            <button type="button" className="carrito__vaciar" onClick={vaciarCarrito}>
+            <button
+              type="button"
+              className="carrito__vaciar"
+              onClick={() => setConfirmacion({ tipo: 'vaciar' })}
+            >
               Vaciar carrito
             </button>
           </div>
@@ -130,7 +146,13 @@ function Carrito() {
                 <button
                   type="button"
                   className="carrito__item-eliminar"
-                  onClick={() => eliminarDelCarrito(item.productoId)}
+                  onClick={() =>
+                    setConfirmacion({
+                      tipo: 'eliminar',
+                      productoId: item.productoId,
+                      nombre: item.producto.nombre,
+                    })
+                  }
                 >
                   Eliminar
                 </button>
@@ -202,6 +224,19 @@ function Carrito() {
           </button>
         </aside>
       </div>
+
+      <ModalConfirmacion
+        abierto={confirmacion !== null}
+        titulo={confirmacion?.tipo === 'vaciar' ? '¿Vaciar el carrito?' : '¿Eliminar producto?'}
+        mensaje={
+          confirmacion?.tipo === 'vaciar'
+            ? 'Se quitarán todos los productos de tu carrito. Esta acción no se puede deshacer.'
+            : `Se quitará "${confirmacion?.nombre}" de tu carrito.`
+        }
+        textoConfirmar={confirmacion?.tipo === 'vaciar' ? 'Vaciar carrito' : 'Eliminar'}
+        onConfirmar={confirmar}
+        onCancelar={() => setConfirmacion(null)}
+      />
     </section>
   )
 }
