@@ -97,12 +97,24 @@ export function TiendaProvider({ children }) {
       localStorage.setItem(claveCarrito(idActual), JSON.stringify(fusionado))
       localStorage.removeItem(claveCarrito(INVITADO))
       setCarrito(fusionado)
+
+      // El código de descuento que el invitado ya tenía aplicado tampoco
+      // se pierde: si el usuario no traía uno propio guardado, se usa el
+      // de invitado.
+      const codigoInvitado = leerLocalStorage(claveCodigo(INVITADO), null)
+      const codigoUsuario = leerLocalStorage(claveCodigo(idActual), null)
+      const codigoFinal = codigoUsuario ?? codigoInvitado
+      if (codigoFinal) {
+        localStorage.setItem(claveCodigo(idActual), JSON.stringify(codigoFinal))
+      }
+      localStorage.removeItem(claveCodigo(INVITADO))
+      setCodigoAplicado(codigoFinal)
     } else {
       setCarrito(carritoDestino)
+      setCodigoAplicado(leerLocalStorage(claveCodigo(idActual), null))
     }
 
     setOrdenes(leerLocalStorage(claveOrdenes(idActual), []))
-    setCodigoAplicado(leerLocalStorage(claveCodigo(idActual), null))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idActual])
 
