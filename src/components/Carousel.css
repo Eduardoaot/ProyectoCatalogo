@@ -94,6 +94,53 @@
   }
 }
 
+/* Cupón grande y destacado: el beneficio (ej. "20% OFF") y el código
+   (ej. "FRESCUERA") en un recuadro propio, aparte del título/texto. */
+.carrusel__cupon {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 4px 0 2px;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 2px dashed rgba(255, 255, 255, 0.85);
+  border-radius: 14px;
+  backdrop-filter: blur(3px);
+
+  @media (max-width: 1024px) {
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 10px;
+  }
+}
+
+.carrusel__cupon-beneficio {
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: #fff;
+
+  @media (max-width: 1024px) {
+    font-size: 18px;
+  }
+}
+
+.carrusel__cupon-codigo {
+  padding: 5px 12px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  white-space: nowrap;
+
+  @media (max-width: 1024px) {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+}
+
 .carrusel__puntos {
   position: absolute;
   bottom: 16px;

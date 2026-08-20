@@ -117,10 +117,11 @@ function Navbar() {
           >
             <IconoBuscar className="navbar__icono-buscar" />
             <input
-              type="search"
+              type="text"
               className="navbar__input-busqueda"
               placeholder="Buscar productos en Rosamark..."
               value={busqueda}
+              autoComplete="off"
               onChange={(e) => {
                 setBusqueda(e.target.value)
                 setMostrarSugerencias(true)

@@ -43,6 +43,12 @@ function Carousel() {
             <div className="carrusel__overlay">
               <span className="carrusel__etiqueta">Oferta</span>
               <h3 className="carrusel__titulo">{oferta.titulo}</h3>
+              {oferta.codigo && (
+                <div className="carrusel__cupon">
+                  <span className="carrusel__cupon-beneficio">{oferta.beneficio}</span>
+                  <span className="carrusel__cupon-codigo">Código: {oferta.codigo}</span>
+                </div>
+              )}
               <p className="carrusel__texto">{oferta.texto}</p>
             </div>
           </div>
