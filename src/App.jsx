@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import PanelCarrito from './components/PanelCarrito'
 import SparkleBackground from './components/SparkleBackground'
 import SplashScreen from './components/SplashScreen'
 import Carrito from './pages/Carrito'
@@ -19,6 +20,7 @@ function App() {
     <>
       {mostrarSplash && <SplashScreen onFinish={() => setMostrarSplash(false)} />}
       <SparkleBackground />
+      <PanelCarrito />
       <div className="app-contenido">
         <Navbar />
         {/* La key con la ruta actual hace que React vuelva a montar este bloque
