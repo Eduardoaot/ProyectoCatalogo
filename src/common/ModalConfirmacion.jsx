@@ -1,9 +1,16 @@
+import { createPortal } from 'react-dom'
 import { IconoAlerta } from './iconos'
 import './ModalConfirmacion.css'
 
 // Modal de confirmación genérico para acciones destructivas (vaciar el
 // carrito, eliminar un producto, etc.). Se controla desde afuera: si
 // `abierto` es false no renderiza nada.
+//
+// Se monta con un portal directo a document.body: si se renderizara en su
+// lugar normal dentro del árbol, quedaría dentro de ".page-transicion"
+// (tiene una animación con transform, lo que convierte a ese contenedor en
+// el "containing block" del position:fixed) y el fondo oscuro se vería
+// recortado al ancho de la página en vez de cubrir toda la pantalla.
 function ModalConfirmacion({
   abierto,
   titulo,
@@ -15,7 +22,7 @@ function ModalConfirmacion({
 }) {
   if (!abierto) return null
 
-  return (
+  return createPortal(
     <div className="modal-confirmacion__fondo" onClick={onCancelar}>
       <div
         className="modal-confirmacion"
@@ -38,7 +45,8 @@ function ModalConfirmacion({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 

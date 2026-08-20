@@ -47,7 +47,9 @@ body {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  overflow: hidden;
+  /* Sin overflow:hidden aquí a propósito: el fondo de destellos ya se
+     recorta a sí mismo (ver SparkleBackground.css) y el footer necesita
+     poder "salirse" de este ancho para cubrir toda la pantalla. */
 }
 
 h1,
