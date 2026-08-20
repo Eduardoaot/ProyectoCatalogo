@@ -3,7 +3,11 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import SparkleBackground from './components/SparkleBackground'
 import SplashScreen from './components/SplashScreen'
+import Carrito from './pages/Carrito'
+import Cuenta from './pages/Cuenta'
 import Home from './pages/Home'
+import Login from './pages/Login'
+import Ordenes from './pages/Ordenes'
 import ProductoDetalle from './pages/ProductoDetalle'
 import './App.css'
 
@@ -24,6 +28,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/producto/:id" element={<ProductoDetalle />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/cuenta" element={<Cuenta />} />
+            <Route path="/ordenes" element={<Ordenes />} />
+            <Route path="/carrito" element={<Carrito />} />
           </Routes>
         </div>
       </div>
