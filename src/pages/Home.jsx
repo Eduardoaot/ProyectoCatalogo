@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Carousel from '../components/Carousel'
 import ProductCard from '../components/ProductCard'
@@ -16,18 +16,29 @@ function Home() {
   const busqueda = searchParams.get('buscar') || ''
 
   const [transicionando, setTransicionando] = useState(false)
+  const catalogoRef = useRef(null)
 
+  // El filtro por categoría tiene prioridad sobre la búsqueda de texto: si
+  // hay una categoría activa, la búsqueda se ignora por completo.
   const productosFiltrados = useMemo(() => {
-    let lista = PRODUCTOS
     if (categoriaActiva !== 'Todas') {
-      lista = lista.filter((producto) => producto.categoria === categoriaActiva)
+      return PRODUCTOS.filter((producto) => producto.categoria === categoriaActiva)
     }
     if (busqueda) {
       const texto = busqueda.toLowerCase()
-      lista = lista.filter((producto) => producto.nombre.toLowerCase().includes(texto))
+      return PRODUCTOS.filter((producto) => producto.nombre.toLowerCase().includes(texto))
     }
-    return lista
+    return PRODUCTOS
   }, [categoriaActiva, busqueda])
+
+  // Al llegar desde una búsqueda del navbar (Enter sin elegir del
+  // dropdown), baja la vista hacia el catálogo en vez de dejar al usuario
+  // arriba del todo, tapado por el carrusel.
+  useEffect(() => {
+    if (busqueda && catalogoRef.current) {
+      catalogoRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [busqueda])
 
   // Al cambiar de categoría desde los botones de filtro, primero se
   // desvanece la grilla (fade out) y, una vez invisible, se actualiza la
@@ -47,20 +58,23 @@ function Home() {
     }, DURACION_TRANSICION_MS)
   }
 
+  let mensajeIntro = 'Todo lo que necesitas para tu hogar, a un clic de distancia.'
+  if (categoriaActiva !== 'Todas') {
+    mensajeIntro = `Categoría: ${categoriaActiva}`
+  } else if (busqueda) {
+    mensajeIntro = `Resultados para "${busqueda}"`
+  }
+
   return (
     <section className="home">
       <Carousel />
 
       <div className="home__intro">
         <h1>Catálogo Rosamark</h1>
-        <p>
-          {busqueda
-            ? `Resultados para "${busqueda}"`
-            : 'Todo lo que necesitas para tu hogar, a un clic de distancia.'}
-        </p>
+        <p>{mensajeIntro}</p>
       </div>
 
-      <div className="home__filtros">
+      <div className="home__filtros" ref={catalogoRef}>
         <button
           type="button"
           className={categoriaActiva === 'Todas' ? 'filtro is-active' : 'filtro'}
