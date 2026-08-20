@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import Footer from './layout/Footer'
 import Navbar from './layout/Navbar'
 import PanelCarrito from './layout/PanelCarrito'
 import SparkleBackground from './layout/SparkleBackground'
@@ -36,6 +37,7 @@ function App() {
             <Route path="/carrito" element={<Carrito />} />
           </Routes>
         </div>
+        <Footer />
       </div>
     </>
   )
