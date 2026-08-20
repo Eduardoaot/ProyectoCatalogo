@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { useTienda } from '../context/TiendaContext'
+import { useAuth } from '../../context/AuthContext'
+import { useTienda } from '../../context/TiendaContext'
 import './Ordenes.css'
 
 function formatearFecha(iso) {

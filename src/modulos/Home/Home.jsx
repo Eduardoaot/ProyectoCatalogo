@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import Carousel from '../components/Carousel'
-import ProductCard from '../components/ProductCard'
-import { CATEGORIAS, PRODUCTOS } from '../data/productos'
+import Carousel from './componentes/Carousel'
+import ProductCard from './componentes/ProductCard'
+import { CATEGORIAS, PRODUCTOS } from '../../data/productos'
 import './Home.css'
 
 const DURACION_TRANSICION_MS = 200

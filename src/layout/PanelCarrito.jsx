@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTienda } from '../context/TiendaContext'
-import ImagenProducto from './ImagenProducto'
-import { IconoX } from './iconos'
+import ImagenProducto from '../common/ImagenProducto'
+import { IconoX } from '../common/iconos'
 import './PanelCarrito.css'
 
 // Panel lateral (derecha) tipo Amazon: se abre solo cada vez que se agrega

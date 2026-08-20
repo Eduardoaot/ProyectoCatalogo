@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import ImagenProducto from '../components/ImagenProducto'
-import { useTienda } from '../context/TiendaContext'
-import { PRODUCTOS } from '../data/productos'
+import ImagenProducto from '../../common/ImagenProducto'
+import { useTienda } from '../../context/TiendaContext'
+import { PRODUCTOS } from '../../data/productos'
 import './ProductoDetalle.css'
 
 function ProductoDetalle() {

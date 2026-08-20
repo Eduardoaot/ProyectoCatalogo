@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { OFERTAS } from '../data/ofertas'
+import { OFERTAS } from '../../../data/ofertas'
 import './Carousel.css'
 
 const INTERVALO_MS = 4500

@@ -1,5 +1,5 @@
 import { Navigate, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 import './Cuenta.css'
 
 // Datos del usuario / configuración de cuenta. Sirve también como destino

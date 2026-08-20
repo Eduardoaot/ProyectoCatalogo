@@ -4,7 +4,7 @@ import rosaLogo from '../assets/RosaLogo.webp'
 import { useAuth } from '../context/AuthContext'
 import { useTienda } from '../context/TiendaContext'
 import { PRODUCTOS } from '../data/productos'
-import { IconoBuscar, IconoCarrito, IconoMenu, IconoX } from './iconos'
+import { IconoBuscar, IconoCarrito, IconoMenu, IconoX } from '../common/iconos'
 import MenuLateral from './MenuLateral'
 import './Navbar.css'
 

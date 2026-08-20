@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { CATEGORIAS } from '../data/productos'
-import { IconoChevron, IconoUsuario, IconoX } from './iconos'
+import { IconoChevron, IconoUsuario, IconoX } from '../common/iconos'
 import './MenuLateral.css'
 
 // Menú lateral (drawer) tipo Amazon: usuario / órdenes / catálogo con

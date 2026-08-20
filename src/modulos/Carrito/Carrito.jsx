@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import ImagenProducto from '../components/ImagenProducto'
-import { useAuth } from '../context/AuthContext'
-import { useTienda } from '../context/TiendaContext'
+import ImagenProducto from '../../common/ImagenProducto'
+import { useAuth } from '../../context/AuthContext'
+import { useTienda } from '../../context/TiendaContext'
 import './Carrito.css'
 
 // Página del carrito: columna izquierda con los productos (aumentar,

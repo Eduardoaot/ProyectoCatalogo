@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { useTienda } from '../context/TiendaContext'
-import ImagenProducto from './ImagenProducto'
+import { useTienda } from '../../../context/TiendaContext'
+import ImagenProducto from '../../../common/ImagenProducto'
 import './ProductCard.css'
 
 function ProductCard({ producto }) {
