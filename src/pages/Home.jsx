@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import Carousel from '../components/Carousel'
 import ProductCard from '../components/ProductCard'
 import { CATEGORIAS, PRODUCTOS } from '../data/productos'
+import all_icon from '../assets/icons/all.svg'
 import './Home.css'
 
 const DURACION_TRANSICION_MS = 200
@@ -41,8 +42,10 @@ function Home() {
           className={categoriaActiva === 'Todas' ? 'filtro is-active' : 'filtro'}
           onClick={() => cambiarCategoria('Todas')}
         >
+          <img className="filtro-icono" src={all_icon} alt="Todas" />
           Todas
         </button>
+
         {CATEGORIAS.map((categoria) => (
           <button
             key={categoria}
