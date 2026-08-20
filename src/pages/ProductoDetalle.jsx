@@ -1,27 +1,15 @@
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import ImagenProducto from '../components/ImagenProducto'
+import { useTienda } from '../context/TiendaContext'
 import { PRODUCTOS } from '../data/productos'
 import './ProductoDetalle.css'
-
-// ---------------------------------------------------------------------------
-// PÁGINA: Detalle de producto
-// ---------------------------------------------------------------------------
-// Esta pantalla es solo la BASE de la ruta "/producto/:id".
-// Ya deja resuelto lo esencial:
-//   - La ruta está conectada en App.jsx
-//   - Se obtiene el "id" desde la URL con useParams()
-//   - Se busca el producto correspondiente en PRODUCTOS (src/data/productos.js)
-//
-// TODO (compañero): diseñar y construir el resto de la vista, por ejemplo:
-//   - Mostrar imagen/emoji en grande, descripción completa, categoría, etc.
-//   - Agregar botón "Agregar al carrito" (si aplica)
-//   - Mostrar productos relacionados de la misma categoría
-//   - Manejar mejor el caso de producto no encontrado
-// ---------------------------------------------------------------------------
 
 function ProductoDetalle() {
   const { id } = useParams()
   const producto = PRODUCTOS.find((item) => item.id === Number(id))
+  const { agregarAlCarrito, obtenerStockRestante } = useTienda()
+  const [cantidad, setCantidad] = useState(1)
 
   if (!producto) {
     return (
@@ -30,6 +18,13 @@ function ProductoDetalle() {
         <Link to="/">Volver al catálogo</Link>
       </section>
     )
+  }
+
+  const stockRestante = obtenerStockRestante(producto.id)
+
+  const handleAgregar = () => {
+    agregarAlCarrito(producto, cantidad)
+    setCantidad(1)
   }
 
   return (
@@ -53,6 +48,40 @@ function ProductoDetalle() {
           </div>
           <h4 className="detail-description-title font-dmsans">Descripción</h4>
           <p className="detail-description">{producto.descripcion}</p>
+
+          <p className="detail-stock">
+            {stockRestante > 0 ? `${stockRestante} disponibles` : 'Sin stock disponible'}
+          </p>
+
+          <div className="detail-agregar">
+            <div className="detail-cantidad">
+              <button
+                type="button"
+                onClick={() => setCantidad((c) => Math.max(1, c - 1))}
+                disabled={cantidad <= 1}
+                aria-label="Disminuir cantidad"
+              >
+                −
+              </button>
+              <span>{cantidad}</span>
+              <button
+                type="button"
+                onClick={() => setCantidad((c) => Math.min(stockRestante, c + 1))}
+                disabled={cantidad >= stockRestante}
+                aria-label="Aumentar cantidad"
+              >
+                +
+              </button>
+            </div>
+            <button
+              type="button"
+              className="detail-agregar-boton"
+              onClick={handleAgregar}
+              disabled={stockRestante <= 0}
+            >
+              {stockRestante <= 0 ? 'Sin stock' : 'Agregar al carrito'}
+            </button>
+          </div>
         </div>
       </div>
     </section>

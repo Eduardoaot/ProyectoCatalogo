@@ -71,3 +71,28 @@
   font-weight: 400;
   color: var(--text);
 }
+
+.product-card__agregar {
+  width: 100%;
+  margin-top: 10px;
+  padding: 9px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.product-card__agregar:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.product-card__agregar:disabled {
+  background: var(--border);
+  color: var(--text);
+  cursor: not-allowed;
+}
