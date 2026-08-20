@@ -61,3 +61,8 @@
 .home__grid--transicion {
   opacity: 0;
 }
+
+.home__sin-resultados {
+  color: var(--text);
+  padding: 32px 0;
+}
