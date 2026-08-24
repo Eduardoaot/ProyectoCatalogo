@@ -280,4 +280,26 @@
 .navbar__abrir-panel:hover {
   background: var(--accent-bg);
   color: var(--accent);
+  .navbar_modo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    margin-left: 2px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-h);
+    cursor: pointer;
+    transition: background 0.2s, color 2.s;
+  }
+  .navbar_modo :hover{
+    background: var(--accent-bg);
+    color: var(--accent);
+  }
+  .navbar_icono-modo{
+    width: 24px;
+    height: 24px;
 }

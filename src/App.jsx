@@ -15,15 +15,23 @@ import './App.css'
 
 function App() {
   const [mostrarSplash, setMostrarSplash] = useState(true)
+  const [modoOscuro, setModoOscuro] = useState(false)
   const location = useLocation()
 
   return (
     <>
-      {mostrarSplash && <SplashScreen onFinish={() => setMostrarSplash(false)} />}
-      <SparkleBackground />
-      <PanelCarrito />
-      <div className="app-contenido">
-        <Navbar />
+    {mostrarSplash && (
+    <SplashScreen onFinish={() => setMostrarSplash(false)} />
+  )}
+      <div className={modoOscuro ? 'app app--oscuro' : 'app'}>
+  <SparkleBackground />
+  <PanelCarrito />
+
+  <div className="app-contenido">
+        <Navbar
+        modoOscuro={modoOscuro}
+        setModoOscuro={setModoOscuro}
+         />
         {/* La key con la ruta actual hace que React vuelva a montar este bloque
             en cada navegación, disparando la animación de fade definida en App.css.
             El Navbar queda fuera de este bloque para no verse afectado. */}
@@ -38,6 +46,7 @@ function App() {
           </Routes>
         </div>
         <Footer />
+      </div>
       </div>
     </>
   )

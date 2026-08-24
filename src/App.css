@@ -1,33 +1,15 @@
-/* Estilos específicos de App.jsx. */
-/* El layout general y la paleta de colores viven en src/index.css */
-
-.app-contenido {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  /* El navbar es "position: fixed" (para poder ocultarse/mostrarse al
-     hacer scroll), así que este padding deja el espacio justo para que
-     no tape el contenido. Navbar.jsx mide su propia altura real y la
-     expone en --navbar-alto; el valor de respaldo es solo por si acaso. */
-  padding-top: var(--navbar-alto, 96px);
+.app {
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.page-transicion {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  animation: pagina-fade 0.4s ease both;
-}
-
-@keyframes pagina-fade {
-  0% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.app--oscuro {
+  --bg: #121212;
+  --text: #d6d6d6;
+  --text-h: #ffffff;
+  --card-bg: #1e1e1e;
+  --border: #3a3a3a;
+  --accent-bg: #3b2433;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
 }

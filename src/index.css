@@ -101,3 +101,20 @@ code {
 .font-outfit {
   font-family: 'Outfit', sans-serif;
 }
+.app--oscuro {
+  --text: #d8c8d0;
+  --text-h: #ffffff;
+  --bg: #171216;
+  --card-bg: #241c21;
+  --border: #46343e;
+  --code-bg: #2d2228;
+  --accent: #f05a9b;
+  --accent-bg: rgba(240, 90, 155, 0.12);
+  --accent-border: rgba(240, 90, 155, 0.45);
+  --social-bg: rgba(45, 34, 40, 0.7);
+  --shadow:
+    rgba(0, 0, 0, 0.35) 0 10px 15px -3px,
+    rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
