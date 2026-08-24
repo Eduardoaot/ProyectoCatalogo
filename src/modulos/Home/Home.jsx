@@ -19,19 +19,17 @@ function Home() {
   const [transicionando, setTransicionando] = useState(false)
   const catalogoRef = useRef(null)
 
-  // La categoría y la búsqueda se combinan: los filtros de categoría se
-  // aplican sobre los resultados de búsqueda (y viceversa), no se
-  // reemplazan entre sí.
+  // El filtro por categoría tiene prioridad sobre la búsqueda de texto: si
+  // hay una categoría activa, la búsqueda se ignora por completo.
   const productosFiltrados = useMemo(() => {
-    let lista = PRODUCTOS
     if (categoriaActiva !== 'Todas') {
-      lista = lista.filter((producto) => producto.categoria === categoriaActiva)
+      return PRODUCTOS.filter((producto) => producto.categoria === categoriaActiva)
     }
     if (busqueda) {
       const texto = busqueda.toLowerCase()
-      lista = lista.filter((producto) => producto.nombre.toLowerCase().includes(texto))
+      return PRODUCTOS.filter((producto) => producto.nombre.toLowerCase().includes(texto))
     }
-    return lista
+    return PRODUCTOS
   }, [categoriaActiva, busqueda])
 
   // Al llegar desde una búsqueda del navbar (Enter sin elegir del
@@ -62,12 +60,10 @@ function Home() {
   }
 
   let mensajeIntro = 'Todo lo que necesitas para tu hogar, a un clic de distancia.'
-  if (busqueda && categoriaActiva !== 'Todas') {
-    mensajeIntro = `Resultados para "${busqueda}" en ${categoriaActiva}`
+  if (categoriaActiva !== 'Todas') {
+    mensajeIntro = `Categoría: ${categoriaActiva}`
   } else if (busqueda) {
     mensajeIntro = `Resultados para "${busqueda}"`
-  } else if (categoriaActiva !== 'Todas') {
-    mensajeIntro = `Categoría: ${categoriaActiva}`
   }
 
   return (

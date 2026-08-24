@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import PanelCarrito from './components/PanelCarrito'
-import SparkleBackground from './components/SparkleBackground'
-import SplashScreen from './components/SplashScreen'
-import Carrito from './pages/Carrito'
-import Cuenta from './pages/Cuenta'
-import Home from './pages/Home'
-import Login from './pages/Login'
-import Ordenes from './pages/Ordenes'
-import ProductoDetalle from './pages/ProductoDetalle'
+import Footer from './layout/Footer'
+import Navbar from './layout/Navbar'
+import PanelCarrito from './layout/PanelCarrito'
+import SparkleBackground from './layout/SparkleBackground'
+import SplashScreen from './layout/SplashScreen'
+import Carrito from './modulos/Carrito/Carrito'
+import Cuenta from './modulos/Cuenta/Cuenta'
+import Home from './modulos/Home/Home'
+import Login from './modulos/Login/Login'
+import Ordenes from './modulos/Ordenes/Ordenes'
+import ProductoDetalle from './modulos/ProductoDetalle/ProductoDetalle'
 import './App.css'
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route path="/carrito" element={<Carrito />} />
           </Routes>
         </div>
+        <Footer />
       </div>
     </>
   )
