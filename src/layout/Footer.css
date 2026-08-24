@@ -1,0 +1,122 @@
+.footer {
+  /* #root tiene un ancho fijo (1126px) y el footer vive dentro de ese
+     flujo normal, así que sin este "escape" su fondo quedaría angosto,
+     como una tarjeta flotando en medio de la página en vez de una barra
+     que cubre todo el ancho de la pantalla (como el navbar, que logra lo
+     mismo siendo position:fixed). */
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  z-index: 1;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+  background: var(--card-bg);
+  text-align: left;
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 32px;
+  max-width: 1126px;
+  margin: 0 auto;
+  padding: 40px 32px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr 1fr;
+    padding: 32px 20px;
+    gap: 28px;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.footer__marca {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @media (max-width: 1024px) {
+    grid-column: 1 / -1;
+  }
+}
+
+.footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.footer__logo {
+  height: 40px;
+  width: auto;
+}
+
+.footer__brand-texto {
+  font-family: var(--font-brand);
+  font-size: 28px;
+  line-height: 1;
+  color: var(--accent);
+  padding-top: 6px;
+}
+
+.footer__eslogan {
+  margin: 0;
+  max-width: 320px;
+  font-size: 14px;
+  line-height: 150%;
+  color: var(--text);
+}
+
+.footer__columna {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer__columna h4 {
+  margin: 0 0 2px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-h);
+}
+
+.footer__columna a {
+  font-size: 14px;
+  color: var(--text);
+  text-decoration: none;
+  width: fit-content;
+}
+
+.footer__columna a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.footer__codigo {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 6px 10px;
+  background: var(--accent-bg);
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.footer__pie {
+  border-top: 1px solid var(--border);
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text);
+
+  @media (max-width: 1024px) {
+    padding: 16px 20px;
+  }
+}
