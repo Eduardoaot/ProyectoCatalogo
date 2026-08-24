@@ -1,0 +1,107 @@
+.modal-confirmacion__fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(58, 14, 34, 0.5);
+  animation: modal-confirmacion-fondo 0.2s ease both;
+}
+
+.modal-confirmacion {
+  width: 100%;
+  max-width: 360px;
+  padding: 28px;
+  background: var(--card-bg);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  animation: modal-confirmacion-entra 0.2s ease both;
+}
+
+.modal-confirmacion__icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: rgba(217, 45, 32, 0.12);
+  color: #d92d20;
+}
+
+.modal-confirmacion__icono-svg {
+  width: 26px;
+  height: 26px;
+}
+
+.modal-confirmacion h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.modal-confirmacion p {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.modal-confirmacion__acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.modal-confirmacion__cancelar,
+.modal-confirmacion__confirmar {
+  flex: 1;
+  padding: 11px;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s, background 0.2s;
+}
+
+.modal-confirmacion__cancelar {
+  background: var(--bg);
+  color: var(--text-h);
+  border: 1px solid var(--border);
+}
+
+.modal-confirmacion__cancelar:hover {
+  background: var(--accent-bg);
+}
+
+.modal-confirmacion__confirmar {
+  background: #d92d20;
+  color: #fff;
+}
+
+.modal-confirmacion__confirmar:hover {
+  filter: brightness(1.1);
+}
+
+@keyframes modal-confirmacion-fondo {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-confirmacion-entra {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
