@@ -280,6 +280,7 @@
 .navbar__abrir-panel:hover {
   background: var(--accent-bg);
   color: var(--accent);
+}
   .navbar_modo{
     display: flex;
     align-items: center;
@@ -302,4 +303,4 @@
   .navbar_icono-modo{
     width: 24px;
     height: 24px;
-}
+  }

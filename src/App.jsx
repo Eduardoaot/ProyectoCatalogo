@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Footer from './layout/Footer'
 import Navbar from './layout/Navbar'
@@ -17,6 +17,12 @@ function App() {
   const [mostrarSplash, setMostrarSplash] = useState(true)
   const [modoOscuro, setModoOscuro] = useState(false)
   const location = useLocation()
+  useEffect(() => {
+    document.body.classList.toggle('app--oscuro',modoOscuro)
+    return () => {
+      document.body.classList.remove('app--oscuro')
+      }
+  }, [modoOscuro])
 
   return (
     <>
