@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import rosaLogo from '../assets/RosaLogo.webp'
+import LogoRosa from '../assets/LogoRosa.png'
+import LogoLetras from '../assets/LogoLetras.png'
 import { useAuth } from '../context/AuthContext'
 import { useTienda } from '../context/TiendaContext'
 import { PRODUCTOS } from '../data/productos'
@@ -104,8 +105,8 @@ function Navbar() {
               <IconoMenu className="navbar__icono" />
             </button>
             <Link to="/" className="navbar__brand">
-              <img className="navbar__logo" src={rosaLogo} alt="" />
-              <span className="navbar__brand-texto">Rosamark</span>
+              <img className="navbar__logo" src={LogoRosa} alt="" />
+              <img className="navbar__brand-texto" src={LogoLetras} alt="Rosamark" />
             </Link>
           </div>
 
