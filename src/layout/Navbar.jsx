@@ -3,8 +3,8 @@ import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-do
 import LogoRosa from '../assets/LogoRosa.png'
 import LogoLetras from '../assets/LogoLetras.png'
 import { useAuth } from '../context/AuthContext'
+import { useCatalogo } from '../context/CatalogoContext'
 import { useTienda } from '../context/TiendaContext'
-import { PRODUCTOS } from '../data/productos'
 import { IconoBuscar, IconoCarrito, IconoMenu, IconoPanelLateral, IconoX } from '../common/iconos'
 import MenuLateral from './MenuLateral'
 import './Navbar.css'
@@ -16,6 +16,7 @@ const MAX_SUGERENCIAS = 6
 
 function Navbar() {
   const { usuario } = useAuth()
+  const { productos } = useCatalogo()
   const { totalUnidades, abrirPanel } = useTienda()
   const navigate = useNavigate()
   const location = useLocation()
@@ -59,11 +60,10 @@ function Navbar() {
   const sugerencias = useMemo(() => {
     const texto = busqueda.trim().toLowerCase()
     if (!texto) return []
-    return PRODUCTOS.filter((producto) => producto.nombre.toLowerCase().includes(texto)).slice(
-      0,
-      MAX_SUGERENCIAS,
-    )
-  }, [busqueda])
+    return productos
+      .filter((producto) => producto.nombre.toLowerCase().includes(texto))
+      .slice(0, MAX_SUGERENCIAS)
+  }, [productos, busqueda])
 
   const irAProducto = (id) => {
     setBusqueda('')

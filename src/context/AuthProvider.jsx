@@ -1,81 +1,71 @@
 import { useEffect, useState } from 'react'
-import { USUARIOS_SEED } from '../data/usuarios'
+import * as api from '../api/auth'
+import { leerToken } from '../api/cliente'
 import { AuthContext } from './AuthContext'
 
-const CLAVE_USUARIOS = 'rosamark:usuarios'
-const CLAVE_SESION = 'rosamark:sesionUsuarioId'
-
-function leerLocalStorage(clave, valorPorDefecto) {
-  try {
-    const guardado = localStorage.getItem(clave)
-    return guardado ? JSON.parse(guardado) : valorPorDefecto
-  } catch {
-    return valorPorDefecto
-  }
-}
-
-// Autenticación de demostración: no hay backend. Los usuarios "existentes"
-// son el seed de src/data/usuarios.js; los que se registran desde la app se
-// agregan a esa misma lista y se persisten en localStorage. La sesión solo
-// guarda el id del usuario logueado (no sus datos), así que si sus datos
-// cambiaran seguirían reflejándose al instante.
+/**
+ * Sesión real contra la API: el registro y el login pegan a
+ * /clientes/registro y /clientes/login, la contraseña se hashea con bcrypt
+ * en el servidor y aquí solo se guarda el JWT que devuelve.
+ *
+ * Al recargar la página se recupera la sesión pidiendo /clientes/me con ese
+ * token; si expiró o es inválido, se descarta y se vuelve a "sin sesión".
+ */
 export function AuthProvider({ children }) {
-  const [usuarios, setUsuarios] = useState(() => leerLocalStorage(CLAVE_USUARIOS, USUARIOS_SEED))
-  const [usuarioId, setUsuarioId] = useState(() => leerLocalStorage(CLAVE_SESION, null))
+  const [usuario, setUsuario] = useState(null)
+  // Mientras se valida el token guardado no se sabe si hay sesión o no, y
+  // las pantallas protegidas no deben redirigir a /login todavía.
+  const [cargandoSesion, setCargandoSesion] = useState(Boolean(leerToken()))
 
   useEffect(() => {
-    localStorage.setItem(CLAVE_USUARIOS, JSON.stringify(usuarios))
-  }, [usuarios])
+    if (!leerToken()) return
 
-  useEffect(() => {
-    if (usuarioId) {
-      localStorage.setItem(CLAVE_SESION, JSON.stringify(usuarioId))
-    } else {
-      localStorage.removeItem(CLAVE_SESION)
+    let cancelado = false
+    api
+      .obtenerPerfil()
+      .then((cliente) => {
+        if (!cancelado) setUsuario(cliente)
+      })
+      .catch(() => {
+        // Token vencido, inválido o backend caído: se empieza sin sesión.
+        api.cerrarSesion()
+      })
+      .finally(() => {
+        if (!cancelado) setCargandoSesion(false)
+      })
+
+    return () => {
+      cancelado = true
     }
-  }, [usuarioId])
+  }, [])
 
-  const usuarioGuardado = usuarios.find((u) => u.id === usuarioId) ?? null
-  // Se expone sin la contraseña: nada que la use fuera de este provider
-  // debería siquiera tenerla a mano.
-  const usuario = usuarioGuardado
-    ? { id: usuarioGuardado.id, nombre: usuarioGuardado.nombre, email: usuarioGuardado.email }
-    : null
-
-  const iniciarSesion = ({ email, password }) => {
-    const correo = email.trim().toLowerCase()
-    const encontrado = usuarios.find(
-      (u) => u.email.toLowerCase() === correo && u.password === password,
-    )
-    if (!encontrado) {
-      return { ok: false, error: 'Correo o contraseña incorrectos.' }
+  const iniciarSesion = async ({ email, password }) => {
+    try {
+      setUsuario(await api.iniciarSesion({ email, password }))
+      return { ok: true }
+    } catch (error) {
+      return { ok: false, error: error.message }
     }
-    setUsuarioId(encontrado.id)
-    return { ok: true }
   }
 
-  const registrarUsuario = ({ nombre, email, password }) => {
-    const correo = email.trim().toLowerCase()
-    if (usuarios.some((u) => u.email.toLowerCase() === correo)) {
-      return { ok: false, error: 'Ya existe una cuenta con ese correo.' }
+  const registrarUsuario = async ({ nombre, email, password }) => {
+    try {
+      setUsuario(await api.registrar({ nombre, email, password }))
+      return { ok: true }
+    } catch (error) {
+      return { ok: false, error: error.message }
     }
-    const nuevo = {
-      id: `u${Date.now()}`,
-      nombre: nombre.trim(),
-      email: email.trim(),
-      password,
-    }
-    setUsuarios((actual) => [...actual, nuevo])
-    setUsuarioId(nuevo.id)
-    return { ok: true }
   }
 
   const cerrarSesion = () => {
-    setUsuarioId(null)
+    api.cerrarSesion()
+    setUsuario(null)
   }
 
   return (
-    <AuthContext.Provider value={{ usuario, iniciarSesion, registrarUsuario, cerrarSesion }}>
+    <AuthContext.Provider
+      value={{ usuario, cargandoSesion, iniciarSesion, registrarUsuario, cerrarSesion }}
+    >
       {children}
     </AuthContext.Provider>
   )

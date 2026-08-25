@@ -31,7 +31,7 @@
 }
 
 .cuenta__etiqueta {
-  font-size: 13px;
+  font-size: 0.722rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--accent);
@@ -39,7 +39,7 @@
 }
 
 .cuenta__valor {
-  font-size: 18px;
+  font-size: 1rem;
   color: var(--text-h);
 }
 

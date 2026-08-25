@@ -40,13 +40,13 @@
 
 .modal-confirmacion h3 {
   margin: 0 0 8px;
-  font-size: 20px;
+  font-size: 1.111rem;
 }
 
 .modal-confirmacion p {
   margin: 0;
   color: var(--text);
-  font-size: 14px;
+  font-size: 0.778rem;
 }
 
 .modal-confirmacion__acciones {

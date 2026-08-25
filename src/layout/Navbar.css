@@ -193,7 +193,7 @@
 
 .navbar__sugerencia-categoria {
   flex-shrink: 0;
-  font-size: 12px;
+  font-size: 0.667rem;
   color: var(--accent);
 }
 
@@ -215,7 +215,7 @@
 
   @media (max-width: 1024px) {
     padding: 6px 10px;
-    font-size: 14px;
+    font-size: 0.778rem;
   }
 }
 
@@ -253,7 +253,7 @@
   justify-content: center;
   background: var(--accent);
   color: #fff;
-  font-size: 11px;
+  font-size: 0.611rem;
   font-weight: 700;
   border-radius: 999px;
   line-height: 1;

@@ -2,12 +2,13 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Carousel from './componentes/Carousel'
 import ProductCard from './componentes/ProductCard'
-import { CATEGORIAS, PRODUCTOS } from '../../data/productos'
+import { useCatalogo } from '../../context/CatalogoContext'
 import './Home.css'
 
 const DURACION_TRANSICION_MS = 200
 
 function Home() {
+  const { productos, categorias, cargando, error, reintentar } = useCatalogo()
   // La URL es la única fuente de verdad del filtro: ?categoria=... permite
   // que el dropdown del menú lateral enlace directo a un filtro aplicado,
   // y ?buscar=... conecta la barra de búsqueda del navbar.
@@ -22,7 +23,7 @@ function Home() {
   // aplican sobre los resultados de búsqueda (y viceversa), no se
   // reemplazan entre sí.
   const productosFiltrados = useMemo(() => {
-    let lista = PRODUCTOS
+    let lista = productos
     if (categoriaActiva !== 'Todas') {
       lista = lista.filter((producto) => producto.categoria === categoriaActiva)
     }
@@ -31,7 +32,7 @@ function Home() {
       lista = lista.filter((producto) => producto.nombre.toLowerCase().includes(texto))
     }
     return lista
-  }, [categoriaActiva, busqueda])
+  }, [productos, categoriaActiva, busqueda])
 
   // Al llegar desde una búsqueda del navbar (Enter sin elegir del
   // dropdown), baja la vista hacia el catálogo en vez de dejar al usuario
@@ -69,6 +70,29 @@ function Home() {
     mensajeIntro = `Categoría: ${categoriaActiva}`
   }
 
+  // El catálogo viene de la API, así que hay dos estados nuevos que antes no
+  // existían: mientras carga, y cuando el backend no responde.
+  if (error) {
+    return (
+      <section className="home home--aviso">
+        <h1>No pudimos cargar el catálogo</h1>
+        <p className="home__error">{error}</p>
+        <button type="button" className="filtro" onClick={reintentar}>
+          Reintentar
+        </button>
+      </section>
+    )
+  }
+
+  if (cargando) {
+    return (
+      <section className="home home--aviso">
+        <h1>Catálogo Rosamark</h1>
+        <p>Cargando productos…</p>
+      </section>
+    )
+  }
+
   return (
     <section className="home">
       <Carousel />
@@ -86,7 +110,7 @@ function Home() {
         >
           Todas
         </button>
-        {CATEGORIAS.map((categoria) => (
+        {categorias.map((categoria) => (
           <button
             key={categoria}
             type="button"
