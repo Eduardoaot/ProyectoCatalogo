@@ -75,5 +75,20 @@ export const validarCodigo = asyncHandler(async (req, res) => {
     });
   }
 
-  return enviarOk(res, { valido: true, ...mapear(fila) });
+  // Si una oferta enlaza este codigo con una categoria, el codigo solo
+  // cuenta para esa categoria (asi se define el alcance de "20% en frutas").
+  const [ofertas] = await pool.execute(
+    `SELECT o.ID_categoria, c.nombre_categoria
+       FROM Ofertas o
+       INNER JOIN Categorias c ON c.ID_categoria = o.ID_categoria
+      WHERE o.ID_codigo_descuento = ?
+      LIMIT 1`,
+    [fila.ID_descuento_codigo],
+  );
+
+  return enviarOk(res, {
+    valido: true,
+    ...mapear(fila),
+    categoria: ofertas[0] ?? null,
+  });
 });

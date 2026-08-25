@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { CATEGORIAS } from '../data/productos'
+import { useCatalogo } from '../context/CatalogoContext'
 import { IconoChevron, IconoUsuario, IconoX } from '../common/iconos'
 import './MenuLateral.css'
 
@@ -10,6 +10,7 @@ import './MenuLateral.css'
 // clases CSS (así el cierre también se ve animado, no solo la apertura).
 function MenuLateral({ abierto, onCerrar }) {
   const { usuario, cerrarSesion } = useAuth()
+  const { categorias } = useCatalogo()
   const navigate = useNavigate()
   const [usuarioExpandido, setUsuarioExpandido] = useState(false)
   const [catalogoExpandido, setCatalogoExpandido] = useState(false)
@@ -126,7 +127,7 @@ function MenuLateral({ abierto, onCerrar }) {
             </div>
             {catalogoExpandido && (
               <div className="menu-lateral__filtros">
-                {CATEGORIAS.map((categoria) => (
+                {categorias.map((categoria) => (
                   <Link
                     key={categoria}
                     to={`/?categoria=${encodeURIComponent(categoria)}`}

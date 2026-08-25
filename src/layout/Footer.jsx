@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom'
 import rosaLogo from '../assets/RosaLogo.webp'
-import { CATEGORIAS } from '../data/productos'
+import { useCatalogo } from '../context/CatalogoContext'
 import './Footer.css'
 
 const ANIO_ACTUAL = new Date().getFullYear()
 
 function Footer() {
+  const { categorias, codigos } = useCatalogo()
+
   return (
     <footer className="footer">
       <div className="footer__inner">
@@ -23,7 +25,7 @@ function Footer() {
         <div className="footer__columna">
           <h4>Catálogo</h4>
           <Link to="/">Todos los productos</Link>
-          {CATEGORIAS.slice(0, 4).map((categoria) => (
+          {categorias.slice(0, 4).map((categoria) => (
             <Link key={categoria} to={`/?categoria=${encodeURIComponent(categoria)}`}>
               {categoria}
             </Link>
@@ -40,8 +42,11 @@ function Footer() {
 
         <div className="footer__columna">
           <h4>Códigos de descuento</h4>
-          <span className="footer__codigo">FRESCUERA — 20% en frutas y verduras</span>
-          <span className="footer__codigo">LLEVATEUNAVACA — 2x1 en lácteos</span>
+          {codigos.map((codigo) => (
+            <span key={codigo.texto} className="footer__codigo">
+              {codigo.texto} — {codigo.descripcion}
+            </span>
+          ))}
         </div>
       </div>
 

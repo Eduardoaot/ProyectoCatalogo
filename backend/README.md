@@ -63,9 +63,45 @@ File* y elige `sql/tienda.sql`.
 
 > **Ojo:** el script empieza con `DROP DATABASE IF EXISTS tienda;`. Si ya tienes
 > datos, borra esa línea antes de importar.
->
-> El cliente `demo@correo.com` del `.sql` trae un hash falso a propósito y **no
-> puede iniciar sesión**. Registra un cliente real con `POST /clientes/registro`.
+
+### Cargar el catálogo real de Rosamark
+
+`sql/tienda.sql` solo deja tres productos de ejemplo. Para llenar la base con el
+catálogo completo (los 29 productos que el frontend tenía en `src/data/`),
+importa después [`sql/datos-rosamark.sql`](sql/datos-rosamark.sql):
+
+```bash
+mysql -u root -p < sql/datos-rosamark.sql
+```
+
+O en Workbench, el mismo *Import from Self-Contained File*.
+
+Ese archivo **se genera**, no se escribe a mano. Si editas `src/data/`, vuelve a
+generarlo:
+
+```bash
+npm run seed:sql
+```
+
+El generador ([`scripts/generar-seed.mjs`](scripts/generar-seed.mjs)) lee
+`src/data/productos.js`, `ofertas.js` y `usuarios.js`, deduce categorías y
+unidades, traduce los `precioOriginal` a descuentos de monto fijo, y hashea con
+bcrypt las contraseñas de los usuarios de prueba. Los `ID_producto` se conservan
+iguales a los `id` que tenían en `src/data`.
+
+> El seed **vacía las tablas** antes de insertar, órdenes y clientes incluidos.
+> Es un seed de desarrollo.
+
+Usuarios que quedan listos para entrar:
+
+| Correo | Contraseña |
+| --- | --- |
+| `diana@rosamark.com` | `rosamark123` |
+| `eduardo@rosamark.com` | `rosamark123` |
+| `demo@rosamark.com` | `demo1234` |
+
+> El cliente `demo@correo.com` que trae `sql/tienda.sql` tiene un hash falso a
+> propósito y **no puede iniciar sesión**; el seed de Rosamark lo reemplaza.
 
 ## 5. Levantar el servidor
 
@@ -97,8 +133,10 @@ backend/
 ├── controllers/            # Lógica de cada recurso
 ├── middlewares/            # auth (JWT), validate, notFound, errorHandler
 ├── utils/                  # Errores, respuestas, reglas de descuento, CRUD genérico
-├── sql/tienda.sql          # Esquema + datos de ejemplo
-└── docs/                   # Ejemplos curl y colección de Postman
+├── scripts/generar-seed.mjs   # Convierte src/data/ en SQL (npm run seed:sql)
+├── sql/tienda.sql             # Esquema + datos de ejemplo
+├── sql/datos-rosamark.sql     # Catálogo real (generado)
+└── docs/                      # Ejemplos curl y colección de Postman
 ```
 
 ## 7. Formato de respuesta
@@ -172,7 +210,7 @@ Cada producto llega con `categoria`, `unidad`, `descuento` (incluye `vigente`) y
 | POST | `/clientes/login` | no | Devuelve `{ cliente, token }` |
 | GET | `/clientes/me` | sí | Perfil del token |
 | GET | `/clientes/:id/ordenes` | sí | Órdenes del cliente (solo las propias) |
-| POST | `/ordenes` | sí | Crea la orden dentro de una transacción |
+| POST | `/ordenes` | sí | Crea la orden dentro de una transacción (acepta `texto_codigo`) |
 | GET | `/ordenes/:id` | sí | Orden con su detalle (solo las propias) |
 
 El token se manda en el encabezado:
@@ -220,6 +258,21 @@ alcanza para un grupo completo, no hay descuento.
    `Maestra_orden_productos`, se descuenta el stock con
    `WHERE cantidad_producto >= ?` (última red contra stock negativo) y se
    actualiza `total_orden`.
+
+### Códigos de descuento en la orden
+
+`POST /ordenes` acepta un `texto_codigo` opcional. El código se valida contra la
+base (que exista y esté vigente) y se aplica **después** de los descuentos
+propios de cada producto.
+
+El alcance del código sale de la tabla `Ofertas`: si una oferta enlaza ese código
+con una categoría, solo cuentan los renglones de esa categoría. Así es como
+`FRESCUERA` descuenta 20% únicamente en frutas y verduras y `LLEVATEUNAVACA`
+aplica el 2x1 solo a lácteos. Si ninguna oferta lo limita, aplica a toda la orden.
+
+El importe **siempre lo calcula el servidor**: lo que mande el navegador no
+influye en el total. El frontend hace la misma cuenta solo para mostrar el
+desglose antes de confirmar.
 
 **Sobre el total:** `precio_orden_producto` guarda el precio de lista congelado,
 sin descuento, porque el esquema no tiene una columna para el descuento del

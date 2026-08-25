@@ -1,16 +1,27 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import ImagenProducto from '../../common/ImagenProducto'
+import { useCatalogo } from '../../context/CatalogoContext'
 import { useTienda } from '../../context/TiendaContext'
-import { PRODUCTOS } from '../../data/productos'
 import './ProductoDetalle.css'
 
 function ProductoDetalle() {
   const { id } = useParams()
-  const producto = PRODUCTOS.find((item) => item.id === Number(id))
+  const { buscarProducto, cargando } = useCatalogo()
+  const producto = buscarProducto(id)
   const { agregarAlCarrito, obtenerStockRestante } = useTienda()
   const [cantidad, setCantidad] = useState(1)
   const [errorCantidad, setErrorCantidad] = useState('')
+
+  // Sin esto, al entrar directo a /producto/3 se vería "Producto no
+  // encontrado" durante el instante en que el catálogo todavía viene en camino.
+  if (cargando) {
+    return (
+      <section className="producto-detalle">
+        <p>Cargando producto…</p>
+      </section>
+    )
+  }
 
   if (!producto) {
     return (

@@ -10,9 +10,19 @@ export const app = express();
 
 // CORS_ORIGIN admite "*" o una lista separada por comas.
 const origenes = env.corsOrigin.split(',').map((o) => o.trim()).filter(Boolean);
+const esLocal = (origen) => /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origen);
+
 app.use(
   cors({
-    origin: origenes.includes('*') ? true : origenes,
+    origin(origen, callback) {
+      // Peticiones sin Origin (curl, Postman, el propio servidor) pasan.
+      if (!origen) return callback(null, true);
+      if (origenes.includes('*') || origenes.includes(origen)) return callback(null, true);
+      // En desarrollo, cualquier puerto de localhost: Vite cambia de puerto
+      // solo si el 5173 esta ocupado, y no vale la pena romper la app por eso.
+      if (env.nodeEnv !== 'production' && esLocal(origen)) return callback(null, true);
+      return callback(new Error(`Origen no permitido por CORS: ${origen}`));
+    },
     credentials: true,
   }),
 );

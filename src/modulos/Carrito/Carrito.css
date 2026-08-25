@@ -348,3 +348,11 @@
 .carrito__generar:hover {
   filter: brightness(1.08);
 }
+
+/* Error devuelto por el servidor al intentar generar la orden
+   (por ejemplo, si otro cliente se llevó el stock mientras tanto). */
+.carrito__error-orden {
+  margin-top: 0.75rem;
+  color: #b3261e;
+  font-size: 0.9rem;
+}

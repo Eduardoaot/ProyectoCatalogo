@@ -321,6 +321,36 @@ curl -X POST http://localhost:3000/ordenes \
   }'
 ```
 
+### Crear una orden con código de descuento
+
+`texto_codigo` es opcional. Se valida contra la base y se aplica sobre los
+renglones que le corresponden (el alcance por categoría se explica en el README):
+
+```bash
+curl -X POST http://localhost:3000/ordenes   -H "Content-Type: application/json"   -H "Authorization: Bearer $TOKEN"   -d '{
+    "items": [ { "ID_producto": 1, "cantidad": 3 } ],
+    "texto_codigo": "FRESCUERA"
+  }'
+```
+
+La respuesta trae un bloque `codigo` con lo que se descontó:
+
+```json
+{
+  "codigo": {
+    "texto_codigo": "FRESCUERA",
+    "etiqueta_codigo": "FRESCUERA",
+    "ID_categoria": 1,
+    "descuento_aplicado": 0.72,
+    "detalle": "20% sobre 3.6"
+  }
+}
+```
+
+Si el código no existe responde `404`, y si no está vigente `409`; en ambos casos
+se hace `rollback` y la orden no se crea.
+
+
 Respuesta (`201`), con el precio congelado y el descuento aplicado:
 
 ```json

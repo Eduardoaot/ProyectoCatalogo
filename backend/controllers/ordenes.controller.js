@@ -2,7 +2,14 @@ import { conTransaccion, pool } from '../db.js';
 import { ApiError } from '../utils/ApiError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { enviarCreado, enviarOk } from '../utils/respuesta.js';
-import { calcularRenglon, hoyISO, mapearDescuento, redondear } from '../utils/descuentos.js';
+import {
+  calcularDescuentoCodigo,
+  calcularRenglon,
+  estaVigente,
+  hoyISO,
+  mapearDescuento,
+  redondear,
+} from '../utils/descuentos.js';
 
 /**
  * Junta los renglones repetidos del carrito (si mandan dos veces el mismo
@@ -39,16 +46,59 @@ async function leerDescuento(conn, idDescuento) {
 }
 
 /**
+ * Busca un codigo de descuento vigente y hasta donde alcanza.
+ *
+ * El alcance sale de la tabla Ofertas: si una oferta enlaza este codigo con
+ * una categoria, el codigo solo cuenta para los productos de esa categoria
+ * (asi funcionan "20% en frutas y verduras" o "2x1 en lacteos"). Si ninguna
+ * oferta lo limita, aplica a la orden completa.
+ */
+async function leerCodigo(conn, textoCodigo, fecha) {
+  const texto = String(textoCodigo).trim();
+
+  const [filas] = await conn.execute(
+    `SELECT dc.ID_descuento_codigo, dc.texto_codigo, dc.etiqueta_codigo, dc.descripcion_codigo,
+            dv.ID_descuento, dv.ID_descuento_tipo, dt.tipo_descuento, dv.nombre_descuento,
+            dv.descuento_valor, dv.cantidad_lleva, dv.cantidad_paga,
+            dv.fecha_inicio, dv.fecha_final
+       FROM Descuentos_codigo dc
+       INNER JOIN Descuentos_valores dv ON dv.ID_descuento      = dc.ID_descuento
+       INNER JOIN Descuentos_tipos   dt ON dt.ID_descuento_tipo = dv.ID_descuento_tipo
+      WHERE dc.texto_codigo = ?`,
+    [texto],
+  );
+
+  if (filas.length === 0) throw ApiError.notFound(`El codigo "${texto}" no existe`);
+  const codigo = filas[0];
+  if (!estaVigente(codigo, fecha)) {
+    throw ApiError.conflict(`El codigo "${texto}" no esta vigente`);
+  }
+
+  const [ofertas] = await conn.execute(
+    `SELECT ID_categoria FROM Ofertas
+      WHERE ID_codigo_descuento = ? AND ID_categoria IS NOT NULL
+      LIMIT 1`,
+    [codigo.ID_descuento_codigo],
+  );
+
+  return { codigo, ID_categoria: ofertas[0]?.ID_categoria ?? null };
+}
+
+/**
  * POST /ordenes
- * Cuerpo: { items: [{ ID_producto, cantidad }] }
+ * Cuerpo: { items: [{ ID_producto, cantidad }], texto_codigo? }
  * El ID_cliente sale del JWT, nunca del body.
  *
  * Todo ocurre dentro de una transaccion: si un producto no existe o no hay
  * stock, se hace rollback y no queda ni la cabecera ni el descuento de stock.
+ *
+ * El total SIEMPRE se calcula aqui con los precios y descuentos de la base:
+ * nada de lo que mande el navegador influye en el importe.
  */
 export const crearOrden = asyncHandler(async (req, res) => {
   const idCliente = req.cliente.ID_cliente;
   const items = normalizarItems(req.body.items);
+  const textoCodigo = req.body.texto_codigo?.trim() || null;
   const fecha = hoyISO();
 
   const resultado = await conTransaccion(async (conn) => {
@@ -59,7 +109,8 @@ export const crearOrden = asyncHandler(async (req, res) => {
       // FOR UPDATE bloquea la fila hasta el commit: dos compras del mismo
       // producto no pueden leer el mismo stock y venderlo dos veces.
       const [productos] = await conn.execute(
-        `SELECT ID_producto, nombre_producto, precio_producto, cantidad_producto, ID_Descuento
+        `SELECT ID_producto, ID_categoria, nombre_producto, precio_producto,
+                cantidad_producto, ID_Descuento
            FROM Productos WHERE ID_producto = ? FOR UPDATE`,
         [item.ID_producto],
       );
@@ -89,6 +140,7 @@ export const crearOrden = asyncHandler(async (req, res) => {
       total = redondear(total + calculo.total);
       renglones.push({
         ID_producto: producto.ID_producto,
+        ID_categoria: producto.ID_categoria,
         nombre_producto: producto.nombre_producto,
         cantidad_orden_producto: item.cantidad,
         // El precio se congela: se guarda el precio de lista del momento de la compra.
@@ -100,6 +152,32 @@ export const crearOrden = asyncHandler(async (req, res) => {
           ? { ...mapearDescuento(descuento, fecha), detalle: calculo.detalle }
           : null,
       });
+    }
+
+    // El codigo se aplica sobre los renglones ya con su descuento de producto.
+    let codigoAplicado = null;
+    if (textoCodigo) {
+      const { codigo, ID_categoria } = await leerCodigo(conn, textoCodigo, fecha);
+      const calculo = calcularDescuentoCodigo({
+        renglones: renglones.map((r) => ({
+          ID_categoria: r.ID_categoria,
+          cantidad: r.cantidad_orden_producto,
+          total: r.total_renglon,
+        })),
+        descuento: codigo,
+        ID_categoria,
+        fechaISO: fecha,
+      });
+
+      total = redondear(Math.max(total - calculo.monto, 0));
+      codigoAplicado = {
+        texto_codigo: codigo.texto_codigo,
+        etiqueta_codigo: codigo.etiqueta_codigo,
+        descripcion_codigo: codigo.descripcion_codigo,
+        ID_categoria,
+        descuento_aplicado: calculo.monto,
+        detalle: calculo.detalle,
+      };
     }
 
     const [cabecera] = await conn.execute(
@@ -151,6 +229,7 @@ export const crearOrden = asyncHandler(async (req, res) => {
       total_orden: total,
       subtotal,
       descuento_total: redondear(subtotal - total),
+      codigo: codigoAplicado,
       productos: renglones,
     };
   });

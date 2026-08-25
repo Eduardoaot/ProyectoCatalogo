@@ -14,6 +14,7 @@ function Login() {
   const location = useLocation()
 
   const [modo, setModo] = useState('login') // 'login' | 'registro'
+  const [enviando, setEnviando] = useState(false)
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -21,30 +22,32 @@ function Login() {
 
   const destino = location.state?.from || '/'
 
-  const handleSubmit = (e) => {
+  // Registro e inicio de sesión pegan a la API; la contraseña se hashea
+  // con bcrypt en el servidor y aquí solo se guarda el token que devuelve.
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    if (enviando) return
 
-    if (modo === 'registro') {
-      if (!nombre.trim() || !email.trim() || !password) {
-        setError('Completa nombre, correo y contraseña.')
-        return
-      }
-      const resultado = registrarUsuario({ nombre, email, password })
-      if (!resultado.ok) {
-        setError(resultado.error)
-        return
-      }
-    } else {
-      if (!email.trim() || !password) {
-        setError('Ingresa tu correo y contraseña.')
-        return
-      }
-      const resultado = iniciarSesion({ email, password })
-      if (!resultado.ok) {
-        setError(resultado.error)
-        return
-      }
+    if (modo === 'registro' && !nombre.trim()) {
+      setError('Completa nombre, correo y contraseña.')
+      return
+    }
+    if (!email.trim() || !password) {
+      setError('Ingresa tu correo y contraseña.')
+      return
+    }
+
+    setEnviando(true)
+    const resultado =
+      modo === 'registro'
+        ? await registrarUsuario({ nombre, email, password })
+        : await iniciarSesion({ email, password })
+    setEnviando(false)
+
+    if (!resultado.ok) {
+      setError(resultado.error)
+      return
     }
 
     navigate(destino, { replace: true })
@@ -78,8 +81,8 @@ function Login() {
         <h1>{modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta'}</h1>
         <p className="login__nota">
           {modo === 'login'
-            ? 'Demostración: prueba con diana@rosamark.com / rosamark123, o crea tu propia cuenta en la pestaña "Registrarse".'
-            : 'Solo se guarda en este navegador (no hay servidor real detrás).'}
+            ? 'Prueba con diana@rosamark.com / rosamark123, o crea tu propia cuenta en la pestaña "Registrarse".'
+            : 'Tu cuenta se guarda en la base de datos; la contraseña se almacena hasheada (mínimo 8 caracteres).'}
         </p>
 
         <form onSubmit={handleSubmit} className="login__formulario">
@@ -121,8 +124,12 @@ function Login() {
 
           {error && <p className="login__error">{error}</p>}
 
-          <button type="submit" className="login__boton">
-            {modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta'}
+          <button type="submit" className="login__boton" disabled={enviando}>
+            {enviando
+              ? 'Enviando…'
+              : modo === 'login'
+                ? 'Iniciar sesión'
+                : 'Crear cuenta'}
           </button>
         </form>
       </div>

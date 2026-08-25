@@ -81,3 +81,17 @@
   font-weight: 700;
   color: var(--text-h);
 }
+
+/* Desglose de la orden: los renglones guardan el precio de lista congelado,
+   y los descuentos se muestran aparte para que el total cuadre. */
+.ordenes__orden-linea {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 0.15rem 0;
+  opacity: 0.85;
+}
+
+.ordenes__orden-linea--descuento {
+  color: #c2185b;
+}

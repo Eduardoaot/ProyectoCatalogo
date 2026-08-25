@@ -100,8 +100,8 @@ export function calcularRenglon({ precio, cantidad, descuento = null, fechaISO =
 
   const tipo = clasificarTipo(descuento.tipo_descuento);
   const valor = Number(descuento.descuento_valor ?? 0);
-  let total = subtotal;
-  let detalle = null;
+  let total;
+  let detalle;
 
   if (tipo === TIPO_PORCENTAJE) {
     const porcentaje = Math.min(Math.max(valor, 0), 100);
@@ -136,6 +136,77 @@ export function calcularRenglon({ precio, cantidad, descuento = null, fechaISO =
     tipo_aplicado: tipo,
     detalle,
   };
+}
+
+/**
+ * Descuento de un codigo aplicado sobre la orden completa.
+ *
+ * Se calcula DESPUES de los descuentos propios de cada producto: recibe los
+ * renglones ya resueltos y trabaja sobre su total.
+ *
+ * @param {object} opciones
+ * @param {Array} opciones.renglones  [{ ID_categoria, cantidad, total }]
+ * @param {object} opciones.descuento Fila de Descuentos_valores + tipo_descuento.
+ * @param {number|null} [opciones.ID_categoria] Si el codigo esta limitado a una
+ *        categoria (via la tabla Ofertas), solo cuentan los renglones de esa
+ *        categoria. Si es null, aplica a toda la orden.
+ * @returns {{monto:number, detalle:string|null}}
+ */
+export function calcularDescuentoCodigo({
+  renglones,
+  descuento,
+  ID_categoria = null,
+  fechaISO = hoyISO(),
+}) {
+  const nulo = { monto: 0, detalle: null };
+  if (!descuento || !estaVigente(descuento, fechaISO)) return nulo;
+
+  const elegibles = ID_categoria
+    ? renglones.filter((r) => r.ID_categoria === ID_categoria)
+    : renglones;
+  if (elegibles.length === 0) return nulo;
+
+  const baseElegible = redondear(elegibles.reduce((acc, r) => acc + r.total, 0));
+  if (baseElegible <= 0) return nulo;
+
+  const tipo = clasificarTipo(descuento.tipo_descuento);
+  const valor = Number(descuento.descuento_valor ?? 0);
+
+  if (tipo === TIPO_PORCENTAJE) {
+    const porcentaje = Math.min(Math.max(valor, 0), 100);
+    if (porcentaje === 0) return nulo;
+    return {
+      monto: redondear(baseElegible * (porcentaje / 100)),
+      detalle: `${porcentaje}% sobre ${redondear(baseElegible)}`,
+    };
+  }
+
+  if (tipo === TIPO_MONTO_FIJO) {
+    const monto = Math.min(Math.max(valor, 0), baseElegible);
+    if (monto === 0) return nulo;
+    return { monto: redondear(monto), detalle: `-${redondear(monto)} sobre la orden` };
+  }
+
+  if (tipo === TIPO_NXM) {
+    const nxm = leerNxM(descuento);
+    if (!nxm) return nulo;
+
+    let monto = 0;
+    for (const renglon of elegibles) {
+      const grupos = Math.floor(renglon.cantidad / nxm.lleva);
+      if (grupos < 1) continue;
+      // Precio unitario ya efectivo (con el descuento propio del producto).
+      const unitario = renglon.total / renglon.cantidad;
+      monto += grupos * (nxm.lleva - nxm.paga) * unitario;
+    }
+    if (monto <= 0) return nulo;
+    return {
+      monto: redondear(Math.min(monto, baseElegible)),
+      detalle: `${nxm.lleva}x${nxm.paga} aplicado a los productos elegibles`,
+    };
+  }
+
+  return nulo;
 }
 
 /** Precio unitario ya con descuento, util para mostrar el catalogo. */

@@ -30,6 +30,9 @@ function Carrito() {
 
   const [codigoTexto, setCodigoTexto] = useState('')
   const [mensajeCodigo, setMensajeCodigo] = useState('')
+  const [aplicandoCodigo, setAplicandoCodigo] = useState(false)
+  const [generando, setGenerando] = useState(false)
+  const [errorOrden, setErrorOrden] = useState('')
   // null, { tipo: 'vaciar' } o { tipo: 'eliminar', productoId, nombre }
   const [confirmacion, setConfirmacion] = useState(null)
 
@@ -42,10 +45,14 @@ function Carrito() {
     setConfirmacion(null)
   }
 
-  const handleAplicarCodigo = (e) => {
+  // Ahora el código se valida contra la base (existencia y vigencia), así
+  // que la operación es asíncrona y puede fallar por red.
+  const handleAplicarCodigo = async (e) => {
     e.preventDefault()
-    if (!codigoTexto.trim()) return
-    const resultado = aplicarCodigo(codigoTexto)
+    if (!codigoTexto.trim() || aplicandoCodigo) return
+    setAplicandoCodigo(true)
+    const resultado = await aplicarCodigo(codigoTexto)
+    setAplicandoCodigo(false)
     if (resultado.ok) {
       setMensajeCodigo('')
       setCodigoTexto('')
@@ -58,14 +65,25 @@ function Carrito() {
   // registrarse) y de vuelta al carrito — el carrito no se toca en ningún
   // momento de este viaje (ver TiendaProvider: solo se fusiona/reemplaza al
   // cambiar de usuario, nunca se vacía por navegar).
-  const handleGenerarOrden = () => {
+  // La orden se crea en el servidor dentro de una transacción: si otro
+  // cliente se llevó el stock mientras tanto, el backend responde con el
+  // error y aquí no se navega a ningún lado.
+  const handleGenerarOrden = async () => {
     if (!usuario) {
       navigate('/login', { state: { from: '/carrito' } })
       return
     }
-    const orden = generarOrden()
-    if (orden) {
+    if (generando) return
+
+    setErrorOrden('')
+    setGenerando(true)
+    const resultado = await generarOrden()
+    setGenerando(false)
+
+    if (resultado.ok) {
       navigate('/ordenes')
+    } else {
+      setErrorOrden(resultado.error)
     }
   }
 
@@ -183,8 +201,11 @@ function Carrito() {
                   placeholder="Ej. FRESCUERA"
                   value={codigoTexto}
                   onChange={(e) => setCodigoTexto(e.target.value)}
+                  disabled={aplicandoCodigo}
                 />
-                <button type="submit">Aplicar</button>
+                <button type="submit" disabled={aplicandoCodigo}>
+                  {aplicandoCodigo ? 'Validando…' : 'Aplicar'}
+                </button>
               </div>
             )}
             {mensajeCodigo && <p className="carrito__codigo-mensaje">{mensajeCodigo}</p>}
@@ -219,9 +240,15 @@ function Carrito() {
             <span>Total</span>
             <span>${total.toFixed(2)}</span>
           </div>
-          <button type="button" className="carrito__generar" onClick={handleGenerarOrden}>
-            Generar orden
+          <button
+            type="button"
+            className="carrito__generar"
+            onClick={handleGenerarOrden}
+            disabled={generando}
+          >
+            {generando ? 'Generando orden…' : 'Generar orden'}
           </button>
+          {errorOrden && <p className="carrito__error-orden">{errorOrden}</p>}
         </aside>
       </div>
 

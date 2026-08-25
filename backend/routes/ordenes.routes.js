@@ -13,6 +13,14 @@ router.post(
   '/',
   [
     body('items').isArray({ min: 1 }).withMessage('items debe ser un arreglo con al menos un producto'),
+    body('texto_codigo')
+      .optional({ nullable: true, checkFalsy: true })
+      .isString()
+      .withMessage('texto_codigo debe ser texto')
+      .bail()
+      .trim()
+      .isLength({ max: 50 })
+      .withMessage('texto_codigo admite maximo 50 caracteres'),
     body('items.*.ID_producto').isInt({ min: 1 }).withMessage('Cada item necesita un ID_producto entero positivo'),
     body('items.*.cantidad')
       .isFloat({ gt: 0 })

@@ -1,14 +1,30 @@
 {
   "info": {
     "name": "Rosamark API v3.0",
-    "description": "API REST de e-commerce (Node.js + Express + MySQL). Ejecuta primero 'Clientes / Registro' o 'Clientes / Login': el token se guarda solo en la variable {{token}} de la coleccion.",
+    "description": "API REST de e-commerce (Node.js + Express + MySQL). Ejecuta primero 'Clientes / Login': el token se guarda solo en la variable {{token}}. Las credenciales de ejemplo salen del seed sql/datos-rosamark.sql (diana@rosamark.com / rosamark123).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    { "key": "baseUrl", "value": "http://localhost:3000", "type": "string" },
-    { "key": "token", "value": "", "type": "string" },
-    { "key": "ID_cliente", "value": "1", "type": "string" },
-    { "key": "ID_orden", "value": "1", "type": "string" }
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "ID_cliente",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "ID_orden",
+      "value": "1",
+      "type": "string"
+    }
   ],
   "item": [
     {
@@ -19,7 +35,15 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/health", "host": ["{{baseUrl}}"], "path": ["health"] }
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
           }
         },
         {
@@ -27,7 +51,15 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/api", "host": ["{{baseUrl}}"], "path": ["api"] }
+            "url": {
+              "raw": "{{baseUrl}}/api",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api"
+              ]
+            }
           }
         }
       ]
@@ -54,12 +86,26 @@
           ],
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre_cliente\": \"Ana Perez\",\n  \"correo_cliente\": \"ana@correo.com\",\n  \"contrasena_cliente\": \"MiClave12345\"\n}"
             },
-            "url": { "raw": "{{baseUrl}}/clientes/registro", "host": ["{{baseUrl}}"], "path": ["clientes", "registro"] }
+            "url": {
+              "raw": "{{baseUrl}}/clientes/registro",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "registro"
+              ]
+            }
           }
         },
         {
@@ -81,31 +127,70 @@
           ],
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"correo_cliente\": \"ana@correo.com\",\n  \"contrasena_cliente\": \"MiClave12345\"\n}"
+              "raw": "{\n  \"correo_cliente\": \"diana@rosamark.com\",\n  \"contrasena_cliente\": \"rosamark123\"\n}"
             },
-            "url": { "raw": "{{baseUrl}}/clientes/login", "host": ["{{baseUrl}}"], "path": ["clientes", "login"] }
+            "url": {
+              "raw": "{{baseUrl}}/clientes/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "login"
+              ]
+            }
           }
         },
         {
           "name": "Perfil (me)",
           "request": {
             "method": "GET",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-            "url": { "raw": "{{baseUrl}}/clientes/me", "host": ["{{baseUrl}}"], "path": ["clientes", "me"] }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "me"
+              ]
+            }
           }
         },
         {
           "name": "Ordenes del cliente",
           "request": {
             "method": "GET",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
             "url": {
               "raw": "{{baseUrl}}/clientes/{{ID_cliente}}/ordenes",
-              "host": ["{{baseUrl}}"],
-              "path": ["clientes", "{{ID_cliente}}", "ordenes"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "{{ID_cliente}}",
+                "ordenes"
+              ]
             }
           }
         }
@@ -119,7 +204,15 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/categorias", "host": ["{{baseUrl}}"], "path": ["categorias"] }
+            "url": {
+              "raw": "{{baseUrl}}/categorias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categorias"
+              ]
+            }
           }
         },
         {
@@ -127,25 +220,67 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/categorias/1", "host": ["{{baseUrl}}"], "path": ["categorias", "1"] }
+            "url": {
+              "raw": "{{baseUrl}}/categorias/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categorias",
+                "1"
+              ]
+            }
           }
         },
         {
           "name": "Crear",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"nombre_categoria\": \"Panaderia\"\n}" },
-            "url": { "raw": "{{baseUrl}}/categorias", "host": ["{{baseUrl}}"], "path": ["categorias"] }
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_categoria\": \"Panaderia\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/categorias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categorias"
+              ]
+            }
           }
         },
         {
           "name": "Editar",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"nombre_categoria\": \"Panaderia y tortillas\"\n}" },
-            "url": { "raw": "{{baseUrl}}/categorias/4", "host": ["{{baseUrl}}"], "path": ["categorias", "4"] }
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_categoria\": \"Panaderia y tortillas\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/categorias/4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categorias",
+                "4"
+              ]
+            }
           }
         },
         {
@@ -153,7 +288,16 @@
           "request": {
             "method": "DELETE",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/categorias/4", "host": ["{{baseUrl}}"], "path": ["categorias", "4"] }
+            "url": {
+              "raw": "{{baseUrl}}/categorias/4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categorias",
+                "4"
+              ]
+            }
           }
         }
       ]
@@ -166,7 +310,15 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/unidades", "host": ["{{baseUrl}}"], "path": ["unidades"] }
+            "url": {
+              "raw": "{{baseUrl}}/unidades",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "unidades"
+              ]
+            }
           }
         },
         {
@@ -174,25 +326,67 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/unidades/1", "host": ["{{baseUrl}}"], "path": ["unidades", "1"] }
+            "url": {
+              "raw": "{{baseUrl}}/unidades/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "unidades",
+                "1"
+              ]
+            }
           }
         },
         {
           "name": "Crear",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"nombre_unidad\": \"paquete\"\n}" },
-            "url": { "raw": "{{baseUrl}}/unidades", "host": ["{{baseUrl}}"], "path": ["unidades"] }
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_unidad\": \"paquete\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/unidades",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "unidades"
+              ]
+            }
           }
         },
         {
           "name": "Editar",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"nombre_unidad\": \"paquete de 6\"\n}" },
-            "url": { "raw": "{{baseUrl}}/unidades/4", "host": ["{{baseUrl}}"], "path": ["unidades", "4"] }
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_unidad\": \"paquete de 6\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/unidades/4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "unidades",
+                "4"
+              ]
+            }
           }
         },
         {
@@ -200,7 +394,16 @@
           "request": {
             "method": "DELETE",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/unidades/4", "host": ["{{baseUrl}}"], "path": ["unidades", "4"] }
+            "url": {
+              "raw": "{{baseUrl}}/unidades/4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "unidades",
+                "4"
+              ]
+            }
           }
         }
       ]
@@ -213,7 +416,15 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/productos", "host": ["{{baseUrl}}"], "path": ["productos"] }
+            "url": {
+              "raw": "{{baseUrl}}/productos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "productos"
+              ]
+            }
           }
         },
         {
@@ -223,9 +434,18 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/productos?categoria=2",
-              "host": ["{{baseUrl}}"],
-              "path": ["productos"],
-              "query": [{ "key": "categoria", "value": "2" }]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "productos"
+              ],
+              "query": [
+                {
+                  "key": "categoria",
+                  "value": "2"
+                }
+              ]
             }
           }
         },
@@ -236,9 +456,18 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/productos?destacado=true",
-              "host": ["{{baseUrl}}"],
-              "path": ["productos"],
-              "query": [{ "key": "destacado", "value": "true" }]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "productos"
+              ],
+              "query": [
+                {
+                  "key": "destacado",
+                  "value": "true"
+                }
+              ]
             }
           }
         },
@@ -249,12 +478,25 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/productos?q=arroz&limit=10&offset=0",
-              "host": ["{{baseUrl}}"],
-              "path": ["productos"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "productos"
+              ],
               "query": [
-                { "key": "q", "value": "arroz" },
-                { "key": "limit", "value": "10" },
-                { "key": "offset", "value": "0" }
+                {
+                  "key": "q",
+                  "value": "arroz"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
               ]
             }
           }
@@ -264,28 +506,67 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/productos/1", "host": ["{{baseUrl}}"], "path": ["productos", "1"] }
+            "url": {
+              "raw": "{{baseUrl}}/productos/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "productos",
+                "1"
+              ]
+            }
           }
         },
         {
           "name": "Crear",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"ID_categoria\": 1,\n  \"ID_unidad\": 1,\n  \"ID_Descuento\": 1,\n  \"nombre_producto\": \"Frijol negro 1kg\",\n  \"precio_producto\": 34.90,\n  \"imagen\": \"/img/frijol.webp\",\n  \"descripcion\": \"Frijol negro seleccionado\",\n  \"destacado\": true,\n  \"cantidad_producto\": 80,\n  \"factor_pieza\": 1\n}"
             },
-            "url": { "raw": "{{baseUrl}}/productos", "host": ["{{baseUrl}}"], "path": ["productos"] }
+            "url": {
+              "raw": "{{baseUrl}}/productos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "productos"
+              ]
+            }
           }
         },
         {
           "name": "Editar",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"precio_producto\": 32.50,\n  \"destacado\": false\n}" },
-            "url": { "raw": "{{baseUrl}}/productos/4", "host": ["{{baseUrl}}"], "path": ["productos", "4"] }
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"precio_producto\": 32.50,\n  \"destacado\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/productos/4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "productos",
+                "4"
+              ]
+            }
           }
         },
         {
@@ -293,7 +574,16 @@
           "request": {
             "method": "DELETE",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/productos/4", "host": ["{{baseUrl}}"], "path": ["productos", "4"] }
+            "url": {
+              "raw": "{{baseUrl}}/productos/4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "productos",
+                "4"
+              ]
+            }
           }
         }
       ]
@@ -306,25 +596,69 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/descuentos/tipos", "host": ["{{baseUrl}}"], "path": ["descuentos", "tipos"] }
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/tipos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "tipos"
+              ]
+            }
           }
         },
         {
           "name": "Tipos - Crear",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"tipo_descuento\": \"porcentaje_temporada\"\n}" },
-            "url": { "raw": "{{baseUrl}}/descuentos/tipos", "host": ["{{baseUrl}}"], "path": ["descuentos", "tipos"] }
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo_descuento\": \"porcentaje_temporada\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/tipos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "tipos"
+              ]
+            }
           }
         },
         {
           "name": "Tipos - Editar",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"tipo_descuento\": \"porcentaje_verano\"\n}" },
-            "url": { "raw": "{{baseUrl}}/descuentos/tipos/4", "host": ["{{baseUrl}}"], "path": ["descuentos", "tipos", "4"] }
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo_descuento\": \"porcentaje_verano\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/tipos/4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "tipos",
+                "4"
+              ]
+            }
           }
         },
         {
@@ -332,7 +666,17 @@
           "request": {
             "method": "DELETE",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/descuentos/tipos/4", "host": ["{{baseUrl}}"], "path": ["descuentos", "tipos", "4"] }
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/tipos/4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "tipos",
+                "4"
+              ]
+            }
           }
         },
         {
@@ -340,40 +684,95 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/descuentos/valores", "host": ["{{baseUrl}}"], "path": ["descuentos", "valores"] }
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/valores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "valores"
+              ]
+            }
           }
         },
         {
           "name": "Valores - Crear porcentaje",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"ID_descuento_tipo\": 1,\n  \"nombre_descuento\": \"15% de temporada\",\n  \"descuento_valor\": 15,\n  \"fecha_inicio\": \"2026-08-01\",\n  \"fecha_final\": \"2026-09-30\"\n}"
             },
-            "url": { "raw": "{{baseUrl}}/descuentos/valores", "host": ["{{baseUrl}}"], "path": ["descuentos", "valores"] }
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/valores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "valores"
+              ]
+            }
           }
         },
         {
           "name": "Valores - Crear NxM",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"ID_descuento_tipo\": 3,\n  \"nombre_descuento\": \"2x1 en limpieza\",\n  \"descuento_valor\": 0,\n  \"cantidad_lleva\": 2,\n  \"cantidad_paga\": 1,\n  \"fecha_inicio\": \"2026-08-01\",\n  \"fecha_final\": \"2026-12-31\"\n}"
             },
-            "url": { "raw": "{{baseUrl}}/descuentos/valores", "host": ["{{baseUrl}}"], "path": ["descuentos", "valores"] }
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/valores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "valores"
+              ]
+            }
           }
         },
         {
           "name": "Valores - Editar",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"descuento_valor\": 20\n}" },
-            "url": { "raw": "{{baseUrl}}/descuentos/valores/3", "host": ["{{baseUrl}}"], "path": ["descuentos", "valores", "3"] }
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"descuento_valor\": 20\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/valores/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "valores",
+                "3"
+              ]
+            }
           }
         },
         {
@@ -381,7 +780,17 @@
           "request": {
             "method": "DELETE",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/descuentos/valores/3", "host": ["{{baseUrl}}"], "path": ["descuentos", "valores", "3"] }
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/valores/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "valores",
+                "3"
+              ]
+            }
           }
         },
         {
@@ -389,28 +798,69 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/descuentos/codigos", "host": ["{{baseUrl}}"], "path": ["descuentos", "codigos"] }
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/codigos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "codigos"
+              ]
+            }
           }
         },
         {
           "name": "Codigos - Crear",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"ID_descuento\": 1,\n  \"texto_codigo\": \"VERANO15\",\n  \"etiqueta_codigo\": \"15% de verano\",\n  \"descripcion_codigo\": \"Valido en toda la tienda\"\n}"
             },
-            "url": { "raw": "{{baseUrl}}/descuentos/codigos", "host": ["{{baseUrl}}"], "path": ["descuentos", "codigos"] }
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/codigos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "codigos"
+              ]
+            }
           }
         },
         {
           "name": "Codigos - Editar",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"etiqueta_codigo\": \"15% de verano (ampliado)\"\n}" },
-            "url": { "raw": "{{baseUrl}}/descuentos/codigos/2", "host": ["{{baseUrl}}"], "path": ["descuentos", "codigos", "2"] }
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"etiqueta_codigo\": \"15% de verano (ampliado)\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/codigos/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "codigos",
+                "2"
+              ]
+            }
           }
         },
         {
@@ -418,19 +868,42 @@
           "request": {
             "method": "DELETE",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/descuentos/codigos/2", "host": ["{{baseUrl}}"], "path": ["descuentos", "codigos", "2"] }
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/codigos/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "codigos",
+                "2"
+              ]
+            }
           }
         },
         {
           "name": "Validar codigo",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"texto_codigo\": \"BIENVENIDA10\"\n}" },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"texto_codigo\": \"FRESCUERA\"\n}"
+            },
             "url": {
               "raw": "{{baseUrl}}/descuentos/validar-codigo",
-              "host": ["{{baseUrl}}"],
-              "path": ["descuentos", "validar-codigo"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "descuentos",
+                "validar-codigo"
+              ]
             }
           }
         }
@@ -444,7 +917,15 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/ofertas", "host": ["{{baseUrl}}"], "path": ["ofertas"] }
+            "url": {
+              "raw": "{{baseUrl}}/ofertas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ofertas"
+              ]
+            }
           }
         },
         {
@@ -452,28 +933,67 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/ofertas/1", "host": ["{{baseUrl}}"], "path": ["ofertas", "1"] }
+            "url": {
+              "raw": "{{baseUrl}}/ofertas/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ofertas",
+                "1"
+              ]
+            }
           }
         },
         {
           "name": "Crear",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"ID_codigo_descuento\": 1,\n  \"ID_categoria\": 1,\n  \"titulo_oferta\": \"Semana de abarrotes\",\n  \"descripcion_oferta\": \"Descuentos en toda la categoria\",\n  \"descripcion_beneficio\": \"Hasta 15% menos\",\n  \"imagen_oferta\": \"/img/banner-abarrotes.webp\"\n}"
             },
-            "url": { "raw": "{{baseUrl}}/ofertas", "host": ["{{baseUrl}}"], "path": ["ofertas"] }
+            "url": {
+              "raw": "{{baseUrl}}/ofertas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ofertas"
+              ]
+            }
           }
         },
         {
           "name": "Editar",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"titulo_oferta\": \"Semana de abarrotes (ultimos dias)\"\n}" },
-            "url": { "raw": "{{baseUrl}}/ofertas/2", "host": ["{{baseUrl}}"], "path": ["ofertas", "2"] }
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo_oferta\": \"Semana de abarrotes (ultimos dias)\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ofertas/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ofertas",
+                "2"
+              ]
+            }
           }
         },
         {
@@ -481,7 +1001,16 @@
           "request": {
             "method": "DELETE",
             "header": [],
-            "url": { "raw": "{{baseUrl}}/ofertas/2", "host": ["{{baseUrl}}"], "path": ["ofertas", "2"] }
+            "url": {
+              "raw": "{{baseUrl}}/ofertas/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ofertas",
+                "2"
+              ]
+            }
           }
         }
       ]
@@ -508,14 +1037,57 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Authorization", "value": "Bearer {{token}}" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"items\": [\n    { \"ID_producto\": 1, \"cantidad\": 2 },\n    { \"ID_producto\": 2, \"cantidad\": 3 }\n  ]\n}"
             },
-            "url": { "raw": "{{baseUrl}}/ordenes", "host": ["{{baseUrl}}"], "path": ["ordenes"] }
+            "url": {
+              "raw": "{{baseUrl}}/ordenes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ordenes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear orden con codigo de descuento",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    { \"ID_producto\": 1, \"cantidad\": 3 }\n  ],\n  \"texto_codigo\": \"FRESCUERA\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ordenes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ordenes"
+              ]
+            }
           }
         },
         {
@@ -523,11 +1095,28 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Authorization", "value": "Bearer {{token}}" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
             ],
-            "body": { "mode": "raw", "raw": "{\n  \"items\": [\n    { \"ID_producto\": 3, \"cantidad\": 9999 }\n  ]\n}" },
-            "url": { "raw": "{{baseUrl}}/ordenes", "host": ["{{baseUrl}}"], "path": ["ordenes"] }
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    { \"ID_producto\": 3, \"cantidad\": 9999 }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ordenes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ordenes"
+              ]
+            }
           }
         },
         {
@@ -535,34 +1124,74 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Authorization", "value": "Bearer {{token}}" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"items\": [\n    { \"ID_producto\": 1, \"cantidad\": 1 },\n    { \"ID_producto\": 9999, \"cantidad\": 1 }\n  ]\n}"
             },
-            "url": { "raw": "{{baseUrl}}/ordenes", "host": ["{{baseUrl}}"], "path": ["ordenes"] }
+            "url": {
+              "raw": "{{baseUrl}}/ordenes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ordenes"
+              ]
+            }
           }
         },
         {
           "name": "Crear orden sin token (401)",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"items\": [\n    { \"ID_producto\": 1, \"cantidad\": 1 }\n  ]\n}" },
-            "url": { "raw": "{{baseUrl}}/ordenes", "host": ["{{baseUrl}}"], "path": ["ordenes"] }
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    { \"ID_producto\": 1, \"cantidad\": 1 }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ordenes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ordenes"
+              ]
+            }
           }
         },
         {
           "name": "Detalle de la orden",
           "request": {
             "method": "GET",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
             "url": {
               "raw": "{{baseUrl}}/ordenes/{{ID_orden}}",
-              "host": ["{{baseUrl}}"],
-              "path": ["ordenes", "{{ID_orden}}"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ordenes",
+                "{{ID_orden}}"
+              ]
             }
           }
         }

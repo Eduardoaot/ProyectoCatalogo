@@ -6,8 +6,19 @@ import './Cuenta.css'
 // del botón "Configuración" del menú lateral. Si no hay sesión, redirige
 // a iniciar sesión (y de ahí de vuelta a /cuenta).
 function Cuenta() {
-  const { usuario, cerrarSesion } = useAuth()
+  const { usuario, cargandoSesion, cerrarSesion } = useAuth()
   const navigate = useNavigate()
+
+  // Al recargar la página el token se valida contra la API; hasta que
+  // termine no se sabe si hay sesión, y redirigir antes sacaría al usuario.
+  if (cargandoSesion) {
+    return (
+      <section className="cuenta">
+        <h1>Mi cuenta</h1>
+        <p>Cargando…</p>
+      </section>
+    )
+  }
 
   if (!usuario) {
     return <Navigate to="/login" state={{ from: '/cuenta' }} replace />
