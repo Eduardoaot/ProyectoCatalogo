@@ -1,0 +1,572 @@
+{
+  "info": {
+    "name": "Rosamark API v3.0",
+    "description": "API REST de e-commerce (Node.js + Express + MySQL). Ejecuta primero 'Clientes / Registro' o 'Clientes / Login': el token se guarda solo en la variable {{token}} de la coleccion.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000", "type": "string" },
+    { "key": "token", "value": "", "type": "string" },
+    { "key": "ID_cliente", "value": "1", "type": "string" },
+    { "key": "ID_orden", "value": "1", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Salud",
+      "item": [
+        {
+          "name": "Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/health", "host": ["{{baseUrl}}"], "path": ["health"] }
+          }
+        },
+        {
+          "name": "Indice de recursos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api", "host": ["{{baseUrl}}"], "path": ["api"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Clientes",
+      "item": [
+        {
+          "name": "Registro",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const cuerpo = pm.response.json();",
+                  "if (cuerpo.ok && cuerpo.data.token) {",
+                  "  pm.collectionVariables.set('token', cuerpo.data.token);",
+                  "  pm.collectionVariables.set('ID_cliente', String(cuerpo.data.cliente.ID_cliente));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre_cliente\": \"Ana Perez\",\n  \"correo_cliente\": \"ana@correo.com\",\n  \"contrasena_cliente\": \"MiClave12345\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/clientes/registro", "host": ["{{baseUrl}}"], "path": ["clientes", "registro"] }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const cuerpo = pm.response.json();",
+                  "if (cuerpo.ok && cuerpo.data.token) {",
+                  "  pm.collectionVariables.set('token', cuerpo.data.token);",
+                  "  pm.collectionVariables.set('ID_cliente', String(cuerpo.data.cliente.ID_cliente));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo_cliente\": \"ana@correo.com\",\n  \"contrasena_cliente\": \"MiClave12345\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/clientes/login", "host": ["{{baseUrl}}"], "path": ["clientes", "login"] }
+          }
+        },
+        {
+          "name": "Perfil (me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/clientes/me", "host": ["{{baseUrl}}"], "path": ["clientes", "me"] }
+          }
+        },
+        {
+          "name": "Ordenes del cliente",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/{{ID_cliente}}/ordenes",
+              "host": ["{{baseUrl}}"],
+              "path": ["clientes", "{{ID_cliente}}", "ordenes"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorias",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/categorias", "host": ["{{baseUrl}}"], "path": ["categorias"] }
+          }
+        },
+        {
+          "name": "Detalle",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/categorias/1", "host": ["{{baseUrl}}"], "path": ["categorias", "1"] }
+          }
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nombre_categoria\": \"Panaderia\"\n}" },
+            "url": { "raw": "{{baseUrl}}/categorias", "host": ["{{baseUrl}}"], "path": ["categorias"] }
+          }
+        },
+        {
+          "name": "Editar",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nombre_categoria\": \"Panaderia y tortillas\"\n}" },
+            "url": { "raw": "{{baseUrl}}/categorias/4", "host": ["{{baseUrl}}"], "path": ["categorias", "4"] }
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/categorias/4", "host": ["{{baseUrl}}"], "path": ["categorias", "4"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Unidades",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/unidades", "host": ["{{baseUrl}}"], "path": ["unidades"] }
+          }
+        },
+        {
+          "name": "Detalle",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/unidades/1", "host": ["{{baseUrl}}"], "path": ["unidades", "1"] }
+          }
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nombre_unidad\": \"paquete\"\n}" },
+            "url": { "raw": "{{baseUrl}}/unidades", "host": ["{{baseUrl}}"], "path": ["unidades"] }
+          }
+        },
+        {
+          "name": "Editar",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nombre_unidad\": \"paquete de 6\"\n}" },
+            "url": { "raw": "{{baseUrl}}/unidades/4", "host": ["{{baseUrl}}"], "path": ["unidades", "4"] }
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/unidades/4", "host": ["{{baseUrl}}"], "path": ["unidades", "4"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/productos", "host": ["{{baseUrl}}"], "path": ["productos"] }
+          }
+        },
+        {
+          "name": "Filtrar por categoria",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/productos?categoria=2",
+              "host": ["{{baseUrl}}"],
+              "path": ["productos"],
+              "query": [{ "key": "categoria", "value": "2" }]
+            }
+          }
+        },
+        {
+          "name": "Solo destacados",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/productos?destacado=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["productos"],
+              "query": [{ "key": "destacado", "value": "true" }]
+            }
+          }
+        },
+        {
+          "name": "Buscar por nombre",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/productos?q=arroz&limit=10&offset=0",
+              "host": ["{{baseUrl}}"],
+              "path": ["productos"],
+              "query": [
+                { "key": "q", "value": "arroz" },
+                { "key": "limit", "value": "10" },
+                { "key": "offset", "value": "0" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Detalle",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/productos/1", "host": ["{{baseUrl}}"], "path": ["productos", "1"] }
+          }
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ID_categoria\": 1,\n  \"ID_unidad\": 1,\n  \"ID_Descuento\": 1,\n  \"nombre_producto\": \"Frijol negro 1kg\",\n  \"precio_producto\": 34.90,\n  \"imagen\": \"/img/frijol.webp\",\n  \"descripcion\": \"Frijol negro seleccionado\",\n  \"destacado\": true,\n  \"cantidad_producto\": 80,\n  \"factor_pieza\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/productos", "host": ["{{baseUrl}}"], "path": ["productos"] }
+          }
+        },
+        {
+          "name": "Editar",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"precio_producto\": 32.50,\n  \"destacado\": false\n}" },
+            "url": { "raw": "{{baseUrl}}/productos/4", "host": ["{{baseUrl}}"], "path": ["productos", "4"] }
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/productos/4", "host": ["{{baseUrl}}"], "path": ["productos", "4"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Descuentos",
+      "item": [
+        {
+          "name": "Tipos - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/descuentos/tipos", "host": ["{{baseUrl}}"], "path": ["descuentos", "tipos"] }
+          }
+        },
+        {
+          "name": "Tipos - Crear",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"tipo_descuento\": \"porcentaje_temporada\"\n}" },
+            "url": { "raw": "{{baseUrl}}/descuentos/tipos", "host": ["{{baseUrl}}"], "path": ["descuentos", "tipos"] }
+          }
+        },
+        {
+          "name": "Tipos - Editar",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"tipo_descuento\": \"porcentaje_verano\"\n}" },
+            "url": { "raw": "{{baseUrl}}/descuentos/tipos/4", "host": ["{{baseUrl}}"], "path": ["descuentos", "tipos", "4"] }
+          }
+        },
+        {
+          "name": "Tipos - Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/descuentos/tipos/4", "host": ["{{baseUrl}}"], "path": ["descuentos", "tipos", "4"] }
+          }
+        },
+        {
+          "name": "Valores - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/descuentos/valores", "host": ["{{baseUrl}}"], "path": ["descuentos", "valores"] }
+          }
+        },
+        {
+          "name": "Valores - Crear porcentaje",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ID_descuento_tipo\": 1,\n  \"nombre_descuento\": \"15% de temporada\",\n  \"descuento_valor\": 15,\n  \"fecha_inicio\": \"2026-08-01\",\n  \"fecha_final\": \"2026-09-30\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/descuentos/valores", "host": ["{{baseUrl}}"], "path": ["descuentos", "valores"] }
+          }
+        },
+        {
+          "name": "Valores - Crear NxM",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ID_descuento_tipo\": 3,\n  \"nombre_descuento\": \"2x1 en limpieza\",\n  \"descuento_valor\": 0,\n  \"cantidad_lleva\": 2,\n  \"cantidad_paga\": 1,\n  \"fecha_inicio\": \"2026-08-01\",\n  \"fecha_final\": \"2026-12-31\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/descuentos/valores", "host": ["{{baseUrl}}"], "path": ["descuentos", "valores"] }
+          }
+        },
+        {
+          "name": "Valores - Editar",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"descuento_valor\": 20\n}" },
+            "url": { "raw": "{{baseUrl}}/descuentos/valores/3", "host": ["{{baseUrl}}"], "path": ["descuentos", "valores", "3"] }
+          }
+        },
+        {
+          "name": "Valores - Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/descuentos/valores/3", "host": ["{{baseUrl}}"], "path": ["descuentos", "valores", "3"] }
+          }
+        },
+        {
+          "name": "Codigos - Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/descuentos/codigos", "host": ["{{baseUrl}}"], "path": ["descuentos", "codigos"] }
+          }
+        },
+        {
+          "name": "Codigos - Crear",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ID_descuento\": 1,\n  \"texto_codigo\": \"VERANO15\",\n  \"etiqueta_codigo\": \"15% de verano\",\n  \"descripcion_codigo\": \"Valido en toda la tienda\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/descuentos/codigos", "host": ["{{baseUrl}}"], "path": ["descuentos", "codigos"] }
+          }
+        },
+        {
+          "name": "Codigos - Editar",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"etiqueta_codigo\": \"15% de verano (ampliado)\"\n}" },
+            "url": { "raw": "{{baseUrl}}/descuentos/codigos/2", "host": ["{{baseUrl}}"], "path": ["descuentos", "codigos", "2"] }
+          }
+        },
+        {
+          "name": "Codigos - Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/descuentos/codigos/2", "host": ["{{baseUrl}}"], "path": ["descuentos", "codigos", "2"] }
+          }
+        },
+        {
+          "name": "Validar codigo",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"texto_codigo\": \"BIENVENIDA10\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/descuentos/validar-codigo",
+              "host": ["{{baseUrl}}"],
+              "path": ["descuentos", "validar-codigo"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ofertas",
+      "item": [
+        {
+          "name": "Listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/ofertas", "host": ["{{baseUrl}}"], "path": ["ofertas"] }
+          }
+        },
+        {
+          "name": "Detalle",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/ofertas/1", "host": ["{{baseUrl}}"], "path": ["ofertas", "1"] }
+          }
+        },
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ID_codigo_descuento\": 1,\n  \"ID_categoria\": 1,\n  \"titulo_oferta\": \"Semana de abarrotes\",\n  \"descripcion_oferta\": \"Descuentos en toda la categoria\",\n  \"descripcion_beneficio\": \"Hasta 15% menos\",\n  \"imagen_oferta\": \"/img/banner-abarrotes.webp\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/ofertas", "host": ["{{baseUrl}}"], "path": ["ofertas"] }
+          }
+        },
+        {
+          "name": "Editar",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"titulo_oferta\": \"Semana de abarrotes (ultimos dias)\"\n}" },
+            "url": { "raw": "{{baseUrl}}/ofertas/2", "host": ["{{baseUrl}}"], "path": ["ofertas", "2"] }
+          }
+        },
+        {
+          "name": "Borrar",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/ofertas/2", "host": ["{{baseUrl}}"], "path": ["ofertas", "2"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ordenes",
+      "item": [
+        {
+          "name": "Crear orden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const cuerpo = pm.response.json();",
+                  "if (cuerpo.ok && cuerpo.data.ID_orden) {",
+                  "  pm.collectionVariables.set('ID_orden', String(cuerpo.data.ID_orden));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    { \"ID_producto\": 1, \"cantidad\": 2 },\n    { \"ID_producto\": 2, \"cantidad\": 3 }\n  ]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/ordenes", "host": ["{{baseUrl}}"], "path": ["ordenes"] }
+          }
+        },
+        {
+          "name": "Crear orden sin stock (409 + rollback)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"items\": [\n    { \"ID_producto\": 3, \"cantidad\": 9999 }\n  ]\n}" },
+            "url": { "raw": "{{baseUrl}}/ordenes", "host": ["{{baseUrl}}"], "path": ["ordenes"] }
+          }
+        },
+        {
+          "name": "Crear orden con producto inexistente (404 + rollback)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    { \"ID_producto\": 1, \"cantidad\": 1 },\n    { \"ID_producto\": 9999, \"cantidad\": 1 }\n  ]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/ordenes", "host": ["{{baseUrl}}"], "path": ["ordenes"] }
+          }
+        },
+        {
+          "name": "Crear orden sin token (401)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"items\": [\n    { \"ID_producto\": 1, \"cantidad\": 1 }\n  ]\n}" },
+            "url": { "raw": "{{baseUrl}}/ordenes", "host": ["{{baseUrl}}"], "path": ["ordenes"] }
+          }
+        },
+        {
+          "name": "Detalle de la orden",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/ordenes/{{ID_orden}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["ordenes", "{{ID_orden}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

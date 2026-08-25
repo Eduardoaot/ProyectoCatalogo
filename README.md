@@ -2,8 +2,12 @@
 
 Catálogo de supermercado hecho con React + Vite. Incluye catálogo con filtros
 y búsqueda, detalle de producto, carrito con stock y códigos de descuento,
-sesión de usuario (login/registro) y órdenes — todo del lado del cliente,
-sin backend real (los datos "persisten" en `localStorage`).
+sesión de usuario (login/registro) y órdenes.
+
+Desde la v3.0 el repositorio incluye además una **API REST propia** en
+[`backend/`](backend/) (Node.js + Express + MySQL). El frontend todavía **no la
+consume**: sigue trabajando del lado del cliente con los datos de `src/data/` y
+`localStorage`. Conectar ambos es el trabajo pendiente de la v3.0.
 
 ## Stack
 
@@ -96,8 +100,37 @@ lógica y el estado.
   invitado agrega productos y luego inicia sesión o se registra, su carrito
   se **fusiona** con el del usuario en vez de perderse.
 
+## Backend (API REST)
+
+La API vive en [`backend/`](backend/), con su propio `package.json`, y habla con
+una base MySQL llamada `tienda`.
+
+```bash
+cd backend
+npm install
+cp .env.example .env      # y edita tus credenciales de MySQL y el JWT_SECRET
+mysql -u root -p < sql/tienda.sql
+npm run dev               # queda en http://localhost:3000
+```
+
+Qué expone:
+
+- CRUD de `Categorias`, `Unidades`, `Productos`, `Descuentos_tipos`,
+  `Descuentos_valores`, `Descuentos_codigo` y `Ofertas`.
+- Productos con filtros por categoría, destacado y búsqueda por nombre, ya con
+  el JOIN a categoría, unidad y descuento aplicable.
+- Registro y login de clientes con bcrypt + JWT.
+- `POST /ordenes` dentro de una transacción: valida stock, congela el precio en
+  `precio_orden_producto`, aplica el descuento vigente y descuenta existencias.
+- `POST /descuentos/validar-codigo` para los códigos que teclea el cliente.
+
+Documentación completa, ejemplos de curl y colección de Postman en
+[`backend/README.md`](backend/README.md).
+
 ## Ramas
 
 - `main` — versión estable.
 - `develop/Version2.0` — integración de la v2 (usuarios, carrito, checkout).
-- `feature/Usuarios/Avance` — desarrollo activo de la v2.
+- `feature/Usuarios/Avance` — desarrollo de la v2.
+- `develop/Version3.0` — integración de la v3, parte de `develop/Version2.0`.
+- `feature/integracionDataBase` — API REST con MySQL (backend de la v3).
