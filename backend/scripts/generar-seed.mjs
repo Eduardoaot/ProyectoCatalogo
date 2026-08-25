@@ -27,43 +27,18 @@ const importarData = (archivo) =>
 const { CATEGORIAS, PRODUCTOS } = await importarData('productos.js');
 const { OFERTAS } = await importarData('ofertas.js');
 const { USUARIOS_SEED } = await importarData('usuarios.js');
+const { CODIGOS_DESCUENTO } = await importarData('descuentos.js');
 
 // Mismo valor que usaba TiendaProvider cuando el stock vivía en el navegador.
 const STOCK_POR_DEFECTO = 30;
 const SALT_ROUNDS = 10;
 
 /**
- * Los códigos de `src/data/descuentos.js` traen una función `calcularDescuento`,
- * y una función no se puede traducir a filas de una tabla. Aquí se declara el
- * equivalente en el modelo de la base, que reproduce exactamente lo que hacían
- * esas funciones:
- *
- *   FRESCUERA       -> 20% sobre los renglones de "Frutas y Verduras"
- *   LLEVATEUNAVACA  -> 2x1 sobre los renglones de "Lácteos"
- *
- * `categoria` es lo que limita el alcance del código: se guarda en la tabla
- * Ofertas, y POST /ordenes la lee de ahí para saber a qué renglones aplica.
+ * Los códigos vienen de `src/data/descuentos.js`, ya descritos con la forma
+ * que tienen en la base (tipo, valor, lleva/paga y la categoría que les da
+ * alcance). Ese archivo es la única fuente: aquí solo se traduce a SQL.
  */
-const CODIGOS = [
-  {
-    texto: 'FRESCUERA',
-    etiqueta: 'FRESCUERA',
-    descripcion: '20% de descuento en frutas y verduras',
-    tipo: 'porcentaje',
-    valor: 20,
-    categoria: 'Frutas y Verduras',
-  },
-  {
-    texto: 'LLEVATEUNAVACA',
-    etiqueta: 'LlevateUnaVaca',
-    descripcion: '2x1 en lácteos',
-    tipo: 'NxM',
-    valor: 0,
-    lleva: 2,
-    paga: 1,
-    categoria: 'Lácteos',
-  },
-];
+const CODIGOS = CODIGOS_DESCUENTO;
 
 // --------------------------------------------------------------------
 // Utilidades de escritura de SQL
@@ -217,6 +192,7 @@ USE tienda;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
+TRUNCATE TABLE Favoritos;
 TRUNCATE TABLE Maestra_orden_productos;
 TRUNCATE TABLE Ordenes;
 TRUNCATE TABLE Ofertas;

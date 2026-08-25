@@ -403,4 +403,533 @@ export const PRODUCTOS = [
       'Miel de abeja pura, natural y endulzante ideal para tus recetas.',
     destacado: true,
   },
+
+  // =========================
+  // MÁS FRUTAS Y VERDURAS
+  // =========================
+  {
+    id: 30,
+    nombre: 'Fresa',
+    categoria: 'Frutas y Verduras',
+    precio: 45,
+    precioOriginal: 55,
+    unidad: 'kg',
+    emoji: '🍓',
+    descripcion:
+      'Fresas frescas de temporada, dulces y aromáticas.',
+    destacado: true,
+    stock: 40,
+  },
+  {
+    id: 31,
+    nombre: 'Uva Verde',
+    categoria: 'Frutas y Verduras',
+    precio: 52,
+    unidad: 'kg',
+    emoji: '🍇',
+    descripcion:
+      'Uva verde sin semilla, crujiente y refrescante.',
+    destacado: false,
+  },
+  {
+    id: 32,
+    nombre: 'Sandía',
+    categoria: 'Frutas y Verduras',
+    precio: 18,
+    unidad: 'kg',
+    emoji: '🍉',
+    descripcion:
+      'Sandía jugosa, perfecta para los días de calor.',
+    destacado: false,
+  },
+  {
+    id: 33,
+    nombre: 'Piña',
+    categoria: 'Frutas y Verduras',
+    precio: 25,
+    unidad: 'pieza',
+    emoji: '🍍',
+    descripcion:
+      'Piña miel madura, dulce y perfumada.',
+    destacado: false,
+  },
+  {
+    id: 34,
+    nombre: 'Aguacate Hass',
+    categoria: 'Frutas y Verduras',
+    precio: 78,
+    unidad: 'kg',
+    emoji: '🥑',
+    descripcion:
+      'Aguacate hass cremoso, listo para el guacamole.',
+    destacado: true,
+    stock: 25,
+  },
+  {
+    id: 35,
+    nombre: 'Zanahoria',
+    categoria: 'Frutas y Verduras',
+    precio: 16,
+    unidad: 'kg',
+    emoji: '🥕',
+    descripcion:
+      'Zanahoria fresca, ideal para sopas y ensaladas.',
+    destacado: false,
+  },
+  {
+    id: 36,
+    nombre: 'Brócoli',
+    categoria: 'Frutas y Verduras',
+    precio: 32,
+    unidad: 'kg',
+    emoji: '🥦',
+    descripcion:
+      'Brócoli verde y firme, cosechado esta semana.',
+    destacado: false,
+  },
+
+  // =========================
+  // MÁS LÁCTEOS
+  // =========================
+  {
+    id: 37,
+    nombre: 'Queso Manchego',
+    categoria: 'Lácteos',
+    precio: 95,
+    precioOriginal: 110,
+    unidad: 'kg',
+    emoji: '🧀',
+    descripcion:
+      'Queso manchego semicurado, ideal para gratinar.',
+    destacado: true,
+    stock: 20,
+  },
+  {
+    id: 38,
+    nombre: 'Yogur Natural',
+    categoria: 'Lácteos',
+    precio: 24,
+    unidad: 'litro',
+    emoji: '🥛',
+    descripcion:
+      'Yogur natural sin azúcar añadida.',
+    destacado: false,
+  },
+  {
+    id: 39,
+    nombre: 'Mantequilla',
+    categoria: 'Lácteos',
+    precio: 48,
+    unidad: 'paquete',
+    emoji: '🧈',
+    descripcion:
+      'Mantequilla sin sal de 225 g.',
+    destacado: false,
+  },
+  {
+    id: 40,
+    nombre: 'Crema Ácida',
+    categoria: 'Lácteos',
+    precio: 36,
+    unidad: 'frasco',
+    emoji: '🥣',
+    descripcion:
+      'Crema ácida espesa para tus antojos.',
+    destacado: false,
+  },
+  {
+    id: 41,
+    nombre: 'Queso Panela',
+    categoria: 'Lácteos',
+    precio: 82,
+    unidad: 'kg',
+    emoji: '🧀',
+    descripcion:
+      'Queso panela fresco, bajo en grasa.',
+    destacado: false,
+  },
+  {
+    id: 42,
+    nombre: 'Leche Deslactosada',
+    categoria: 'Lácteos',
+    precio: 34,
+    unidad: 'litro',
+    emoji: '🥛',
+    descripcion:
+      'Leche deslactosada entera de 1 litro.',
+    destacado: false,
+  },
+  {
+    id: 43,
+    nombre: 'Huevo Blanco',
+    categoria: 'Lácteos',
+    precio: 68,
+    unidad: 'paquete',
+    emoji: '🥚',
+    descripcion:
+      'Paquete de 18 huevos frescos de granja.',
+    destacado: true,
+    stock: 45,
+  },
+
+  // =========================
+  // MÁS PANADERÍA
+  // =========================
+  {
+    id: 44,
+    nombre: 'Croissant',
+    categoria: 'Panadería',
+    precio: 18,
+    unidad: 'pieza',
+    emoji: '🥐',
+    descripcion:
+      'Croissant de mantequilla horneado en casa.',
+    destacado: true,
+  },
+  {
+    id: 45,
+    nombre: 'Bagel',
+    categoria: 'Panadería',
+    precio: 22,
+    unidad: 'pieza',
+    emoji: '🥯',
+    descripcion:
+      'Bagel artesanal, perfecto para el desayuno.',
+    destacado: false,
+  },
+  {
+    id: 46,
+    nombre: 'Pan de Caja Integral',
+    categoria: 'Panadería',
+    precio: 42,
+    unidad: 'paquete',
+    emoji: '🍞',
+    descripcion:
+      'Pan integral de caja, 680 g.',
+    destacado: false,
+  },
+  {
+    id: 47,
+    nombre: 'Dona Glaseada',
+    categoria: 'Panadería',
+    precio: 15,
+    unidad: 'pieza',
+    emoji: '🍩',
+    descripcion:
+      'Dona glaseada recién hecha.',
+    destacado: false,
+  },
+  {
+    id: 48,
+    nombre: 'Pastel de Chocolate',
+    categoria: 'Panadería',
+    precio: 185,
+    precioOriginal: 220,
+    unidad: 'pieza',
+    emoji: '🍰',
+    descripcion:
+      'Pastel de chocolate para 8 porciones.',
+    destacado: true,
+    stock: 12,
+  },
+  {
+    id: 49,
+    nombre: 'Galletas de Avena',
+    categoria: 'Panadería',
+    precio: 38,
+    unidad: 'paquete',
+    emoji: '🍪',
+    descripcion:
+      'Galletas de avena con pasas, 300 g.',
+    destacado: false,
+  },
+
+  // =========================
+  // MÁS CARNES
+  // =========================
+  {
+    id: 50,
+    nombre: 'Pechuga de Pollo',
+    categoria: 'Carnes',
+    precio: 88,
+    unidad: 'kg',
+    emoji: '🍗',
+    descripcion:
+      'Pechuga de pollo sin hueso ni piel.',
+    destacado: true,
+    stock: 35,
+  },
+  {
+    id: 51,
+    nombre: 'Chuleta de Cerdo',
+    categoria: 'Carnes',
+    precio: 105,
+    unidad: 'kg',
+    emoji: '🥩',
+    descripcion:
+      'Chuleta de cerdo con hueso, corte grueso.',
+    destacado: false,
+  },
+  {
+    id: 52,
+    nombre: 'Salmón Fresco',
+    categoria: 'Carnes',
+    precio: 290,
+    precioOriginal: 340,
+    unidad: 'kg',
+    emoji: '🐟',
+    descripcion:
+      'Filete de salmón fresco del Atlántico.',
+    destacado: true,
+    stock: 15,
+  },
+  {
+    id: 53,
+    nombre: 'Camarón Mediano',
+    categoria: 'Carnes',
+    precio: 245,
+    unidad: 'kg',
+    emoji: '🦐',
+    descripcion:
+      'Camarón mediano limpio y sin cabeza.',
+    destacado: false,
+  },
+  {
+    id: 54,
+    nombre: 'Tocino',
+    categoria: 'Carnes',
+    precio: 72,
+    unidad: 'paquete',
+    emoji: '🥓',
+    descripcion:
+      'Tocino ahumado en rebanadas, 250 g.',
+    destacado: false,
+  },
+  {
+    id: 55,
+    nombre: 'Chorizo',
+    categoria: 'Carnes',
+    precio: 68,
+    unidad: 'kg',
+    emoji: '🌭',
+    descripcion:
+      'Chorizo artesanal, ideal para el desayuno.',
+    destacado: false,
+  },
+
+  // =========================
+  // MÁS BEBIDAS
+  // =========================
+  {
+    id: 56,
+    nombre: 'Jugo de Naranja',
+    categoria: 'Bebidas',
+    precio: 32,
+    unidad: 'litro',
+    emoji: '🧃',
+    descripcion:
+      'Jugo de naranja 100% natural, sin azúcar añadida.',
+    destacado: true,
+  },
+  {
+    id: 57,
+    nombre: 'Agua Mineral',
+    categoria: 'Bebidas',
+    precio: 18,
+    unidad: 'botella',
+    emoji: '💧',
+    descripcion:
+      'Agua mineral con gas, 1 litro.',
+    destacado: false,
+  },
+  {
+    id: 58,
+    nombre: 'Cerveza Artesanal',
+    categoria: 'Bebidas',
+    precio: 48,
+    precioOriginal: 58,
+    unidad: 'botella',
+    emoji: '🍺',
+    descripcion:
+      'Cerveza artesanal estilo IPA, 355 ml.',
+    destacado: true,
+    stock: 30,
+  },
+  {
+    id: 59,
+    nombre: 'Vino Tinto',
+    categoria: 'Bebidas',
+    precio: 245,
+    unidad: 'botella',
+    emoji: '🍷',
+    descripcion:
+      'Vino tinto de mesa, cosecha reciente.',
+    destacado: false,
+  },
+  {
+    id: 60,
+    nombre: 'Té Helado',
+    categoria: 'Bebidas',
+    precio: 26,
+    unidad: 'botella',
+    emoji: '🧋',
+    descripcion:
+      'Té helado de limón, 600 ml.',
+    destacado: false,
+  },
+  {
+    id: 61,
+    nombre: 'Café Molido',
+    categoria: 'Bebidas',
+    precio: 125,
+    unidad: 'paquete',
+    emoji: '☕',
+    descripcion:
+      'Café molido de altura, 500 g.',
+    destacado: false,
+  },
+
+  // =========================
+  // MÁS LIMPIEZA
+  // =========================
+  {
+    id: 62,
+    nombre: 'Detergente Líquido',
+    categoria: 'Limpieza',
+    precio: 85,
+    unidad: 'litro',
+    emoji: '🧴',
+    descripcion:
+      'Detergente líquido concentrado para ropa.',
+    destacado: true,
+  },
+  {
+    id: 63,
+    nombre: 'Jabón para Trastes',
+    categoria: 'Limpieza',
+    precio: 38,
+    unidad: 'botella',
+    emoji: '🧽',
+    descripcion:
+      'Jabón líquido para trastes con aroma a limón.',
+    destacado: false,
+  },
+  {
+    id: 64,
+    nombre: 'Papel Higiénico',
+    categoria: 'Limpieza',
+    precio: 96,
+    precioOriginal: 115,
+    unidad: 'paquete',
+    emoji: '🧻',
+    descripcion:
+      'Paquete de 12 rollos de doble hoja.',
+    destacado: true,
+    stock: 50,
+  },
+  {
+    id: 65,
+    nombre: 'Limpiador Multiusos',
+    categoria: 'Limpieza',
+    precio: 44,
+    unidad: 'botella',
+    emoji: '🧼',
+    descripcion:
+      'Limpiador multiusos desinfectante.',
+    destacado: false,
+  },
+  {
+    id: 66,
+    nombre: 'Bolsas para Basura',
+    categoria: 'Limpieza',
+    precio: 52,
+    unidad: 'paquete',
+    emoji: '🗑️',
+    descripcion:
+      'Bolsas para basura de 90 litros, 20 piezas.',
+    destacado: false,
+  },
+
+  // =========================
+  // MÁS ABARROTES
+  // =========================
+  {
+    id: 67,
+    nombre: 'Aceite de Oliva',
+    categoria: 'Abarrotes',
+    precio: 165,
+    precioOriginal: 195,
+    unidad: 'botella',
+    emoji: '🫒',
+    descripcion:
+      'Aceite de oliva extra virgen, 500 ml.',
+    destacado: true,
+    stock: 22,
+  },
+  {
+    id: 68,
+    nombre: 'Pasta Spaghetti',
+    categoria: 'Abarrotes',
+    precio: 22,
+    unidad: 'paquete',
+    emoji: '🍝',
+    descripcion:
+      'Pasta spaghetti de sémola, 500 g.',
+    destacado: false,
+  },
+  {
+    id: 69,
+    nombre: 'Atún en Lata',
+    categoria: 'Abarrotes',
+    precio: 26,
+    unidad: 'pieza',
+    emoji: '🐟',
+    descripcion:
+      'Atún en agua, lata de 140 g.',
+    destacado: false,
+  },
+  {
+    id: 70,
+    nombre: 'Frijol Negro',
+    categoria: 'Abarrotes',
+    precio: 38,
+    unidad: 'kg',
+    emoji: '🫘',
+    descripcion:
+      'Frijol negro seleccionado a granel.',
+    destacado: false,
+  },
+  {
+    id: 71,
+    nombre: 'Azúcar Refinada',
+    categoria: 'Abarrotes',
+    precio: 28,
+    unidad: 'kg',
+    emoji: '🍬',
+    descripcion:
+      'Azúcar refinada de caña, 1 kg.',
+    destacado: false,
+  },
+  {
+    id: 72,
+    nombre: 'Sal de Mesa',
+    categoria: 'Abarrotes',
+    precio: 14,
+    unidad: 'paquete',
+    emoji: '🧂',
+    descripcion:
+      'Sal de mesa yodada, 1 kg.',
+    destacado: false,
+  },
+  {
+    id: 73,
+    nombre: 'Cereal de Maíz',
+    categoria: 'Abarrotes',
+    precio: 64,
+    unidad: 'paquete',
+    emoji: '🥣',
+    descripcion:
+      'Cereal de maíz tostado, 500 g.',
+    destacado: false,
+  },
 ]

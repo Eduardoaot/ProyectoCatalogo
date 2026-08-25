@@ -5,7 +5,7 @@
 --      cd backend && npm run seed:sql
 --  a partir de src/data/ (productos.js, ofertas.js, usuarios.js).
 --
---  Generado: 2026-08-25 04:45:48
+--  Generado: 2026-08-25 05:25:38
 --
 --  ATENCIÓN: vacía las tablas antes de insertar, incluidas Ordenes y
 --  Clientes. Es un seed de desarrollo, no lo corras sobre datos reales.
@@ -87,8 +87,15 @@ VALUES
   (2, 2, '$8.00 de descuento', 8, NULL, NULL, NULL, NULL),
   (3, 2, '$3.00 de descuento', 3, NULL, NULL, NULL, NULL),
   (4, 2, '$15.00 de descuento', 15, NULL, NULL, NULL, NULL),
-  (5, 1, '20% de descuento en frutas y verduras', 20, NULL, NULL, NULL, NULL),
-  (6, 3, '2x1 en lácteos', 0, 2, 1, NULL, NULL);
+  (5, 2, '$10.00 de descuento', 10, NULL, NULL, NULL, NULL),
+  (6, 2, '$35.00 de descuento', 35, NULL, NULL, NULL, NULL),
+  (7, 2, '$50.00 de descuento', 50, NULL, NULL, NULL, NULL),
+  (8, 2, '$19.00 de descuento', 19, NULL, NULL, NULL, NULL),
+  (9, 2, '$30.00 de descuento', 30, NULL, NULL, NULL, NULL),
+  (10, 1, '20% de descuento en frutas y verduras', 20, NULL, NULL, NULL, NULL),
+  (11, 3, '2x1 en lácteos', 0, 2, 1, NULL, NULL),
+  (12, 1, '15% de descuento en carnes y pescados', 15, NULL, NULL, NULL, NULL),
+  (13, 3, '3x2 en bebidas', 0, 3, 2, NULL, NULL);
 
 -- ============================================================
 --  Códigos de descuento
@@ -97,11 +104,13 @@ VALUES
 INSERT INTO Descuentos_codigo
   (ID_descuento_codigo, ID_descuento, texto_codigo, etiqueta_codigo, descripcion_codigo)
 VALUES
-  (1, 5, 'FRESCUERA', 'FRESCUERA', '20% de descuento en frutas y verduras'),
-  (2, 6, 'LLEVATEUNAVACA', 'LlevateUnaVaca', '2x1 en lácteos');
+  (1, 10, 'FRESCUERA', 'FRESCUERA', '20% de descuento en frutas y verduras'),
+  (2, 11, 'LLEVATEUNAVACA', 'LlevateUnaVaca', '2x1 en lácteos'),
+  (3, 12, 'PARRILLADA', 'PARRILLADA', '15% de descuento en carnes y pescados'),
+  (4, 13, 'REFRESCATE', 'REFRESCATE', '3x2 en bebidas');
 
 -- ============================================================
---  Productos (29)
+--  Productos (73)
 -- ============================================================
 
 -- El ID_producto se conserva igual que el id de src/data/productos.js,
@@ -138,7 +147,51 @@ VALUES
   (26, 4, 1, NULL, 'Salchicha', 48, 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Cervelat.jpg/960px-Cervelat.jpg', 'Salchichas ahumadas, listas para asar o cocinar.', FALSE, 30, 1),
   (27, 5, 4, NULL, 'Café en Grano', 65, 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Coffee_Robusta_Arabica.jpg/960px-Coffee_Robusta_Arabica.jpg', 'Café en grano tostado, ideal para preparar un buen café recién molido.', TRUE, 30, 1),
   (28, 6, 2, NULL, 'Cloro', 24, 'https://upload.wikimedia.org/wikipedia/commons/d/d3/Clorox_Bleach_products.jpg', 'Cloro desinfectante para limpieza y desinfección del hogar.', FALSE, 30, 1),
-  (29, 7, 6, NULL, 'Miel de Abeja', 60, 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Runny_hunny.jpg/960px-Runny_hunny.jpg', 'Miel de abeja pura, natural y endulzante ideal para tus recetas.', TRUE, 30, 1);
+  (29, 7, 6, NULL, 'Miel de Abeja', 60, 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Runny_hunny.jpg/960px-Runny_hunny.jpg', 'Miel de abeja pura, natural y endulzante ideal para tus recetas.', TRUE, 30, 1),
+  (30, 1, 1, 5, 'Fresa', 55, '🍓', 'Fresas frescas de temporada, dulces y aromáticas.', TRUE, 40, 1),
+  (31, 1, 1, NULL, 'Uva Verde', 52, '🍇', 'Uva verde sin semilla, crujiente y refrescante.', FALSE, 30, 1),
+  (32, 1, 1, NULL, 'Sandía', 18, '🍉', 'Sandía jugosa, perfecta para los días de calor.', FALSE, 30, 1),
+  (33, 1, 3, NULL, 'Piña', 25, '🍍', 'Piña miel madura, dulce y perfumada.', FALSE, 30, 1),
+  (34, 1, 1, NULL, 'Aguacate Hass', 78, '🥑', 'Aguacate hass cremoso, listo para el guacamole.', TRUE, 25, 1),
+  (35, 1, 1, NULL, 'Zanahoria', 16, '🥕', 'Zanahoria fresca, ideal para sopas y ensaladas.', FALSE, 30, 1),
+  (36, 1, 1, NULL, 'Brócoli', 32, '🥦', 'Brócoli verde y firme, cosechado esta semana.', FALSE, 30, 1),
+  (37, 2, 1, 4, 'Queso Manchego', 110, '🧀', 'Queso manchego semicurado, ideal para gratinar.', TRUE, 20, 1),
+  (38, 2, 2, NULL, 'Yogur Natural', 24, '🥛', 'Yogur natural sin azúcar añadida.', FALSE, 30, 1),
+  (39, 2, 4, NULL, 'Mantequilla', 48, '🧈', 'Mantequilla sin sal de 225 g.', FALSE, 30, 1),
+  (40, 2, 6, NULL, 'Crema Ácida', 36, '🥣', 'Crema ácida espesa para tus antojos.', FALSE, 30, 1),
+  (41, 2, 1, NULL, 'Queso Panela', 82, '🧀', 'Queso panela fresco, bajo en grasa.', FALSE, 30, 1),
+  (42, 2, 2, NULL, 'Leche Deslactosada', 34, '🥛', 'Leche deslactosada entera de 1 litro.', FALSE, 30, 1),
+  (43, 2, 4, NULL, 'Huevo Blanco', 68, '🥚', 'Paquete de 18 huevos frescos de granja.', TRUE, 45, 1),
+  (44, 3, 3, NULL, 'Croissant', 18, '🥐', 'Croissant de mantequilla horneado en casa.', TRUE, 30, 1),
+  (45, 3, 3, NULL, 'Bagel', 22, '🥯', 'Bagel artesanal, perfecto para el desayuno.', FALSE, 30, 1),
+  (46, 3, 4, NULL, 'Pan de Caja Integral', 42, '🍞', 'Pan integral de caja, 680 g.', FALSE, 30, 1),
+  (47, 3, 3, NULL, 'Dona Glaseada', 15, '🍩', 'Dona glaseada recién hecha.', FALSE, 30, 1),
+  (48, 3, 3, 6, 'Pastel de Chocolate', 220, '🍰', 'Pastel de chocolate para 8 porciones.', TRUE, 12, 1),
+  (49, 3, 4, NULL, 'Galletas de Avena', 38, '🍪', 'Galletas de avena con pasas, 300 g.', FALSE, 30, 1),
+  (50, 4, 1, NULL, 'Pechuga de Pollo', 88, '🍗', 'Pechuga de pollo sin hueso ni piel.', TRUE, 35, 1),
+  (51, 4, 1, NULL, 'Chuleta de Cerdo', 105, '🥩', 'Chuleta de cerdo con hueso, corte grueso.', FALSE, 30, 1),
+  (52, 4, 1, 7, 'Salmón Fresco', 340, '🐟', 'Filete de salmón fresco del Atlántico.', TRUE, 15, 1),
+  (53, 4, 1, NULL, 'Camarón Mediano', 245, '🦐', 'Camarón mediano limpio y sin cabeza.', FALSE, 30, 1),
+  (54, 4, 4, NULL, 'Tocino', 72, '🥓', 'Tocino ahumado en rebanadas, 250 g.', FALSE, 30, 1),
+  (55, 4, 1, NULL, 'Chorizo', 68, '🌭', 'Chorizo artesanal, ideal para el desayuno.', FALSE, 30, 1),
+  (56, 5, 2, NULL, 'Jugo de Naranja', 32, '🧃', 'Jugo de naranja 100% natural, sin azúcar añadida.', TRUE, 30, 1),
+  (57, 5, 5, NULL, 'Agua Mineral', 18, '💧', 'Agua mineral con gas, 1 litro.', FALSE, 30, 1),
+  (58, 5, 5, 5, 'Cerveza Artesanal', 58, '🍺', 'Cerveza artesanal estilo IPA, 355 ml.', TRUE, 30, 1),
+  (59, 5, 5, NULL, 'Vino Tinto', 245, '🍷', 'Vino tinto de mesa, cosecha reciente.', FALSE, 30, 1),
+  (60, 5, 5, NULL, 'Té Helado', 26, '🧋', 'Té helado de limón, 600 ml.', FALSE, 30, 1),
+  (61, 5, 4, NULL, 'Café Molido', 125, '☕', 'Café molido de altura, 500 g.', FALSE, 30, 1),
+  (62, 6, 2, NULL, 'Detergente Líquido', 85, '🧴', 'Detergente líquido concentrado para ropa.', TRUE, 30, 1),
+  (63, 6, 5, NULL, 'Jabón para Trastes', 38, '🧽', 'Jabón líquido para trastes con aroma a limón.', FALSE, 30, 1),
+  (64, 6, 4, 8, 'Papel Higiénico', 115, '🧻', 'Paquete de 12 rollos de doble hoja.', TRUE, 50, 1),
+  (65, 6, 5, NULL, 'Limpiador Multiusos', 44, '🧼', 'Limpiador multiusos desinfectante.', FALSE, 30, 1),
+  (66, 6, 4, NULL, 'Bolsas para Basura', 52, '🗑️', 'Bolsas para basura de 90 litros, 20 piezas.', FALSE, 30, 1),
+  (67, 7, 5, 9, 'Aceite de Oliva', 195, '🫒', 'Aceite de oliva extra virgen, 500 ml.', TRUE, 22, 1),
+  (68, 7, 4, NULL, 'Pasta Spaghetti', 22, '🍝', 'Pasta spaghetti de sémola, 500 g.', FALSE, 30, 1),
+  (69, 7, 3, NULL, 'Atún en Lata', 26, '🐟', 'Atún en agua, lata de 140 g.', FALSE, 30, 1),
+  (70, 7, 1, NULL, 'Frijol Negro', 38, '🫘', 'Frijol negro seleccionado a granel.', FALSE, 30, 1),
+  (71, 7, 1, NULL, 'Azúcar Refinada', 28, '🍬', 'Azúcar refinada de caña, 1 kg.', FALSE, 30, 1),
+  (72, 7, 4, NULL, 'Sal de Mesa', 14, '🧂', 'Sal de mesa yodada, 1 kg.', FALSE, 30, 1),
+  (73, 7, 4, NULL, 'Cereal de Maíz', 64, '🥣', 'Cereal de maíz tostado, 500 g.', FALSE, 30, 1);
 
 -- ============================================================
 --  Ofertas del carrusel
@@ -153,7 +206,10 @@ VALUES
   (1, 1, 1, 'Frutas y verduras frescas', 'Aplica en frutas y verduras seleccionadas', '20% OFF', 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Produce_section_at_Publix.jpg/1280px-Produce_section_at_Publix.jpg'),
   (2, NULL, NULL, 'Panadería recién horneada', 'Pan y pastelería todos los días', NULL, 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Korb_mit_Br%C3%B6tchen.JPG/1280px-Korb_mit_Br%C3%B6tchen.JPG'),
   (3, 2, 2, 'Lácteos y quesos', 'Aplica en lácteos seleccionados', '2x1', 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Cheese_platter.jpg'),
-  (4, NULL, NULL, 'Delicias listas para llevar', 'Nuevos platillos preparados cada semana', NULL, 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Prepared_food_display_in_an_Italian_deli_in_Rome.jpg/1280px-Prepared_food_display_in_an_Italian_deli_in_Rome.jpg');
+  (4, NULL, NULL, 'Delicias listas para llevar', 'Nuevos platillos preparados cada semana', NULL, 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Prepared_food_display_in_an_Italian_deli_in_Rome.jpg/1280px-Prepared_food_display_in_an_Italian_deli_in_Rome.jpg'),
+  (5, 3, 4, 'Fin de semana de parrilla', 'Aplica en cortes, pollo y pescados', '15% OFF', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Meat_at_the_butcher_shop.JPG/1280px-Meat_at_the_butcher_shop.JPG'),
+  (6, 4, 5, 'Refréscate este verano', 'Aplica en toda la sección de bebidas', '3x2', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Soft_drink_shelf.JPG/1280px-Soft_drink_shelf.JPG'),
+  (7, NULL, NULL, 'Despensa completa', 'Todo lo que necesitas para la semana, en un solo lugar', NULL, 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Supermarket_shelves.jpg/1280px-Supermarket_shelves.jpg');
 
 -- ============================================================
 --  Clientes de demostración
@@ -168,9 +224,9 @@ VALUES
 INSERT INTO Clientes
   (ID_cliente, nombre_cliente, correo_cliente, contrasena_cliente)
 VALUES
-  (1, 'Diana Wiling', 'diana@rosamark.com', '$2b$10$D16zSxUGxMV/ggCt8vlMreBEPiGo0GkSSLpEh8.WWDAAoDSWw9fC6'),
-  (2, 'Eduardo Ortiz', 'eduardo@rosamark.com', '$2b$10$wgXyp1CVH0SPj0ur8OI.7uWNCL7bchKzFY3lQArJQ5LXnnYba./xa'),
-  (3, 'Usuaria Demo', 'demo@rosamark.com', '$2b$10$u5kLkKmA9NiR0klWSdgZtuMmULmigccGhwZpyszb6cis9oI0mQbcK');
+  (1, 'Diana Wiling', 'diana@rosamark.com', '$2b$10$1HOdDYypUQj9TP9zaylF.OnQ3sXBghj17H7lLayyi8usR1Qhz1AYK'),
+  (2, 'Eduardo Ortiz', 'eduardo@rosamark.com', '$2b$10$jtnEM7oN1RqlnViEbcoGteCZFTaPO6kfWy8P5hx4rsoScvHD7JkA2'),
+  (3, 'Usuaria Demo', 'demo@rosamark.com', '$2b$10$g5SlTfnuc532EralXeU.i.H8yqDcvkdomepuSbXLnRARD.gpvDy7O');
 
 
 -- =============================================================

@@ -33,7 +33,7 @@
   border: none;
   border-radius: 999px;
   font: inherit;
-  font-size: 13px;
+  font-size: 0.722rem;
   font-weight: 600;
   color: var(--text);
   cursor: pointer;
@@ -48,12 +48,12 @@
 .login__tarjeta h1 {
   margin: 0 0 12px;
   text-align: left;
-  font-size: 32px;
+  font-size: 1.778rem;
 }
 
 .login__nota {
   margin-bottom: 24px;
-  font-size: 14px;
+  font-size: 0.778rem;
   color: var(--text);
 }
 
@@ -67,7 +67,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  font-size: 14px;
+  font-size: 0.778rem;
   font-weight: 600;
   color: var(--text-h);
 }
@@ -95,7 +95,7 @@
   background: rgba(217, 45, 32, 0.1);
   color: #b42318;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 0.722rem;
   font-weight: 500;
 }
 

@@ -6,6 +6,7 @@ import descuentosRoutes from './descuentos.routes.js';
 import ofertasRoutes from './ofertas.routes.js';
 import clientesRoutes from './clientes.routes.js';
 import ordenesRoutes from './ordenes.routes.js';
+import favoritosRoutes from './favoritos.routes.js';
 
 const router = Router();
 
@@ -30,6 +31,8 @@ router.get('/', (_req, res) => {
         '/clientes/:id/ordenes',
         '/ordenes',
         '/ordenes/:id',
+        '/favoritos',
+        '/clientes/me/contrasena',
       ],
     },
     error: null,
@@ -43,5 +46,6 @@ router.use('/descuentos', descuentosRoutes);
 router.use('/ofertas', ofertasRoutes);
 router.use('/clientes', clientesRoutes);
 router.use('/ordenes', ordenesRoutes);
+router.use('/favoritos', favoritosRoutes);
 
 export default router;

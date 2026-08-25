@@ -162,6 +162,28 @@ CREATE TABLE Maestra_orden_productos (
 ) ENGINE=InnoDB;
 
 -- =============================================================
+--  7. FAVORITOS
+--  (Tabla agregada en la v3.0 para el apartado "Mis favoritos".
+--   Es aditiva: no cambia ninguna tabla ni columna del esquema original.)
+-- =============================================================
+
+CREATE TABLE Favoritos (
+    ID_favorito INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    ID_cliente  INT UNSIGNED NOT NULL,
+    ID_producto INT UNSIGNED NOT NULL,
+    created_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (ID_favorito),
+    -- Un cliente no puede tener dos veces el mismo producto en favoritos.
+    UNIQUE KEY uq_favorito_cliente_producto (ID_cliente, ID_producto),
+    CONSTRAINT fk_fav_cliente
+        FOREIGN KEY (ID_cliente) REFERENCES Clientes (ID_cliente)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_fav_producto
+        FOREIGN KEY (ID_producto) REFERENCES Productos (ID_producto)
+        ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- =============================================================
 --  DATOS DE EJEMPLO (opcional, para probar)
 -- =============================================================
 

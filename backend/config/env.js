@@ -26,7 +26,7 @@ export const env = {
     host: requerido('DB_HOST', 'localhost'),
     port: numero('DB_PORT', 3306),
     user: requerido('DB_USER', 'root'),
-    password: process.env.DB_PASSWORD ?? '',
+    password: process.env.DB_PASSWORD ?? 'admin',
     database: requerido('DB_NAME', 'tienda'),
     connectionLimit: numero('DB_CONNECTION_LIMIT', 10),
   },

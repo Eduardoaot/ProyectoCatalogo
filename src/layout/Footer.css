@@ -58,7 +58,7 @@
 
 .footer__brand-texto {
   font-family: var(--font-brand);
-  font-size: 28px;
+  font-size: 1.556rem;
   line-height: 1;
   color: var(--accent);
   padding-top: 6px;
@@ -67,7 +67,7 @@
 .footer__eslogan {
   margin: 0;
   max-width: 320px;
-  font-size: 14px;
+  font-size: 0.778rem;
   line-height: 150%;
   color: var(--text);
 }
@@ -80,7 +80,7 @@
 
 .footer__columna h4 {
   margin: 0 0 2px;
-  font-size: 13px;
+  font-size: 0.722rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -88,7 +88,7 @@
 }
 
 .footer__columna a {
-  font-size: 14px;
+  font-size: 0.778rem;
   color: var(--text);
   text-decoration: none;
   width: fit-content;
@@ -100,7 +100,7 @@
 }
 
 .footer__codigo {
-  font-size: 13px;
+  font-size: 0.722rem;
   font-weight: 600;
   color: var(--accent);
   padding: 6px 10px;
@@ -113,7 +113,7 @@
   border-top: 1px solid var(--border);
   padding: 16px 32px;
   text-align: center;
-  font-size: 12px;
+  font-size: 0.667rem;
   color: var(--text);
 
   @media (max-width: 1024px) {

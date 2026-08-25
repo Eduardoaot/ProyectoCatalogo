@@ -83,6 +83,36 @@ export const login = asyncHandler(async (req, res) => {
   return enviarOk(res, { cliente, token: firmarToken(cliente) });
 });
 
+/**
+ * PUT /clientes/me/contrasena  { contrasena_actual, contrasena_nueva }
+ *
+ * Exige la contraseña actual aunque ya haya token: si alguien deja la sesión
+ * abierta, que no pueda cambiarla sin conocerla.
+ */
+export const cambiarContrasena = asyncHandler(async (req, res) => {
+  const [filas] = await pool.execute(
+    'SELECT contrasena_cliente FROM Clientes WHERE ID_cliente = ?',
+    [req.cliente.ID_cliente],
+  );
+  if (filas.length === 0) throw ApiError.notFound('Cliente no encontrado');
+
+  const coincide = await bcrypt.compare(req.body.contrasena_actual, filas[0].contrasena_cliente);
+  if (!coincide) throw ApiError.unauthorized('La contraseña actual no es correcta');
+
+  const esLaMisma = await bcrypt.compare(req.body.contrasena_nueva, filas[0].contrasena_cliente);
+  if (esLaMisma) {
+    throw ApiError.badRequest('La contraseña nueva debe ser distinta de la actual');
+  }
+
+  const hash = await bcrypt.hash(req.body.contrasena_nueva, env.bcryptSaltRounds);
+  await pool.execute('UPDATE Clientes SET contrasena_cliente = ? WHERE ID_cliente = ?', [
+    hash,
+    req.cliente.ID_cliente,
+  ]);
+
+  return enviarOk(res, { actualizada: true });
+});
+
 /** GET /clientes/me (requiere token) */
 export const perfil = asyncHandler(async (req, res) => {
   const [filas] = await pool.execute(
