@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
-import rosaLogo from '../assets/RosaLogo.webp'
+import LogoRosa from '../assets/LogoRosa.png'
+import LogoLetras from '../assets/LogoLetras.png'
+import LogoCompleto from '../assets/LogoCompleto.png'
 import { CATEGORIAS } from '../data/productos'
 import './Footer.css'
 
@@ -11,8 +13,8 @@ function Footer() {
       <div className="footer__inner">
         <div className="footer__marca">
           <Link to="/" className="footer__brand">
-            <img className="footer__logo" src={rosaLogo} alt="" />
-            <span className="footer__brand-texto">Rosamark</span>
+            <img className="footer__logo" src={LogoRosa} alt="" />
+              <img className="footer__brand-texto" src={LogoLetras} alt="Rosamark" />
           </Link>
           <p className="footer__eslogan">
             Tu supermercado de confianza: frescura, ofertas y todo lo que necesitas para tu

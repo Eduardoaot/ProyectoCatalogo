@@ -1,5 +1,6 @@
 .navbar {
   position: fixed;
+
   top: 0;
   left: 0;
   right: 0;
@@ -45,7 +46,7 @@
 }
 
 .navbar__logo {
-  height: 48px;
+  height: 65px;
   width: auto;
   filter: drop-shadow(0 2px 4px var(--accent-border));
 
@@ -55,15 +56,8 @@
 }
 
 .navbar__brand-texto {
-  font-family: var(--font-brand);
-  font-size: 32px;
-  line-height: 1;
-  color: var(--accent);
-  padding-top: 6px;
-
-  @media (max-width: 1024px) {
-    font-size: 26px;
-  }
+  height: 48px;
+  width: auto;
 }
 
 .navbar__hamburguesa {

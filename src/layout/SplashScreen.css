@@ -26,9 +26,8 @@
 }
 
 .splash__texto {
-  font-family: var(--font-brand);
-  font-size: 64px;
-  color: var(--accent);
+  width: 200px;
+  height: auto;
   animation: splash-texto-in 0.7s ease 0.25s both;
 }
 

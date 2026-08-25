@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import rosaLogo from '../assets/RosaLogo.webp'
+import LogoRosa from '../assets/LogoRosa.png'
+import LogoLetras from '../assets/LogoLetras.png'
 import './SplashScreen.css'
 
 const DURACION_VISIBLE_MS = 1600
@@ -22,8 +23,8 @@ function SplashScreen({ onFinish }) {
 
   return (
     <div className={saliendo ? 'splash splash--saliendo' : 'splash'}>
-      <img className="splash__logo" src={rosaLogo} alt="" />
-      <span className="splash__texto">Rosamark</span>
+      <img className="splash__logo" src={LogoRosa} alt="" />
+      <img className="splash__texto" src={LogoLetras} alt="Rosamark" />
     </div>
   )
 }

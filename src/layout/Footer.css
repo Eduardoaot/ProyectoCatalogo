@@ -52,16 +52,13 @@
 }
 
 .footer__logo {
-  height: 40px;
+  height: 50px;
   width: auto;
 }
 
 .footer__brand-texto {
-  font-family: var(--font-brand);
-  font-size: 28px;
-  line-height: 1;
-  color: var(--accent);
-  padding-top: 6px;
+  width: 200px;
+  height: auto;
 }
 
 .footer__eslogan {
