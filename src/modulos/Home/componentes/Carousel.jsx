@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useCatalogo } from '../../../context/CatalogoContext'
+import { usePreferencias } from '../../../context/PreferenciasContext'
 import './Carousel.css'
 
 const INTERVALO_MS = 4500
@@ -12,6 +13,7 @@ const UMBRAL_ARRASTRE = 0.15
 // y también se puede arrastrar con el mouse (o el dedo, vía Pointer Events).
 function Carousel() {
   const { ofertas } = useCatalogo()
+  const { t } = usePreferencias()
   const [indice, setIndice] = useState(0)
   const [arrastreX, setArrastreX] = useState(0)
   const [arrastrando, setArrastrando] = useState(false)
@@ -102,12 +104,14 @@ function Carousel() {
               draggable="false"
             />
             <div className="carrusel__overlay">
-              <span className="carrusel__etiqueta">Oferta</span>
+              <span className="carrusel__etiqueta">{t('carrusel.oferta')}</span>
               <h3 className="carrusel__titulo">{oferta.titulo}</h3>
               {oferta.codigo && (
                 <div className="carrusel__cupon">
                   <span className="carrusel__cupon-beneficio">{oferta.beneficio}</span>
-                  <span className="carrusel__cupon-codigo">Código: {oferta.codigo}</span>
+                  <span className="carrusel__cupon-codigo">
+                    {t('carrusel.codigo', { codigo: oferta.codigo })}
+                  </span>
                 </div>
               )}
               <p className="carrusel__texto">{oferta.texto}</p>
@@ -122,7 +126,7 @@ function Carousel() {
             key={oferta.id}
             type="button"
             className={i === indice ? 'carrusel__punto is-active' : 'carrusel__punto'}
-            aria-label={`Ver oferta ${i + 1}`}
+            aria-label={t('carrusel.verOferta', { n: i + 1 })}
             onClick={() => irA(i)}
           />
         ))}

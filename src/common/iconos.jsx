@@ -252,6 +252,172 @@ export function IconoIdioma({ className }) {
   )
 }
 
+export function IconoAjustes({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="3.2" />
+      <path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l1.9-1.5-2-3.5-2.3.6a7.6 7.6 0 0 0-2.6-1.5L14 2h-4l-.4 2.6a7.6 7.6 0 0 0-2.6 1.5l-2.3-.6-2 3.5L4.6 10.5a7.6 7.6 0 0 0 0 3L2.7 15l2 3.5 2.3-.6a7.6 7.6 0 0 0 2.6 1.5L10 22h4l.4-2.6a7.6 7.6 0 0 0 2.6-1.5l2.3.6 2-3.5-1.9-1.5Z" />
+    </svg>
+  )
+}
+
+// --- Íconos de categoría (usados en los chips de filtro del catálogo) ---
+
+export function IconoTodas({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="3" y="3" width="7.5" height="7.5" rx="1.5" />
+      <rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5" />
+      <rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5" />
+      <rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5" />
+    </svg>
+  )
+}
+
+export function IconoFrutas({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M12 9.2c4 0 6.5 2.6 6.5 6.2 0 3.5-2.7 6.6-6.5 6.6s-6.5-3.1-6.5-6.6c0-3.6 2.5-6.2 6.5-6.2Z" />
+      <path d="M12 9.2c0-2.4 1-4.3 3-5.4M12 9.2c0-2.4-1-4.3-3-5.4" />
+    </svg>
+  )
+}
+
+export function IconoLacteos({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M9 2.5h6v4l2.4 3.4c.4.5.6 1.2.6 1.8V20a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 7 20v-8.3c0-.6.2-1.3.6-1.8L10 6.5v-4Z" />
+      <path d="M7.3 13.5h9.4" />
+    </svg>
+  )
+}
+
+export function IconoPanaderia({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4 13c0-4 3.6-7.5 8-7.5s8 3.5 8 7.5-3.6 6.5-8 6.5-8-2.5-8-6.5Z" />
+      <path d="M7 11.5c.6-1 1.8-1.6 3-1.2M13.5 10.8c1-.6 2.4-.4 3.2.5" />
+    </svg>
+  )
+}
+
+export function IconoCarnes({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M9.5 14.5c-3-3-3.2-7.4-.5-10 2.6-2.6 6.8-2.4 9.7.5 3 3 3.1 7.2.5 9.7-1.2 1.2-2.9 1.7-4.6 1.5" />
+      <path d="M9.5 14.5 4 20M6.3 16.8 4 20l3.2-2.3" />
+    </svg>
+  )
+}
+
+export function IconoBebidas({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M6 2.5h12l-1.4 6.6a2 2 0 0 1-2 1.6h-5.2a2 2 0 0 1-2-1.6L6 2.5Z" />
+      <path d="M12 10.7V21M8 21h8" />
+    </svg>
+  )
+}
+
+export function IconoLimpieza({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M14.5 3.5 20 9l-8.5 8.5-6-6Z" />
+      <path d="M9 12.5 3.5 18c-1 1-1 2.4 0 3s2.4.5 3.4-.5L12 15" />
+    </svg>
+  )
+}
+
+export function IconoAbarrotes({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M5.5 8.5h13l-1.1 10.3a2 2 0 0 1-2 1.7H8.6a2 2 0 0 1-2-1.7L5.5 8.5Z" />
+      <path d="M8.5 8.5V6a3.5 3.5 0 0 1 7 0v2.5" />
+    </svg>
+  )
+}
+
 export function IconoTexto({ className }) {
   return (
     <svg

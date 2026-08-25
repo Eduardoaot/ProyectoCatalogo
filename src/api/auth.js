@@ -38,6 +38,18 @@ export async function obtenerPerfil() {
   return adaptarCliente(await pedir('/clientes/me', { autenticado: true }))
 }
 
+/**
+ * Cambia la contraseña del cliente en sesión. El servidor exige la actual
+ * (aunque ya haya token) antes de guardar la nueva, hasheada con bcrypt.
+ */
+export async function cambiarContrasena({ actual, nueva }) {
+  await pedir('/clientes/me/contrasena', {
+    metodo: 'PUT',
+    autenticado: true,
+    cuerpo: { contrasena_actual: actual, contrasena_nueva: nueva },
+  })
+}
+
 export function cerrarSesion() {
   guardarToken(null)
 }

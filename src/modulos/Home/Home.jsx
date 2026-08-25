@@ -2,13 +2,16 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Carousel from './componentes/Carousel'
 import ProductCard from './componentes/ProductCard'
+import { usePreferencias } from '../../context/PreferenciasContext'
 import { useCatalogo } from '../../context/CatalogoContext'
+import { ICONO_POR_CATEGORIA, ICONO_TODAS } from '../../data/categoriaMeta'
 import './Home.css'
 
 const DURACION_TRANSICION_MS = 200
 
 function Home() {
   const { productos, categorias, cargando, error, reintentar } = useCatalogo()
+  const { t } = usePreferencias()
   // La URL es la única fuente de verdad del filtro: ?categoria=... permite
   // que el dropdown del menú lateral enlace directo a un filtro aplicado,
   // y ?buscar=... conecta la barra de búsqueda del navbar.
@@ -61,13 +64,15 @@ function Home() {
     }, DURACION_TRANSICION_MS)
   }
 
-  let mensajeIntro = 'Todo lo que necesitas para tu hogar, a un clic de distancia.'
+  // null = eslogan por defecto (con su segunda línea); si hay búsqueda o
+  // categoría activa, se muestra ese mensaje en su lugar.
+  let mensajeIntro = null
   if (busqueda && categoriaActiva !== 'Todas') {
-    mensajeIntro = `Resultados para "${busqueda}" en ${categoriaActiva}`
+    mensajeIntro = t('home.resultadosEn', { texto: busqueda, categoria: t(`cat.${categoriaActiva}`) })
   } else if (busqueda) {
-    mensajeIntro = `Resultados para "${busqueda}"`
+    mensajeIntro = t('home.resultadosPara', { texto: busqueda })
   } else if (categoriaActiva !== 'Todas') {
-    mensajeIntro = `Categoría: ${categoriaActiva}`
+    mensajeIntro = t('home.categoria', { categoria: t(`cat.${categoriaActiva}`) })
   }
 
   // El catálogo viene de la API, así que hay dos estados nuevos que antes no
@@ -75,10 +80,10 @@ function Home() {
   if (error) {
     return (
       <section className="home home--aviso">
-        <h1>No pudimos cargar el catálogo</h1>
+        <h1>{t('home.errorTitulo')}</h1>
         <p className="home__error">{error}</p>
         <button type="button" className="filtro" onClick={reintentar}>
-          Reintentar
+          {t('home.reintentar')}
         </button>
       </section>
     )
@@ -87,8 +92,8 @@ function Home() {
   if (cargando) {
     return (
       <section className="home home--aviso">
-        <h1>Catálogo Rosamark</h1>
-        <p>Cargando productos…</p>
+        <h1>{t('home.titulo')}</h1>
+        <p>{t('home.cargando')}</p>
       </section>
     )
   }
@@ -98,8 +103,12 @@ function Home() {
       <Carousel />
 
       <div className="home__intro">
-        <h1>Catálogo Rosamark</h1>
-        <p>{mensajeIntro}</p>
+        <h1 className="home__intro-titulo">{t('home.titulo')}</h1>
+        <p className="home__intro-eslogan">
+          <span className="home__intro-eslogan-punto" aria-hidden="true" />
+          {mensajeIntro ?? t('home.eslogan')}
+        </p>
+        {!mensajeIntro && <p className="home__intro-eslogan2">{t('home.eslogan2')}</p>}
       </div>
 
       <div className="home__filtros" ref={catalogoRef}>
@@ -108,22 +117,29 @@ function Home() {
           className={categoriaActiva === 'Todas' ? 'filtro is-active' : 'filtro'}
           onClick={() => cambiarCategoria('Todas')}
         >
-          Todas
+          <span className="filtro__icono">
+            <ICONO_TODAS />
+          </span>
+          <span>{t('home.todas')}</span>
         </button>
-        {categorias.map((categoria) => (
-          <button
-            key={categoria}
-            type="button"
-            className={categoriaActiva === categoria ? 'filtro is-active' : 'filtro'}
-            onClick={() => cambiarCategoria(categoria)}
-          >
-            {categoria}
-          </button>
-        ))}
+        {categorias.map((categoria) => {
+          const Icono = ICONO_POR_CATEGORIA[categoria]
+          return (
+            <button
+              key={categoria}
+              type="button"
+              className={categoriaActiva === categoria ? 'filtro is-active' : 'filtro'}
+              onClick={() => cambiarCategoria(categoria)}
+            >
+              <span className="filtro__icono">{Icono && <Icono />}</span>
+              <span>{t(`cat.${categoria}`)}</span>
+            </button>
+          )
+        })}
       </div>
 
       {productosFiltrados.length === 0 ? (
-        <p className="home__sin-resultados">No encontramos productos que coincidan.</p>
+        <p className="home__sin-resultados">{t('home.sinResultados')}</p>
       ) : (
         <div className={transicionando ? 'home__grid home__grid--transicion' : 'home__grid'}>
           {productosFiltrados.map((producto) => (

@@ -19,6 +19,7 @@ export default {
   'menu.configuracion': 'Настройки',
   'menu.invitado': 'Здравствуйте, войдите',
   'pref.titulo': 'Настройки',
+  'pref.cerrar': 'Закрыть настройки',
   'pref.tema': 'Тема',
   'pref.temaClaro': 'Светлая',
   'pref.temaOscuro': 'Тёмная',
@@ -71,6 +72,7 @@ export default {
   'carrito.irCatalogo': 'Перейти в каталог',
   'carrito.vaciar': 'Очистить корзину',
   'carrito.codigo': 'Промокод',
+  'carrito.codigoPlaceholder': 'Например, FRESCUERA',
   'carrito.aplicar': 'Применить',
   'carrito.validando': 'Проверяем…',
   'carrito.quitarCodigo': 'Убрать промокод',
@@ -93,6 +95,10 @@ export default {
   'carrito.confirmarEliminarTexto': '«{nombre}» будет удалён из вашей корзины.',
   'carrito.cancelar': 'Отмена',
   'carrito.unidades': 'Товаров: {n}',
+
+  // --- Panel lateral del carrito (vista rapida) ---
+  'panelCarrito.titulo': 'Ваша корзина ({n})',
+  'panelCarrito.verCompleto': 'Посмотреть всю корзину',
 
   'ordenes.titulo': 'Мои заказы',
   'ordenes.vacio': 'Вы ещё не оформили ни одного заказа.',
@@ -146,6 +152,11 @@ export default {
   'footer.miCuenta': 'Мой аккаунт',
   'footer.codigos': 'Промокоды',
   'footer.derechos': '© {anio} Rosamark. Учебный проект, это не настоящий магазин.',
+
+  // --- Carrusel de ofertas ---
+  'carrusel.oferta': 'Акция',
+  'carrusel.codigo': 'Код: {codigo}',
+  'carrusel.verOferta': 'Посмотреть предложение {n}',
 
   'cat.Frutas y Verduras': 'Фрукты и овощи',
   'cat.Lácteos': 'Молочные продукты',

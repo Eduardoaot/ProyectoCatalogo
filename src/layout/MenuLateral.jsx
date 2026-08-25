@@ -2,15 +2,17 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useCatalogo } from '../context/CatalogoContext'
-import { IconoChevron, IconoUsuario, IconoX } from '../common/iconos'
+import { usePreferencias } from '../context/PreferenciasContext'
+import { IconoAjustes, IconoChevron, IconoCorazon, IconoUsuario, IconoX } from '../common/iconos'
 import './MenuLateral.css'
 
 // Menú lateral (drawer) tipo Amazon: usuario / órdenes / catálogo con
 // filtros / configuración. Se mantiene montado siempre y se anima con
 // clases CSS (así el cierre también se ve animado, no solo la apertura).
-function MenuLateral({ abierto, onCerrar }) {
+function MenuLateral({ abierto, onCerrar, onAbrirPreferencias }) {
   const { usuario, cerrarSesion } = useAuth()
   const { categorias } = useCatalogo()
+  const { t } = usePreferencias()
   const navigate = useNavigate()
   const [usuarioExpandido, setUsuarioExpandido] = useState(false)
   const [catalogoExpandido, setCatalogoExpandido] = useState(false)
@@ -36,6 +38,11 @@ function MenuLateral({ abierto, onCerrar }) {
     navigate('/')
   }
 
+  const abrirPreferencias = () => {
+    onCerrar()
+    onAbrirPreferencias()
+  }
+
   return (
     <>
       <div
@@ -51,12 +58,12 @@ function MenuLateral({ abierto, onCerrar }) {
         aria-hidden={!abierto}
       >
         <div className="menu-lateral__cabecera">
-          <span>Menú</span>
+          <span>{t('nav.menu')}</span>
           <button
             type="button"
             className="menu-lateral__cerrar"
             onClick={onCerrar}
-            aria-label="Cerrar menú"
+            aria-label={t('nav.menu')}
           >
             <IconoX className="menu-lateral__icono-cerrar" />
           </button>
@@ -79,13 +86,13 @@ function MenuLateral({ abierto, onCerrar }) {
                     irACuenta()
                   }}
                 >
-                  Hola, {usuario.nombre}
+                  {t('nav.hola', { nombre: usuario.nombre })}
                 </span>
               </button>
             ) : (
               <Link to="/login" className="menu-lateral__usuario" onClick={onCerrar}>
                 <IconoUsuario className="menu-lateral__icono-usuario" />
-                <span className="menu-lateral__usuario-nombre">Hola, inicia sesión</span>
+                <span className="menu-lateral__usuario-nombre">{t('menu.invitado')}</span>
               </Link>
             )}
             {usuario && usuarioExpandido && (
@@ -94,26 +101,32 @@ function MenuLateral({ abierto, onCerrar }) {
                 className="menu-lateral__cerrar-sesion"
                 onClick={handleCerrarSesion}
               >
-                Cerrar sesión
+                {t('menu.cerrarSesion')}
               </button>
             )}
           </div>
 
           {/* Órdenes */}
           <button type="button" className="menu-lateral__item" onClick={irAOrdenes}>
-            Órdenes
+            {t('menu.misOrdenes')}
           </button>
+
+          {/* Favoritos */}
+          <Link to="/favoritos" className="menu-lateral__item menu-lateral__item--icono" onClick={onCerrar}>
+            <IconoCorazon className="menu-lateral__icono-item" />
+            {t('menu.misFavoritos')}
+          </Link>
 
           {/* Catálogo */}
           <div className="menu-lateral__seccion">
             <div className="menu-lateral__item-conjunto">
               <Link to="/" className="menu-lateral__item menu-lateral__item--flex" onClick={onCerrar}>
-                Catálogo
+                {t('menu.catalogo')}
               </Link>
               <button
                 type="button"
                 className="menu-lateral__flecha"
-                aria-label="Mostrar filtros de catálogo"
+                aria-label={t('menu.categorias')}
                 onClick={() => setCatalogoExpandido((v) => !v)}
               >
                 <IconoChevron
@@ -134,7 +147,7 @@ function MenuLateral({ abierto, onCerrar }) {
                     className="menu-lateral__filtro"
                     onClick={onCerrar}
                   >
-                    {categoria}
+                    {t(`cat.${categoria}`)}
                   </Link>
                 ))}
               </div>
@@ -143,9 +156,14 @@ function MenuLateral({ abierto, onCerrar }) {
         </div>
 
         <div className="menu-lateral__pie">
-          <Link to="/cuenta" className="menu-lateral__item" onClick={onCerrar}>
-            Configuración
-          </Link>
+          <button
+            type="button"
+            className="menu-lateral__item menu-lateral__item--icono"
+            onClick={abrirPreferencias}
+          >
+            <IconoAjustes className="menu-lateral__icono-item" />
+            {t('pref.titulo')}
+          </button>
         </div>
       </aside>
     </>

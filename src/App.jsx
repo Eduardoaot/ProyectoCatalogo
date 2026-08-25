@@ -7,6 +7,7 @@ import SparkleBackground from './layout/SparkleBackground'
 import SplashScreen from './layout/SplashScreen'
 import Carrito from './modulos/Carrito/Carrito'
 import Cuenta from './modulos/Cuenta/Cuenta'
+import Favoritos from './modulos/Favoritos/Favoritos'
 import Home from './modulos/Home/Home'
 import Login from './modulos/Login/Login'
 import Ordenes from './modulos/Ordenes/Ordenes'
@@ -35,6 +36,7 @@ function App() {
             <Route path="/cuenta" element={<Cuenta />} />
             <Route path="/ordenes" element={<Ordenes />} />
             <Route path="/carrito" element={<Carrito />} />
+            <Route path="/favoritos" element={<Favoritos />} />
           </Routes>
         </div>
         <Footer />

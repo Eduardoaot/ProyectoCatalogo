@@ -68,6 +68,13 @@
   margin-top: 16px;
 }
 
+.detail-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .detail-category {
   color: #fff;
   background-color: var(--accent);
@@ -76,6 +83,33 @@
   display: inline;
   font-size: 0.778rem;
   font-weight: 500;
+}
+
+.detail-favorito {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.722rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.detail-favorito:hover,
+.detail-favorito.is-active {
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+
+.detail-favorito-icono {
+  width: 16px;
+  height: 16px;
 }
 
 .detail-precio-fila {

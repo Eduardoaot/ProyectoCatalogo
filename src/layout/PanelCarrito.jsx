@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ModalConfirmacion from '../common/ModalConfirmacion'
+import { usePreferencias } from '../context/PreferenciasContext'
 import { useTienda } from '../context/TiendaContext'
 import ImagenProducto from '../common/ImagenProducto'
 import { IconoX } from '../common/iconos'
@@ -12,6 +13,7 @@ import './PanelCarrito.css'
 function PanelCarrito() {
   const { carrito, totalUnidades, total, panelAbierto, cerrarPanel, cambiarCantidad, eliminarDelCarrito } =
     useTienda()
+  const { t } = usePreferencias()
   // null o { productoId, nombre } del producto que se va a eliminar
   const [aEliminar, setAEliminar] = useState(null)
 
@@ -33,19 +35,19 @@ function PanelCarrito() {
         aria-hidden={!panelAbierto}
       >
         <div className="panel-carrito__cabecera">
-          <span>Tu carrito ({totalUnidades})</span>
+          <span>{t('panelCarrito.titulo', { n: totalUnidades })}</span>
           <button
             type="button"
             className="panel-carrito__cerrar"
             onClick={cerrarPanel}
-            aria-label="Cerrar carrito"
+            aria-label={t('nav.carrito')}
           >
             <IconoX className="panel-carrito__icono-cerrar" />
           </button>
         </div>
 
         {carrito.length === 0 ? (
-          <p className="panel-carrito__vacio">Todavía no has agregado productos.</p>
+          <p className="panel-carrito__vacio">{t('carrito.vacio')}</p>
         ) : (
           <ul className="panel-carrito__lista">
             {carrito.map((item) => (
@@ -62,7 +64,7 @@ function PanelCarrito() {
                     <button
                       type="button"
                       onClick={() => cambiarCantidad(item.productoId, -1)}
-                      aria-label={`Disminuir cantidad de ${item.producto.nombre}`}
+                      aria-label={t('producto.disminuir')}
                     >
                       −
                     </button>
@@ -71,7 +73,7 @@ function PanelCarrito() {
                       type="button"
                       onClick={() => cambiarCantidad(item.productoId, 1)}
                       disabled={item.cantidad >= item.stockRestante}
-                      aria-label={`Aumentar cantidad de ${item.producto.nombre}`}
+                      aria-label={t('producto.aumentar')}
                     >
                       +
                     </button>
@@ -82,7 +84,7 @@ function PanelCarrito() {
                         setAEliminar({ productoId: item.productoId, nombre: item.producto.nombre })
                       }
                     >
-                      Eliminar
+                      {t('carrito.eliminar')}
                     </button>
                   </div>
                 </div>
@@ -94,11 +96,11 @@ function PanelCarrito() {
         {carrito.length > 0 && (
           <div className="panel-carrito__pie">
             <div className="panel-carrito__total">
-              <span>Total</span>
+              <span>{t('carrito.total')}</span>
               <span>${total.toFixed(2)}</span>
             </div>
             <Link to="/carrito" className="panel-carrito__ver" onClick={cerrarPanel}>
-              Ver carrito completo
+              {t('panelCarrito.verCompleto')}
             </Link>
           </div>
         )}
@@ -106,9 +108,10 @@ function PanelCarrito() {
 
       <ModalConfirmacion
         abierto={aEliminar !== null}
-        titulo="¿Eliminar producto?"
-        mensaje={`Se quitará "${aEliminar?.nombre}" de tu carrito.`}
-        textoConfirmar="Eliminar"
+        titulo={t('carrito.confirmarEliminarTitulo')}
+        mensaje={t('carrito.confirmarEliminarTexto', { nombre: aEliminar?.nombre })}
+        textoConfirmar={t('carrito.eliminar')}
+        textoCancelar={t('carrito.cancelar')}
         onConfirmar={confirmarEliminar}
         onCancelar={() => setAEliminar(null)}
       />

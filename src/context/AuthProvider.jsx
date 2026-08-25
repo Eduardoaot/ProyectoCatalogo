@@ -62,9 +62,28 @@ export function AuthProvider({ children }) {
     setUsuario(null)
   }
 
+  // La contraseña nunca vive en el navegador (ni siquiera cifrada): esto
+  // solo manda actual+nueva a la API, que valida la actual contra el hash y
+  // guarda la nueva ya hasheada con bcrypt.
+  const cambiarPassword = async (actual, nueva) => {
+    try {
+      await api.cambiarContrasena({ actual, nueva })
+      return { ok: true }
+    } catch (error) {
+      return { ok: false, error: error.message }
+    }
+  }
+
   return (
     <AuthContext.Provider
-      value={{ usuario, cargandoSesion, iniciarSesion, registrarUsuario, cerrarSesion }}
+      value={{
+        usuario,
+        cargandoSesion,
+        iniciarSesion,
+        registrarUsuario,
+        cerrarSesion,
+        cambiarPassword,
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -19,6 +19,7 @@ export default {
   'menu.configuracion': '设置',
   'menu.invitado': '你好，请登录',
   'pref.titulo': '偏好设置',
+  'pref.cerrar': '关闭偏好设置',
   'pref.tema': '主题',
   'pref.temaClaro': '浅色',
   'pref.temaOscuro': '深色',
@@ -71,6 +72,7 @@ export default {
   'carrito.irCatalogo': '去选购',
   'carrito.vaciar': '清空购物车',
   'carrito.codigo': '优惠码',
+  'carrito.codigoPlaceholder': '例如 FRESCUERA',
   'carrito.aplicar': '使用',
   'carrito.validando': '验证中…',
   'carrito.quitarCodigo': '移除优惠码',
@@ -92,6 +94,10 @@ export default {
   'carrito.confirmarEliminarTexto': '“{nombre}”将从购物车中移除。',
   'carrito.cancelar': '取消',
   'carrito.unidades': '{n} 件',
+
+  // --- Panel lateral del carrito (vista rapida) ---
+  'panelCarrito.titulo': '我的购物车 ({n})',
+  'panelCarrito.verCompleto': '查看完整购物车',
 
   'ordenes.titulo': '我的订单',
   'ordenes.vacio': '你还没有下过订单。',
@@ -143,6 +149,11 @@ export default {
   'footer.miCuenta': '我的账户',
   'footer.codigos': '优惠码',
   'footer.derechos': '© {anio} Rosamark. 教学项目，并非真实商店。',
+
+  // --- Carrusel de ofertas ---
+  'carrusel.oferta': '优惠',
+  'carrusel.codigo': '优惠码：{codigo}',
+  'carrusel.verOferta': '查看优惠 {n}',
 
   'cat.Frutas y Verduras': '果蔬',
   'cat.Lácteos': '乳制品',

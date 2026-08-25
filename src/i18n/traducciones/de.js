@@ -19,6 +19,7 @@ export default {
   'menu.configuracion': 'Einstellungen',
   'menu.invitado': 'Hallo, bitte anmelden',
   'pref.titulo': 'Einstellungen',
+  'pref.cerrar': 'Einstellungen schließen',
   'pref.tema': 'Design',
   'pref.temaClaro': 'Hell',
   'pref.temaOscuro': 'Dunkel',
@@ -71,6 +72,7 @@ export default {
   'carrito.irCatalogo': 'Zum Katalog',
   'carrito.vaciar': 'Warenkorb leeren',
   'carrito.codigo': 'Rabattcode',
+  'carrito.codigoPlaceholder': 'Z. B. FRESCUERA',
   'carrito.aplicar': 'Anwenden',
   'carrito.validando': 'Wird geprüft…',
   'carrito.quitarCodigo': 'Code entfernen',
@@ -93,6 +95,10 @@ export default {
   'carrito.confirmarEliminarTexto': '„{nombre}“ wird aus deinem Warenkorb entfernt.',
   'carrito.cancelar': 'Abbrechen',
   'carrito.unidades': '{n} Artikel',
+
+  // --- Panel lateral del carrito (vista rapida) ---
+  'panelCarrito.titulo': 'Ihr Warenkorb ({n})',
+  'panelCarrito.verCompleto': 'Vollständigen Warenkorb ansehen',
 
   'ordenes.titulo': 'Meine Bestellungen',
   'ordenes.vacio': 'Du hast noch keine Bestellung aufgegeben.',
@@ -146,6 +152,11 @@ export default {
   'footer.miCuenta': 'Mein Konto',
   'footer.codigos': 'Rabattcodes',
   'footer.derechos': '© {anio} Rosamark. Lernprojekt, kein echter Shop.',
+
+  // --- Carrusel de ofertas ---
+  'carrusel.oferta': 'Angebot',
+  'carrusel.codigo': 'Code: {codigo}',
+  'carrusel.verOferta': 'Angebot {n} ansehen',
 
   'cat.Frutas y Verduras': 'Obst & Gemüse',
   'cat.Lácteos': 'Molkereiprodukte',

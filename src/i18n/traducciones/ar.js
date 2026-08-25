@@ -20,6 +20,7 @@ export default {
   'menu.configuracion': 'الإعدادات',
   'menu.invitado': 'مرحبًا، سجّل الدخول',
   'pref.titulo': 'التفضيلات',
+  'pref.cerrar': 'إغلاق التفضيلات',
   'pref.tema': 'المظهر',
   'pref.temaClaro': 'فاتح',
   'pref.temaOscuro': 'داكن',
@@ -72,6 +73,7 @@ export default {
   'carrito.irCatalogo': 'الذهاب إلى الكتالوج',
   'carrito.vaciar': 'إفراغ السلة',
   'carrito.codigo': 'رمز الخصم',
+  'carrito.codigoPlaceholder': 'مثال: FRESCUERA',
   'carrito.aplicar': 'تطبيق',
   'carrito.validando': 'جارٍ التحقق…',
   'carrito.quitarCodigo': 'إزالة الرمز',
@@ -93,6 +95,10 @@ export default {
   'carrito.confirmarEliminarTexto': 'سيُحذف «{nombre}» من سلّتك.',
   'carrito.cancelar': 'إلغاء',
   'carrito.unidades': '{n} عنصرًا',
+
+  // --- Panel lateral del carrito (vista rapida) ---
+  'panelCarrito.titulo': 'سلتك ({n})',
+  'panelCarrito.verCompleto': 'عرض السلة كاملة',
 
   'ordenes.titulo': 'طلباتي',
   'ordenes.vacio': 'لم تقم بأي طلب بعد.',
@@ -146,6 +152,11 @@ export default {
   'footer.miCuenta': 'حسابي',
   'footer.codigos': 'رموز الخصم',
   'footer.derechos': '© {anio} Rosamark. مشروع تعليمي، وليس متجرًا حقيقيًا.',
+
+  // --- Carrusel de ofertas ---
+  'carrusel.oferta': 'عرض',
+  'carrusel.codigo': 'الرمز: {codigo}',
+  'carrusel.verOferta': 'عرض العرض {n}',
 
   'cat.Frutas y Verduras': 'الفواكه والخضروات',
   'cat.Lácteos': 'منتجات الألبان',

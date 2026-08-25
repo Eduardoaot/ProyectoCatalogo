@@ -19,6 +19,7 @@ export default {
   'menu.configuracion': '設定',
   'menu.invitado': 'ログインしてください',
   'pref.titulo': '設定',
+  'pref.cerrar': '設定を閉じる',
   'pref.tema': 'テーマ',
   'pref.temaClaro': 'ライト',
   'pref.temaOscuro': 'ダーク',
@@ -71,6 +72,7 @@ export default {
   'carrito.irCatalogo': 'カタログへ',
   'carrito.vaciar': 'カートを空にする',
   'carrito.codigo': 'クーポンコード',
+  'carrito.codigoPlaceholder': '例: FRESCUERA',
   'carrito.aplicar': '適用',
   'carrito.validando': '確認中…',
   'carrito.quitarCodigo': 'コードを外す',
@@ -92,6 +94,10 @@ export default {
   'carrito.confirmarEliminarTexto': '「{nombre}」をカートから削除します。',
   'carrito.cancelar': 'キャンセル',
   'carrito.unidades': '{n} 点',
+
+  // --- Panel lateral del carrito (vista rapida) ---
+  'panelCarrito.titulo': 'カート ({n})',
+  'panelCarrito.verCompleto': 'カートをすべて見る',
 
   'ordenes.titulo': '注文履歴',
   'ordenes.vacio': 'まだご注文がありません。',
@@ -145,6 +151,11 @@ export default {
   'footer.miCuenta': 'アカウント',
   'footer.codigos': 'クーポンコード',
   'footer.derechos': '© {anio} Rosamark. 学習用プロジェクトであり、実在の店舗ではありません。',
+
+  // --- Carrusel de ofertas ---
+  'carrusel.oferta': 'セール',
+  'carrusel.codigo': 'コード: {codigo}',
+  'carrusel.verOferta': 'セール{n}を見る',
 
   'cat.Frutas y Verduras': '青果',
   'cat.Lácteos': '乳製品',

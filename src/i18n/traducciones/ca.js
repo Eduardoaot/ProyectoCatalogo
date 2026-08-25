@@ -19,6 +19,7 @@ export default {
   'menu.configuracion': 'Configuració',
   'menu.invitado': 'Hola, inicia la sessió',
   'pref.titulo': 'Preferències',
+  'pref.cerrar': 'Tanca les preferències',
   'pref.tema': 'Tema',
   'pref.temaClaro': 'Clar',
   'pref.temaOscuro': 'Fosc',
@@ -71,6 +72,7 @@ export default {
   'carrito.irCatalogo': 'Ves al catàleg',
   'carrito.vaciar': 'Buida la cistella',
   'carrito.codigo': 'Codi de descompte',
+  'carrito.codigoPlaceholder': 'Ex. FRESCUERA',
   'carrito.aplicar': 'Aplica',
   'carrito.validando': 'S’està validant…',
   'carrito.quitarCodigo': 'Treu el codi',
@@ -93,6 +95,10 @@ export default {
   'carrito.confirmarEliminarTexto': 'Es traurà «{nombre}» de la teva cistella.',
   'carrito.cancelar': 'Cancel·la',
   'carrito.unidades': '{n} articles',
+
+  // --- Panel lateral del carrito (vista rapida) ---
+  'panelCarrito.titulo': 'La teva cistella ({n})',
+  'panelCarrito.verCompleto': 'Veure cistella completa',
 
   'ordenes.titulo': 'Les meves comandes',
   'ordenes.vacio': 'Encara no has fet cap comanda.',
@@ -146,6 +152,11 @@ export default {
   'footer.miCuenta': 'El meu compte',
   'footer.codigos': 'Codis de descompte',
   'footer.derechos': '© {anio} Rosamark. Projecte educatiu, no és una botiga real.',
+
+  // --- Carrusel de ofertas ---
+  'carrusel.oferta': 'Oferta',
+  'carrusel.codigo': 'Codi: {codigo}',
+  'carrusel.verOferta': 'Veure oferta {n}',
 
   'cat.Frutas y Verduras': 'Fruita i Verdura',
   'cat.Lácteos': 'Làctics',

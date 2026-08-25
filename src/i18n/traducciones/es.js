@@ -24,6 +24,7 @@ export default {
   'menu.configuracion': 'Configuración',
   'menu.invitado': 'Hola, inicia sesión',
   'pref.titulo': 'Preferencias',
+  'pref.cerrar': 'Cerrar preferencias',
   'pref.tema': 'Tema',
   'pref.temaClaro': 'Claro',
   'pref.temaOscuro': 'Oscuro',
@@ -80,6 +81,7 @@ export default {
   'carrito.irCatalogo': 'Ir al catálogo',
   'carrito.vaciar': 'Vaciar carrito',
   'carrito.codigo': 'Código de descuento',
+  'carrito.codigoPlaceholder': 'Ej. FRESCUERA',
   'carrito.aplicar': 'Aplicar',
   'carrito.validando': 'Validando…',
   'carrito.quitarCodigo': 'Quitar código',
@@ -102,6 +104,10 @@ export default {
   'carrito.confirmarEliminarTexto': 'Se quitará «{nombre}» de tu carrito.',
   'carrito.cancelar': 'Cancelar',
   'carrito.unidades': '{n} artículos',
+
+  // --- Panel lateral del carrito (vista rápida) ---
+  'panelCarrito.titulo': 'Tu carrito ({n})',
+  'panelCarrito.verCompleto': 'Ver carrito completo',
 
   // --- Órdenes ---
   'ordenes.titulo': 'Mis órdenes',
@@ -159,6 +165,11 @@ export default {
   'footer.miCuenta': 'Mi cuenta',
   'footer.codigos': 'Códigos de descuento',
   'footer.derechos': '© {anio} Rosamark. Proyecto educativo, no es una tienda real.',
+
+  // --- Carrusel de ofertas ---
+  'carrusel.oferta': 'Oferta',
+  'carrusel.codigo': 'Código: {codigo}',
+  'carrusel.verOferta': 'Ver oferta {n}',
 
   // --- Categorías (los nombres vienen de la base; esto los traduce en pantalla) ---
   'cat.Frutas y Verduras': 'Frutas y Verduras',

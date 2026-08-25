@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import ImagenProducto from '../../common/ImagenProducto'
 import ModalConfirmacion from '../../common/ModalConfirmacion'
 import { useAuth } from '../../context/AuthContext'
+import { usePreferencias } from '../../context/PreferenciasContext'
 import { useTienda } from '../../context/TiendaContext'
 import './Carrito.css'
 
@@ -26,6 +27,7 @@ function Carrito() {
     quitarCodigo,
     generarOrden,
   } = useTienda()
+  const { t } = usePreferencias()
   const navigate = useNavigate()
 
   const [codigoTexto, setCodigoTexto] = useState('')
@@ -90,10 +92,10 @@ function Carrito() {
   if (carrito.length === 0) {
     return (
       <section className="carrito carrito--vacio">
-        <h1>Tu carrito</h1>
-        <p>Todavía no has agregado productos.</p>
+        <h1>{t('carrito.titulo')}</h1>
+        <p>{t('carrito.vacio')}</p>
         <Link to="/" className="carrito__volver">
-          Ir al catálogo
+          {t('carrito.irCatalogo')}
         </Link>
       </section>
     )
@@ -101,7 +103,7 @@ function Carrito() {
 
   return (
     <section className="carrito">
-      <h1>Tu carrito</h1>
+      <h1>{t('carrito.titulo')}</h1>
       <div className="carrito__contenido">
         <div className="carrito__columna-izquierda">
           <div className="carrito__acciones">
@@ -110,7 +112,7 @@ function Carrito() {
               className="carrito__vaciar"
               onClick={() => setConfirmacion({ tipo: 'vaciar' })}
             >
-              Vaciar carrito
+              {t('carrito.vaciar')}
             </button>
           </div>
 
@@ -134,7 +136,7 @@ function Carrito() {
                     )}
                   </span>
                   {item.cantidad >= item.stockRestante && (
-                    <span className="carrito__item-stock">Máximo disponible alcanzado</span>
+                    <span className="carrito__item-stock">{t('carrito.maximo')}</span>
                   )}
                 </div>
 
@@ -142,7 +144,7 @@ function Carrito() {
                   <button
                     type="button"
                     onClick={() => cambiarCantidad(item.productoId, -1)}
-                    aria-label={`Disminuir cantidad de ${item.producto.nombre}`}
+                    aria-label={t('producto.disminuir')}
                   >
                     −
                   </button>
@@ -151,7 +153,7 @@ function Carrito() {
                     type="button"
                     onClick={() => cambiarCantidad(item.productoId, 1)}
                     disabled={item.cantidad >= item.stockRestante}
-                    aria-label={`Aumentar cantidad de ${item.producto.nombre}`}
+                    aria-label={t('producto.aumentar')}
                   >
                     +
                   </button>
@@ -172,7 +174,7 @@ function Carrito() {
                     })
                   }
                 >
-                  Eliminar
+                  {t('carrito.eliminar')}
                 </button>
               </li>
             ))}
@@ -182,14 +184,14 @@ function Carrito() {
         <aside className="carrito__resumen">
           <form className="carrito__codigo" onSubmit={handleAplicarCodigo}>
             <label htmlFor="codigo-descuento" className="carrito__codigo-etiqueta">
-              Código de descuento
+              {t('carrito.codigo')}
             </label>
             {codigoAplicado ? (
               <div className="carrito__codigo-aplicado">
                 <span>
                   {codigoAplicado.etiqueta} — {codigoAplicado.descripcion}
                 </span>
-                <button type="button" onClick={quitarCodigo} aria-label="Quitar código">
+                <button type="button" onClick={quitarCodigo} aria-label={t('carrito.quitarCodigo')}>
                   ×
                 </button>
               </div>
@@ -198,46 +200,46 @@ function Carrito() {
                 <input
                   id="codigo-descuento"
                   type="text"
-                  placeholder="Ej. FRESCUERA"
+                  placeholder={t('carrito.codigoPlaceholder')}
                   value={codigoTexto}
                   onChange={(e) => setCodigoTexto(e.target.value)}
                   disabled={aplicandoCodigo}
                 />
                 <button type="submit" disabled={aplicandoCodigo}>
-                  {aplicandoCodigo ? 'Validando…' : 'Aplicar'}
+                  {aplicandoCodigo ? t('carrito.validando') : t('carrito.aplicar')}
                 </button>
               </div>
             )}
             {mensajeCodigo && <p className="carrito__codigo-mensaje">{mensajeCodigo}</p>}
           </form>
 
-          <h2>Resumen</h2>
+          <h2>{t('carrito.resumen')}</h2>
           <div className="carrito__resumen-linea">
-            <span>Precio de lista</span>
+            <span>{t('carrito.precioLista')}</span>
             <span>${subtotalLista.toFixed(2)}</span>
           </div>
           {descuentoProductos > 0 && (
             <div className="carrito__resumen-linea carrito__resumen-linea--descuento">
-              <span>Descuento en productos</span>
+              <span>{t('carrito.descuentoProductos')}</span>
               <span>−${descuentoProductos.toFixed(2)}</span>
             </div>
           )}
           {codigoAplicado && (
             <div className="carrito__resumen-linea carrito__resumen-linea--descuento">
-              <span>Código {codigoAplicado.etiqueta}</span>
+              <span>{t('carrito.codigoAplicado', { codigo: codigoAplicado.etiqueta })}</span>
               <span>−${descuentoCodigo.toFixed(2)}</span>
             </div>
           )}
           <div className="carrito__resumen-linea">
-            <span>Subtotal</span>
+            <span>{t('carrito.subtotal')}</span>
             <span>${subtotal.toFixed(2)}</span>
           </div>
           <div className="carrito__resumen-linea">
-            <span>Envío</span>
-            <span>Gratis</span>
+            <span>{t('carrito.envio')}</span>
+            <span>{t('carrito.gratis')}</span>
           </div>
           <div className="carrito__resumen-linea carrito__resumen-linea--total">
-            <span>Total</span>
+            <span>{t('carrito.total')}</span>
             <span>${total.toFixed(2)}</span>
           </div>
           <button
@@ -246,7 +248,7 @@ function Carrito() {
             onClick={handleGenerarOrden}
             disabled={generando}
           >
-            {generando ? 'Generando orden…' : 'Generar orden'}
+            {generando ? t('carrito.generando') : t('carrito.generar')}
           </button>
           {errorOrden && <p className="carrito__error-orden">{errorOrden}</p>}
         </aside>
@@ -254,13 +256,14 @@ function Carrito() {
 
       <ModalConfirmacion
         abierto={confirmacion !== null}
-        titulo={confirmacion?.tipo === 'vaciar' ? '¿Vaciar el carrito?' : '¿Eliminar producto?'}
+        titulo={confirmacion?.tipo === 'vaciar' ? t('carrito.confirmarVaciarTitulo') : t('carrito.confirmarEliminarTitulo')}
         mensaje={
           confirmacion?.tipo === 'vaciar'
-            ? 'Se quitarán todos los productos de tu carrito. Esta acción no se puede deshacer.'
-            : `Se quitará "${confirmacion?.nombre}" de tu carrito.`
+            ? t('carrito.confirmarVaciarTexto')
+            : t('carrito.confirmarEliminarTexto', { nombre: confirmacion?.nombre })
         }
-        textoConfirmar={confirmacion?.tipo === 'vaciar' ? 'Vaciar carrito' : 'Eliminar'}
+        textoConfirmar={confirmacion?.tipo === 'vaciar' ? t('carrito.vaciar') : t('carrito.eliminar')}
+        textoCancelar={t('carrito.cancelar')}
         onConfirmar={confirmar}
         onCancelar={() => setConfirmacion(null)}
       />

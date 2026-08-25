@@ -85,6 +85,11 @@
 .navbar__busqueda {
   position: relative;
   flex: 1;
+  /* Causa raíz de por qué un nombre de usuario largo deformaba el buscador:
+     un flex-item con flex:1 no puede encogerse por debajo de su contenido
+     si no se le permite explícitamente. Con esto, el que se recorta es el
+     nombre (ver .navbar__usuario-nombre), no el buscador. */
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -116,6 +121,13 @@
 
 .navbar__input-busqueda {
   flex: 1;
+  /* Sin min-width:0 el input no se encoge por debajo de su contenido (el
+     placeholder), y en idiomas con textos más largos se salía de la
+     píldora del buscador. El texto que no entra se recorta con "…". */
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   border: none;
   outline: none;
   background: none;
@@ -224,6 +236,45 @@
   color: var(--accent);
 }
 
+.navbar__link--usuario {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 190px;
+}
+
+/* El nombre de usuario se recorta con "…" en vez de forzar al buscador a
+   deformarse (ver min-width:0 arriba). */
+.navbar__usuario-nombre {
+  display: inline-block;
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+
+  @media (max-width: 1024px) {
+    max-width: 70px;
+  }
+}
+
+.navbar__favoritos {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  margin-left: 4px;
+  border-radius: 8px;
+  color: var(--text-h);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar__favoritos:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
 .navbar__carrito {
   position: relative;
   display: flex;
@@ -272,6 +323,25 @@
 }
 
 .navbar__abrir-panel:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.navbar__tema,
+.navbar__preferencias {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-h);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar__tema:hover,
+.navbar__preferencias:hover {
   background: var(--accent-bg);
   color: var(--accent);
 }

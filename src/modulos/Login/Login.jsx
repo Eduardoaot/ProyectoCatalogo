@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import CampoPassword from '../../common/CampoPassword'
 import { useAuth } from '../../context/AuthContext'
+import { usePreferencias } from '../../context/PreferenciasContext'
 import './Login.css'
 
 // Pantalla de acceso con dos modos: iniciar sesión (contra el seed de
@@ -10,6 +12,7 @@ import './Login.css'
 // location.state.from.
 function Login() {
   const { iniciarSesion, registrarUsuario } = useAuth()
+  const { t } = usePreferencias()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -30,11 +33,11 @@ function Login() {
     if (enviando) return
 
     if (modo === 'registro' && !nombre.trim()) {
-      setError('Completa nombre, correo y contraseña.')
+      setError(t('login.faltanDatos'))
       return
     }
     if (!email.trim() || !password) {
-      setError('Ingresa tu correo y contraseña.')
+      setError(t('login.faltanCredenciales'))
       return
     }
 
@@ -67,40 +70,38 @@ function Login() {
             className={modo === 'login' ? 'login__tab is-active' : 'login__tab'}
             onClick={() => cambiarModo('login')}
           >
-            Iniciar sesión
+            {t('login.iniciar')}
           </button>
           <button
             type="button"
             className={modo === 'registro' ? 'login__tab is-active' : 'login__tab'}
             onClick={() => cambiarModo('registro')}
           >
-            Registrarse
+            {t('login.registrarse')}
           </button>
         </div>
 
-        <h1>{modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta'}</h1>
+        <h1>{modo === 'login' ? t('login.iniciar') : t('login.crearCuenta')}</h1>
         <p className="login__nota">
-          {modo === 'login'
-            ? 'Prueba con diana@rosamark.com / rosamark123, o crea tu propia cuenta en la pestaña "Registrarse".'
-            : 'Tu cuenta se guarda en la base de datos; la contraseña se almacena hasheada (mínimo 8 caracteres).'}
+          {modo === 'login' ? t('login.ayudaLogin') : t('login.ayudaRegistro')}
         </p>
 
         <form onSubmit={handleSubmit} className="login__formulario">
           {modo === 'registro' && (
             <label className="login__campo">
-              Nombre
+              {t('login.nombre')}
               <input
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                placeholder="Tu nombre"
+                placeholder={t('login.nombrePlaceholder')}
                 autoComplete="name"
                 required
               />
             </label>
           )}
           <label className="login__campo">
-            Correo electrónico
+            {t('login.correo')}
             <input
               type="email"
               value={email}
@@ -110,26 +111,19 @@ function Login() {
               required
             />
           </label>
-          <label className="login__campo">
-            Contraseña
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              autoComplete={modo === 'login' ? 'current-password' : 'new-password'}
-              required
-            />
-          </label>
+          <CampoPassword
+            id="login-password"
+            label={t('login.contrasena')}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete={modo === 'login' ? 'current-password' : 'new-password'}
+            required
+          />
 
           {error && <p className="login__error">{error}</p>}
 
           <button type="submit" className="login__boton" disabled={enviando}>
-            {enviando
-              ? 'Enviando…'
-              : modo === 'login'
-                ? 'Iniciar sesión'
-                : 'Crear cuenta'}
+            {enviando ? t('login.enviando') : modo === 'login' ? t('login.iniciar') : t('login.crearCuenta')}
           </button>
         </form>
       </div>

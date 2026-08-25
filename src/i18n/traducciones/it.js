@@ -19,6 +19,7 @@ export default {
   'menu.configuracion': 'Impostazioni',
   'menu.invitado': 'Ciao, accedi',
   'pref.titulo': 'Preferenze',
+  'pref.cerrar': 'Chiudi preferenze',
   'pref.tema': 'Tema',
   'pref.temaClaro': 'Chiaro',
   'pref.temaOscuro': 'Scuro',
@@ -71,6 +72,7 @@ export default {
   'carrito.irCatalogo': 'Vai al catalogo',
   'carrito.vaciar': 'Svuota il carrello',
   'carrito.codigo': 'Codice sconto',
+  'carrito.codigoPlaceholder': 'Es. FRESCUERA',
   'carrito.aplicar': 'Applica',
   'carrito.validando': 'Verifica…',
   'carrito.quitarCodigo': 'Rimuovi il codice',
@@ -93,6 +95,10 @@ export default {
   'carrito.confirmarEliminarTexto': '«{nombre}» sarà rimosso dal tuo carrello.',
   'carrito.cancelar': 'Annulla',
   'carrito.unidades': '{n} articoli',
+
+  // --- Panel lateral del carrito (vista rapida) ---
+  'panelCarrito.titulo': 'Il tuo carrello ({n})',
+  'panelCarrito.verCompleto': 'Vedi carrello completo',
 
   'ordenes.titulo': 'I miei ordini',
   'ordenes.vacio': 'Non hai ancora effettuato ordini.',
@@ -146,6 +152,11 @@ export default {
   'footer.miCuenta': 'Il mio account',
   'footer.codigos': 'Codici sconto',
   'footer.derechos': '© {anio} Rosamark. Progetto didattico, non è un negozio reale.',
+
+  // --- Carrusel de ofertas ---
+  'carrusel.oferta': 'Offerta',
+  'carrusel.codigo': 'Codice: {codigo}',
+  'carrusel.verOferta': 'Vedi offerta {n}',
 
   'cat.Frutas y Verduras': 'Frutta e Verdura',
   'cat.Lácteos': 'Latticini',

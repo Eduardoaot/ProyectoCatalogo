@@ -19,6 +19,7 @@ export default {
   'menu.configuracion': '설정',
   'menu.invitado': '안녕하세요, 로그인해 주세요',
   'pref.titulo': '환경설정',
+  'pref.cerrar': '환경설정 닫기',
   'pref.tema': '테마',
   'pref.temaClaro': '라이트',
   'pref.temaOscuro': '다크',
@@ -71,6 +72,7 @@ export default {
   'carrito.irCatalogo': '쇼핑하러 가기',
   'carrito.vaciar': '장바구니 비우기',
   'carrito.codigo': '할인 코드',
+  'carrito.codigoPlaceholder': '예: FRESCUERA',
   'carrito.aplicar': '적용',
   'carrito.validando': '확인 중…',
   'carrito.quitarCodigo': '코드 삭제',
@@ -92,6 +94,10 @@ export default {
   'carrito.confirmarEliminarTexto': '“{nombre}”을(를) 장바구니에서 삭제합니다.',
   'carrito.cancelar': '취소',
   'carrito.unidades': '{n}개',
+
+  // --- Panel lateral del carrito (vista rapida) ---
+  'panelCarrito.titulo': '내 장바구니 ({n})',
+  'panelCarrito.verCompleto': '장바구니 전체 보기',
 
   'ordenes.titulo': '내 주문',
   'ordenes.vacio': '아직 주문 내역이 없습니다.',
@@ -144,6 +150,11 @@ export default {
   'footer.miCuenta': '내 계정',
   'footer.codigos': '할인 코드',
   'footer.derechos': '© {anio} Rosamark. 학습용 프로젝트이며 실제 상점이 아닙니다.',
+
+  // --- Carrusel de ofertas ---
+  'carrusel.oferta': '할인',
+  'carrusel.codigo': '코드: {codigo}',
+  'carrusel.verOferta': '{n}번째 혜택 보기',
 
   'cat.Frutas y Verduras': '과일·채소',
   'cat.Lácteos': '유제품',
