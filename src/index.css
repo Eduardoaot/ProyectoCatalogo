@@ -2,6 +2,11 @@
   --text: #7a5568;
   --text-h: #3a1f2d;
   --bg: #ffe3ef;
+
+   --gradient-1: #f8cdeb;
+  --gradient-2: #f8d9e9;
+  --gradient-3: #eb5d81c2;
+
   --card-bg: #fff5fa;
   --border: #f7c9de;
   --code-bg: #fdeef4;
@@ -54,10 +59,29 @@
   --accent-border: rgba(255, 111, 174, 0.45);
   --social-bg: rgba(45, 32, 41, 0.65);
   --shadow:
-    rgba(0, 0, 0, 0.45) 0 10px 15px -3px, rgba(0, 0, 0, 0.3) 0 4px 6px -2px;
+    rgba(0, 0, 0, 0.45) 0 10px 15px -3px,
+    rgba(0, 0, 0, 0.3) 0 4px 6px -2px;
+
+  /* Dark gradient */
+  --gradient-1: #171115;
+  --gradient-2: #241a21;
+  --gradient-3: #5a2542;
 
   color-scheme: dark;
 }
+
+:root[data-tema='oscuro'] .sparkle {
+  background: radial-gradient(
+    circle,
+    #ffffff 0%,
+    #ff8fbd 35%,
+    var(--accent) 55%,
+    transparent 78%
+  );
+
+  filter: drop-shadow(0 0 8px rgba(255, 111, 174, 0.7));
+}
+
 
 /* Las fotos de producto y los banners resultan deslumbrantes sobre fondo
    oscuro; se bajan un punto para que no quemen la vista. */
@@ -85,19 +109,17 @@
     transition-duration: 0.01ms !important;
   }
 }
-
 body {
   margin: 0;
   min-height: 100vh;
   background: linear-gradient(
     140deg,
-    #f8cdeb 0%,
-    #f8d9e9 45%,
-    #eb5d81c2 100%
+    var(--gradient-1) 0%,
+    var(--gradient-2) 45%,
+    var(--gradient-3) 100%
   );
   background-attachment: fixed;
 }
-
 #root {
   position: relative;
   width: 1126px;

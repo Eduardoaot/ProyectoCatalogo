@@ -5,7 +5,12 @@
   left: 0;
   right: 0;
   z-index: 60;
-  background: var(--bg);
+background: linear-gradient(
+    140deg,
+    var(--gradient-1) 20%,
+    var(--gradient-2) 50%,
+    var(--gradient-3) 120%
+  );
   border-bottom: 1px solid var(--border);
   transform: translateY(0);
   transition: transform 0.3s ease;
