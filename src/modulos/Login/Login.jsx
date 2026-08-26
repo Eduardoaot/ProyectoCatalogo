@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import CampoPassword from '../../common/CampoPassword'
 import { useAuth } from '../../context/AuthContext'
+import { usePreferencias } from '../../context/PreferenciasContext'
 import './Login.css'
 
 // Pantalla de acceso con dos modos: iniciar sesión (contra el seed de
@@ -10,10 +12,12 @@ import './Login.css'
 // location.state.from.
 function Login() {
   const { iniciarSesion, registrarUsuario } = useAuth()
+  const { t } = usePreferencias()
   const navigate = useNavigate()
   const location = useLocation()
 
   const [modo, setModo] = useState('login') // 'login' | 'registro'
+  const [enviando, setEnviando] = useState(false)
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -21,30 +25,32 @@ function Login() {
 
   const destino = location.state?.from || '/'
 
-  const handleSubmit = (e) => {
+  // Registro e inicio de sesión pegan a la API; la contraseña se hashea
+  // con bcrypt en el servidor y aquí solo se guarda el token que devuelve.
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    if (enviando) return
 
-    if (modo === 'registro') {
-      if (!nombre.trim() || !email.trim() || !password) {
-        setError('Completa nombre, correo y contraseña.')
-        return
-      }
-      const resultado = registrarUsuario({ nombre, email, password })
-      if (!resultado.ok) {
-        setError(resultado.error)
-        return
-      }
-    } else {
-      if (!email.trim() || !password) {
-        setError('Ingresa tu correo y contraseña.')
-        return
-      }
-      const resultado = iniciarSesion({ email, password })
-      if (!resultado.ok) {
-        setError(resultado.error)
-        return
-      }
+    if (modo === 'registro' && !nombre.trim()) {
+      setError(t('login.faltanDatos'))
+      return
+    }
+    if (!email.trim() || !password) {
+      setError(t('login.faltanCredenciales'))
+      return
+    }
+
+    setEnviando(true)
+    const resultado =
+      modo === 'registro'
+        ? await registrarUsuario({ nombre, email, password })
+        : await iniciarSesion({ email, password })
+    setEnviando(false)
+
+    if (!resultado.ok) {
+      setError(resultado.error)
+      return
     }
 
     navigate(destino, { replace: true })
@@ -64,40 +70,38 @@ function Login() {
             className={modo === 'login' ? 'login__tab is-active' : 'login__tab'}
             onClick={() => cambiarModo('login')}
           >
-            Iniciar sesión
+            {t('login.iniciar')}
           </button>
           <button
             type="button"
             className={modo === 'registro' ? 'login__tab is-active' : 'login__tab'}
             onClick={() => cambiarModo('registro')}
           >
-            Registrarse
+            {t('login.registrarse')}
           </button>
         </div>
 
-        <h1>{modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta'}</h1>
+        <h1>{modo === 'login' ? t('login.iniciar') : t('login.crearCuenta')}</h1>
         <p className="login__nota">
-          {modo === 'login'
-            ? 'Demostración: prueba con diana@rosamark.com / rosamark123, o crea tu propia cuenta en la pestaña "Registrarse".'
-            : 'Solo se guarda en este navegador (no hay servidor real detrás).'}
+          {modo === 'login' ? t('login.ayudaLogin') : t('login.ayudaRegistro')}
         </p>
 
         <form onSubmit={handleSubmit} className="login__formulario">
           {modo === 'registro' && (
             <label className="login__campo">
-              Nombre
+              {t('login.nombre')}
               <input
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                placeholder="Tu nombre"
+                placeholder={t('login.nombrePlaceholder')}
                 autoComplete="name"
                 required
               />
             </label>
           )}
           <label className="login__campo">
-            Correo electrónico
+            {t('login.correo')}
             <input
               type="email"
               value={email}
@@ -107,22 +111,19 @@ function Login() {
               required
             />
           </label>
-          <label className="login__campo">
-            Contraseña
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              autoComplete={modo === 'login' ? 'current-password' : 'new-password'}
-              required
-            />
-          </label>
+          <CampoPassword
+            id="login-password"
+            label={t('login.contrasena')}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete={modo === 'login' ? 'current-password' : 'new-password'}
+            required
+          />
 
           {error && <p className="login__error">{error}</p>}
 
-          <button type="submit" className="login__boton">
-            {modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta'}
+          <button type="submit" className="login__boton" disabled={enviando}>
+            {enviando ? t('login.enviando') : modo === 'login' ? t('login.iniciar') : t('login.crearCuenta')}
           </button>
         </form>
       </div>

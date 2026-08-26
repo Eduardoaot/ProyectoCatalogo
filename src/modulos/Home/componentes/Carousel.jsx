@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { OFERTAS } from '../../../data/ofertas'
+import { useCatalogo } from '../../../context/CatalogoContext'
+import { usePreferencias } from '../../../context/PreferenciasContext'
 import './Carousel.css'
 
 const INTERVALO_MS = 4500
@@ -11,6 +12,8 @@ const UMBRAL_ARRASTRE = 0.15
 // pantalla, solo avanza automáticamente, se puede navegar con los puntos
 // y también se puede arrastrar con el mouse (o el dedo, vía Pointer Events).
 function Carousel() {
+  const { ofertas } = useCatalogo()
+  const { t } = usePreferencias()
   const [indice, setIndice] = useState(0)
   const [arrastreX, setArrastreX] = useState(0)
   const [arrastrando, setArrastrando] = useState(false)
@@ -18,18 +21,23 @@ function Carousel() {
   const contenedorRef = useRef(null)
   const inicioXRef = useRef(0)
 
-  const irA = useCallback((i) => {
-    setIndice((i + OFERTAS.length) % OFERTAS.length)
-  }, [])
+  const irA = useCallback(
+    (i) => {
+      if (ofertas.length === 0) return
+      setIndice((i + ofertas.length) % ofertas.length)
+    },
+    [ofertas.length],
+  )
 
   useEffect(() => {
+    if (ofertas.length === 0) return undefined
     const intervalo = setInterval(() => {
       if (!pausadoRef.current) {
-        setIndice((actual) => (actual + 1) % OFERTAS.length)
+        setIndice((actual) => (actual + 1) % ofertas.length)
       }
     }, INTERVALO_MS)
     return () => clearInterval(intervalo)
-  }, [])
+  }, [ofertas.length])
 
   const handlePointerDown = (e) => {
     if (e.button !== undefined && e.button !== 0) return
@@ -62,6 +70,10 @@ function Carousel() {
     ? `translateX(calc(-${indice * 100}% + ${arrastreX}px))`
     : `translateX(-${indice * 100}%)`
 
+  // Las ofertas vienen de la API: mientras no haya ninguna, no se pinta un
+  // recuadro vacío arriba del catálogo.
+  if (ofertas.length === 0) return null
+
   return (
     <div
       className="carrusel"
@@ -83,7 +95,7 @@ function Carousel() {
         onPointerUp={soltarArrastre}
         onPointerCancel={soltarArrastre}
       >
-        {OFERTAS.map((oferta) => (
+        {ofertas.map((oferta) => (
           <div className="carrusel__slide" key={oferta.id}>
             <img
               className="carrusel__imagen"
@@ -92,12 +104,14 @@ function Carousel() {
               draggable="false"
             />
             <div className="carrusel__overlay">
-              <span className="carrusel__etiqueta">Oferta</span>
+              <span className="carrusel__etiqueta">{t('carrusel.oferta')}</span>
               <h3 className="carrusel__titulo">{oferta.titulo}</h3>
               {oferta.codigo && (
                 <div className="carrusel__cupon">
                   <span className="carrusel__cupon-beneficio">{oferta.beneficio}</span>
-                  <span className="carrusel__cupon-codigo">Código: {oferta.codigo}</span>
+                  <span className="carrusel__cupon-codigo">
+                    {t('carrusel.codigo', { codigo: oferta.codigo })}
+                  </span>
                 </div>
               )}
               <p className="carrusel__texto">{oferta.texto}</p>
@@ -107,12 +121,12 @@ function Carousel() {
       </div>
 
       <div className="carrusel__puntos">
-        {OFERTAS.map((oferta, i) => (
+        {ofertas.map((oferta, i) => (
           <button
             key={oferta.id}
             type="button"
             className={i === indice ? 'carrusel__punto is-active' : 'carrusel__punto'}
-            aria-label={`Ver oferta ${i + 1}`}
+            aria-label={t('carrusel.verOferta', { n: i + 1 })}
             onClick={() => irA(i)}
           />
         ))}

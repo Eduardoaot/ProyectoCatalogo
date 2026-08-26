@@ -2,10 +2,22 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import LogoRosa from '../assets/LogoRosa.png'
 import LogoLetras from '../assets/LogoLetras.png'
+import PreferenciasPanel from '../common/PreferenciasPanel'
 import { useAuth } from '../context/AuthContext'
+import { useCatalogo } from '../context/CatalogoContext'
+import { usePreferencias } from '../context/PreferenciasContext'
 import { useTienda } from '../context/TiendaContext'
-import { PRODUCTOS } from '../data/productos'
-import { IconoBuscar, IconoCarrito, IconoMenu, IconoPanelLateral, IconoX } from '../common/iconos'
+import {
+  IconoAjustes,
+  IconoBuscar,
+  IconoCarrito,
+  IconoCorazon,
+  IconoLuna,
+  IconoMenu,
+  IconoPanelLateral,
+  IconoSol,
+  IconoX,
+} from '../common/iconos'
 import MenuLateral from './MenuLateral'
 import './Navbar.css'
 
@@ -13,15 +25,22 @@ import './Navbar.css'
 // navbar (evita que "parpadee" con pequeños scrolls cerca del tope).
 const UMBRAL_SCROLL_PX = 80
 const MAX_SUGERENCIAS = 6
+// Separador improbable de encontrar en un nombre real: sirve para partir la
+// plantilla traducida "Hola, {nombre}" en un "antes" y un "después" del
+// nombre, sin asumir el orden de las palabras (varía según el idioma).
+const MARCADOR = '§'
 
 function Navbar() {
   const { usuario } = useAuth()
+  const { productos } = useCatalogo()
   const { totalUnidades, abrirPanel } = useTienda()
+  const { t, esOscuro, alternarTema } = usePreferencias()
   const navigate = useNavigate()
   const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [menuAbierto, setMenuAbierto] = useState(false)
+  const [preferenciasAbiertas, setPreferenciasAbiertas] = useState(false)
   const [oculta, setOculta] = useState(false)
   const [busqueda, setBusqueda] = useState('')
   const [mostrarSugerencias, setMostrarSugerencias] = useState(false)
@@ -59,11 +78,10 @@ function Navbar() {
   const sugerencias = useMemo(() => {
     const texto = busqueda.trim().toLowerCase()
     if (!texto) return []
-    return PRODUCTOS.filter((producto) => producto.nombre.toLowerCase().includes(texto)).slice(
-      0,
-      MAX_SUGERENCIAS,
-    )
-  }, [busqueda])
+    return productos
+      .filter((producto) => producto.nombre.toLowerCase().includes(texto))
+      .slice(0, MAX_SUGERENCIAS)
+  }, [productos, busqueda])
 
   const irAProducto = (id) => {
     setBusqueda('')
@@ -91,6 +109,13 @@ function Navbar() {
     }
   }
 
+  // El nombre se pinta en su propio <span> (recortable con "…" por CSS, ver
+  // Navbar.css) en vez de quedar embebido en el string traducido: así un
+  // nombre largo no empuja/deforma el buscador, sea cual sea el idioma.
+  const [antesDelNombre, despuesDelNombre] = usuario
+    ? t('nav.hola', { nombre: MARCADOR }).split(MARCADOR)
+    : []
+
   return (
     <>
       <header ref={navRef} className={oculta ? 'navbar navbar--oculta' : 'navbar'}>
@@ -99,7 +124,7 @@ function Navbar() {
             <button
               type="button"
               className="navbar__hamburguesa"
-              aria-label="Abrir menú"
+              aria-label={t('nav.menu')}
               onClick={() => setMenuAbierto(true)}
             >
               <IconoMenu className="navbar__icono" />
@@ -120,7 +145,7 @@ function Navbar() {
             <input
               type="text"
               className="navbar__input-busqueda"
-              placeholder="Buscar productos en Rosamark..."
+              placeholder={t('nav.buscar')}
               value={busqueda}
               autoComplete="off"
               onChange={(e) => {
@@ -133,7 +158,7 @@ function Navbar() {
               <button
                 type="button"
                 className="navbar__limpiar-busqueda"
-                aria-label="Limpiar búsqueda"
+                aria-label={t('nav.buscar')}
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={limpiarBusqueda}
               >
@@ -154,7 +179,9 @@ function Navbar() {
                       }}
                     >
                       <span className="navbar__sugerencia-nombre">{producto.nombre}</span>
-                      <span className="navbar__sugerencia-categoria">{producto.categoria}</span>
+                      <span className="navbar__sugerencia-categoria">
+                        {t(`cat.${producto.categoria}`)}
+                      </span>
                     </button>
                   </li>
                 ))}
@@ -163,36 +190,73 @@ function Navbar() {
           </form>
 
           <div className="navbar__derecha">
-            <Link to={usuario ? '/cuenta' : '/login'} className="navbar__link">
-              {usuario ? `Hola, ${usuario.nombre}` : 'Iniciar sesión'}
+            <Link to={usuario ? '/cuenta' : '/login'} className="navbar__link navbar__link--usuario">
+              {usuario ? (
+                <>
+                  {antesDelNombre}
+                  <span className="navbar__usuario-nombre">{usuario.nombre}</span>
+                  {despuesDelNombre}
+                </>
+              ) : (
+                t('nav.iniciarSesion')
+              )}
             </Link>
             <Link
               to={usuario ? '/ordenes' : '/login'}
               state={usuario ? undefined : { from: '/ordenes' }}
               className="navbar__link"
             >
-              Órdenes
+              {t('nav.ordenes')}
             </Link>
-            <Link to="/carrito" className="navbar__carrito" aria-label="Ver carrito">
+            <Link
+              to="/favoritos"
+              className="navbar__favoritos"
+              aria-label={t('nav.favoritos')}
+              title={t('nav.favoritos')}
+            >
+              <IconoCorazon className="navbar__icono" />
+            </Link>
+            <Link to="/carrito" className="navbar__carrito" aria-label={t('nav.carrito')}>
               <IconoCarrito className="navbar__icono" />
-              {totalUnidades > 0 && (
-                <span className="navbar__carrito-badge">{totalUnidades}</span>
-              )}
+              {totalUnidades > 0 && <span className="navbar__carrito-badge">{totalUnidades}</span>}
             </Link>
             <button
               type="button"
               className="navbar__abrir-panel"
-              aria-label="Abrir vista rápida del carrito"
-              title="Vista rápida del carrito"
+              aria-label={t('nav.vistaRapida')}
+              title={t('nav.vistaRapida')}
               onClick={abrirPanel}
             >
               <IconoPanelLateral className="navbar__icono" />
+            </button>
+            <button
+              type="button"
+              className="navbar__tema"
+              aria-label={esOscuro ? t('nav.temaClaro') : t('nav.temaOscuro')}
+              title={esOscuro ? t('nav.temaClaro') : t('nav.temaOscuro')}
+              onClick={alternarTema}
+            >
+              {esOscuro ? <IconoSol className="navbar__icono" /> : <IconoLuna className="navbar__icono" />}
+            </button>
+            <button
+              type="button"
+              className="navbar__preferencias"
+              aria-label={t('pref.titulo')}
+              title={t('pref.titulo')}
+              onClick={() => setPreferenciasAbiertas(true)}
+            >
+              <IconoAjustes className="navbar__icono" />
             </button>
           </div>
         </div>
       </header>
 
-      <MenuLateral abierto={menuAbierto} onCerrar={() => setMenuAbierto(false)} />
+      <MenuLateral
+        abierto={menuAbierto}
+        onCerrar={() => setMenuAbierto(false)}
+        onAbrirPreferencias={() => setPreferenciasAbiertas(true)}
+      />
+      <PreferenciasPanel abierto={preferenciasAbiertas} onCerrar={() => setPreferenciasAbiertas(false)} />
     </>
   )
 }

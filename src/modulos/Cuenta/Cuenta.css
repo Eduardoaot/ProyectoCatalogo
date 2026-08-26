@@ -31,7 +31,7 @@
 }
 
 .cuenta__etiqueta {
-  font-size: 13px;
+  font-size: 0.722rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--accent);
@@ -39,7 +39,7 @@
 }
 
 .cuenta__valor {
-  font-size: 18px;
+  font-size: 1rem;
   color: var(--text-h);
 }
 
@@ -58,4 +58,102 @@
 
 .cuenta__cerrar-sesion:hover {
   background: #b42318;
+}
+
+.cuenta__seguridad {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+}
+
+.cuenta__nota-cifrado {
+  margin: 0;
+  font-size: 0.722rem;
+  line-height: 145%;
+  color: var(--text);
+}
+
+.cuenta__cambiar-password {
+  align-self: flex-start;
+  padding: 8px 16px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.778rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cuenta__cambiar-password:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.cuenta__form-password {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cuenta__form-password-acciones {
+  display: flex;
+  gap: 10px;
+}
+
+.cuenta__cancelar {
+  padding: 10px 16px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-h);
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cuenta__guardar-password {
+  flex: 1;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.cuenta__guardar-password:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.cuenta__guardar-password:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cuenta__error {
+  margin: 0;
+  padding: 10px 12px;
+  background: rgba(217, 45, 32, 0.1);
+  color: #b42318;
+  border-radius: 8px;
+  font-size: 0.722rem;
+  font-weight: 500;
+}
+
+.cuenta__exito {
+  margin: 0;
+  padding: 10px 12px;
+  background: rgba(34, 154, 92, 0.12);
+  color: #1f8a52;
+  border-radius: 8px;
+  font-size: 0.722rem;
+  font-weight: 500;
 }

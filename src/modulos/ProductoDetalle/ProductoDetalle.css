@@ -44,7 +44,7 @@
   border-radius: 12px;
   overflow: hidden;
 
-  font-size: 96px;
+  font-size: 5.333rem;
   overflow: hidden;
 }
 
@@ -62,10 +62,17 @@
 }
 
 .detail-name {
-  font-size: 48px;
+  font-size: 2.667rem;
   font-weight: 700;
   margin-bottom: 16px;
   margin-top: 16px;
+}
+
+.detail-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .detail-category {
@@ -74,8 +81,35 @@
   padding: 8px 16px;
   border-radius: 999px;
   display: inline;
-  font-size: 14px;
+  font-size: 0.778rem;
   font-weight: 500;
+}
+
+.detail-favorito {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.722rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.detail-favorito:hover,
+.detail-favorito.is-active {
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+
+.detail-favorito-icono {
+  width: 16px;
+  height: 16px;
 }
 
 .detail-precio-fila {
@@ -87,13 +121,13 @@
 }
 
 .detail-price {
-  font-size: 36px;
+  font-size: 2rem;
   font-weight: 800;
   color: var(--accent);
 }
 
 .detail-price-original {
-  font-size: 15px;
+  font-size: 0.833rem;
   font-weight: 500;
   color: #d92d20;
   opacity: 0.65;
@@ -102,25 +136,25 @@
 }
 
 .detail-unit {
-  font-size: 16px;
+  font-size: 0.889rem;
   color: var(--text);
   margin-left: 6px;
 }
 
 .detail-description-title {
-  font-size: 16px;
+  font-size: 0.889rem;
   font-weight: 600;
   margin-bottom: 0px;
 }
 
 .detail-description {
-  font-size: 18px;
+  font-size: 1rem;
   color: var(--text);
 }
 
 .detail-stock {
   margin-top: 16px;
-  font-size: 14px;
+  font-size: 0.778rem;
   font-weight: 600;
   color: var(--accent);
 }
@@ -170,7 +204,7 @@
   border: none;
   background: var(--accent-bg);
   color: var(--accent);
-  font-size: 18px;
+  font-size: 1rem;
   line-height: 1;
   cursor: pointer;
   transition: background 0.2s;
@@ -211,7 +245,7 @@
 
 .detail-cantidad-error {
   margin-top: 10px;
-  font-size: 13px;
+  font-size: 0.722rem;
   font-weight: 600;
   color: #d92d20;
 }

@@ -1,0 +1,182 @@
+// Español — idioma base. Las claves de este archivo son las que existen;
+// los demás idiomas traducen estos mismos valores. Si a otro idioma le falta
+// una clave, se usa la de aquí (ver src/i18n/index.js).
+export default {
+  // --- Navbar ---
+  'nav.buscar': 'Buscar productos en Rosamark…',
+  'nav.ordenes': 'Órdenes',
+  'nav.favoritos': 'Favoritos',
+  'nav.iniciarSesion': 'Iniciar sesión',
+  'nav.hola': 'Hola, {nombre}',
+  'nav.menu': 'Menú',
+  'nav.carrito': 'Carrito',
+  'nav.vistaRapida': 'Vista rápida del carrito',
+  'nav.temaOscuro': 'Activar modo oscuro',
+  'nav.temaClaro': 'Activar modo claro',
+
+  // --- Menú lateral / preferencias ---
+  'menu.catalogo': 'Catálogo',
+  'menu.categorias': 'Categorías',
+  'menu.miCuenta': 'Mi cuenta',
+  'menu.misOrdenes': 'Mis órdenes',
+  'menu.misFavoritos': 'Mis favoritos',
+  'menu.cerrarSesion': 'Cerrar sesión',
+  'menu.configuracion': 'Configuración',
+  'menu.invitado': 'Hola, inicia sesión',
+  'pref.titulo': 'Preferencias',
+  'pref.cerrar': 'Cerrar preferencias',
+  'pref.tema': 'Tema',
+  'pref.temaClaro': 'Claro',
+  'pref.temaOscuro': 'Oscuro',
+  'pref.texto': 'Tamaño del texto',
+  'pref.textoNormal': 'Normal',
+  'pref.textoGrande': 'Grande',
+  'pref.textoEnorme': 'Enorme',
+  'pref.idioma': 'Idioma',
+  'pref.restablecer': 'Restablecer',
+
+  // --- Home ---
+  'home.titulo': 'Catálogo Rosamark',
+  'home.eslogan': 'Frescura de mercado, comodidad de casa.',
+  'home.eslogan2': 'Elige, agrega al carrito y nosotros nos encargamos del resto.',
+  'home.todas': 'Todas',
+  'home.sinResultados': 'No encontramos productos que coincidan.',
+  'home.resultadosPara': 'Resultados para «{texto}»',
+  'home.resultadosEn': 'Resultados para «{texto}» en {categoria}',
+  'home.categoria': 'Categoría: {categoria}',
+  'home.cargando': 'Cargando productos…',
+  'home.errorTitulo': 'No pudimos cargar el catálogo',
+  'home.reintentar': 'Reintentar',
+  'home.productos': '{n} productos',
+
+  // --- Producto ---
+  'producto.agregar': 'Agregar al carrito',
+  'producto.destacado': 'Destacado',
+  'producto.sinStock': 'Sin stock',
+  'producto.volver': 'Volver al catálogo',
+  'producto.descripcion': 'Descripción',
+  'producto.disponibles': '{n} disponibles',
+  'producto.sinStockDisponible': 'Sin stock disponible',
+  'producto.cantidad': 'Cantidad',
+  'producto.por': 'por {unidad}',
+  'producto.cargando': 'Cargando producto…',
+  'producto.noEncontrado': 'Producto no encontrado.',
+  'producto.soloHay': 'Solo hay {n} unidades disponibles.',
+  'producto.aumentar': 'Aumentar cantidad',
+  'producto.disminuir': 'Disminuir cantidad',
+
+  // --- Favoritos ---
+  'fav.titulo': 'Mis favoritos',
+  'fav.agregar': 'Agregar a favoritos',
+  'fav.quitar': 'Quitar de favoritos',
+  'fav.vacio': 'Todavía no has guardado ningún producto.',
+  'fav.vacioAyuda': 'Toca el corazón de cualquier producto para tenerlo siempre a mano.',
+  'fav.necesitaSesion': 'Inicia sesión para guardar tus productos favoritos.',
+  'fav.cargando': 'Cargando tus favoritos…',
+  'fav.total': '{n} guardados',
+
+  // --- Carrito ---
+  'carrito.titulo': 'Tu carrito',
+  'carrito.vacio': 'Todavía no has agregado productos.',
+  'carrito.irCatalogo': 'Ir al catálogo',
+  'carrito.vaciar': 'Vaciar carrito',
+  'carrito.codigo': 'Código de descuento',
+  'carrito.codigoPlaceholder': 'Ej. FRESCUERA',
+  'carrito.aplicar': 'Aplicar',
+  'carrito.validando': 'Validando…',
+  'carrito.quitarCodigo': 'Quitar código',
+  'carrito.resumen': 'Resumen',
+  'carrito.precioLista': 'Precio de lista',
+  'carrito.descuentoProductos': 'Descuento en productos',
+  'carrito.codigoAplicado': 'Código {codigo}',
+  'carrito.subtotal': 'Subtotal',
+  'carrito.envio': 'Envío',
+  'carrito.gratis': 'Gratis',
+  'carrito.total': 'Total',
+  'carrito.generar': 'Generar orden',
+  'carrito.generando': 'Generando orden…',
+  'carrito.maximo': 'Máximo disponible alcanzado',
+  'carrito.eliminar': 'Eliminar',
+  'carrito.confirmarVaciarTitulo': '¿Vaciar el carrito?',
+  'carrito.confirmarVaciarTexto':
+    'Se quitarán todos los productos de tu carrito. Esta acción no se puede deshacer.',
+  'carrito.confirmarEliminarTitulo': '¿Eliminar producto?',
+  'carrito.confirmarEliminarTexto': 'Se quitará «{nombre}» de tu carrito.',
+  'carrito.cancelar': 'Cancelar',
+  'carrito.unidades': '{n} artículos',
+
+  // --- Panel lateral del carrito (vista rápida) ---
+  'panelCarrito.titulo': 'Tu carrito ({n})',
+  'panelCarrito.verCompleto': 'Ver carrito completo',
+
+  // --- Órdenes ---
+  'ordenes.titulo': 'Mis órdenes',
+  'ordenes.vacio': 'Todavía no tienes ninguna orden generada.',
+  'ordenes.cargando': 'Cargando tus órdenes…',
+  'ordenes.orden': 'Orden #{id}',
+  'ordenes.verDetalle': 'Ver detalle',
+  'ordenes.ocultarDetalle': 'Ocultar detalle',
+  'ordenes.descuentos': 'Descuentos',
+  'ordenes.total': 'Total',
+  'ordenes.articulos': '{n} artículos',
+  'ordenes.volverCatalogo': 'Seguir comprando',
+
+  // --- Login ---
+  'login.iniciar': 'Iniciar sesión',
+  'login.registrarse': 'Registrarse',
+  'login.crearCuenta': 'Crear cuenta',
+  'login.nombre': 'Nombre',
+  'login.nombrePlaceholder': 'Tu nombre',
+  'login.correo': 'Correo electrónico',
+  'login.contrasena': 'Contraseña',
+  'login.enviando': 'Enviando…',
+  'login.mostrar': 'Mostrar contraseña',
+  'login.ocultar': 'Ocultar contraseña',
+  'login.ayudaLogin':
+    'Prueba con diana@rosamark.com / rosamark123, o crea tu propia cuenta en la pestaña «Registrarse».',
+  'login.ayudaRegistro':
+    'Tu cuenta se guarda en la base de datos; la contraseña se almacena cifrada (mínimo 8 caracteres).',
+  'login.faltanDatos': 'Completa nombre, correo y contraseña.',
+  'login.faltanCredenciales': 'Ingresa tu correo y contraseña.',
+
+  // --- Cuenta ---
+  'cuenta.titulo': 'Mi cuenta',
+  'cuenta.nombre': 'Nombre',
+  'cuenta.correo': 'Correo electrónico',
+  'cuenta.cerrarSesion': 'Cerrar sesión',
+  'cuenta.seguridad': 'Seguridad',
+  'cuenta.cambiarContrasena': 'Cambiar contraseña',
+  'cuenta.contrasenaActual': 'Contraseña actual',
+  'cuenta.contrasenaNueva': 'Contraseña nueva',
+  'cuenta.confirmarNueva': 'Repite la contraseña nueva',
+  'cuenta.guardar': 'Guardar contraseña',
+  'cuenta.guardando': 'Guardando…',
+  'cuenta.cambiada': 'Listo, tu contraseña quedó actualizada.',
+  'cuenta.noCoinciden': 'La contraseña nueva y su repetición no coinciden.',
+  'cuenta.notaCifrado':
+    'Por seguridad, tu contraseña se guarda cifrada y ni siquiera nosotros podemos leerla. Aquí puedes cambiarla, y con el ojo ves lo que estás escribiendo.',
+  'cuenta.cargando': 'Cargando…',
+
+  // --- Footer ---
+  'footer.eslogan':
+    'Tu supermercado de confianza: frescura, ofertas y todo lo que necesitas para tu hogar, a un clic de distancia.',
+  'footer.catalogo': 'Catálogo',
+  'footer.todosProductos': 'Todos los productos',
+  'footer.miCuenta': 'Mi cuenta',
+  'footer.codigos': 'Códigos de descuento',
+  'footer.derechos': '© {anio} Rosamark. Proyecto educativo, no es una tienda real.',
+
+  // --- Carrusel de ofertas ---
+  'carrusel.oferta': 'Oferta',
+  'carrusel.codigo': 'Código: {codigo}',
+  'carrusel.verOferta': 'Ver oferta {n}',
+
+  // --- Categorías (los nombres vienen de la base; esto los traduce en pantalla) ---
+  'cat.Frutas y Verduras': 'Frutas y Verduras',
+  'cat.Lácteos': 'Lácteos',
+  'cat.Panadería': 'Panadería',
+  'cat.Carnes': 'Carnes',
+  'cat.Bebidas': 'Bebidas',
+  'cat.Limpieza': 'Limpieza',
+  'cat.Abarrotes': 'Abarrotes',
+}

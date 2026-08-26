@@ -151,6 +151,20 @@
   border-bottom: none;
 }
 
+.menu-lateral__item--icono {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.menu-lateral__icono-item {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
 .menu-lateral__flecha {
   display: flex;
   align-items: center;

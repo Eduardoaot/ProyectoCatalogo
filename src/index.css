@@ -17,18 +17,72 @@
   --mono: ui-monospace, Consolas, monospace;
   --font-brand: 'Pacifico', cursive;
 
-  font: 18px/145% var(--sans);
+  /* El tamaño base es una variable para que Preferencias pueda escalarlo
+     (ver [data-fuente] más abajo). Todo lo que use rem/em se ajusta solo. */
+  --tamano-base: 18px;
+
+  font: var(--tamano-base) / 145% var(--sans);
   letter-spacing: 0.18px;
   color-scheme: light;
   color: var(--text);
   background: var(--bg);
+  transition: background-color 0.25s ease, color 0.25s ease;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
   @media (max-width: 1024px) {
-    font-size: 16px;
+    --tamano-base: 16px;
+  }
+}
+
+/* =============================================================
+   Modo oscuro
+   Solo se redefinen los tokens de color: ningún componente sabe
+   que existe el tema, todos leen estas mismas variables.
+   ============================================================= */
+:root[data-tema='oscuro'] {
+  --text: #d9c6d0;
+  --text-h: #fdf3f8;
+  --bg: #171115;
+  --card-bg: #241a21;
+  --border: #4a3541;
+  --code-bg: #2d2029;
+  --accent: #ff6fae;
+  --accent-bg: rgba(255, 111, 174, 0.14);
+  --accent-border: rgba(255, 111, 174, 0.45);
+  --social-bg: rgba(45, 32, 41, 0.65);
+  --shadow:
+    rgba(0, 0, 0, 0.45) 0 10px 15px -3px, rgba(0, 0, 0, 0.3) 0 4px 6px -2px;
+
+  color-scheme: dark;
+}
+
+/* Las fotos de producto y los banners resultan deslumbrantes sobre fondo
+   oscuro; se bajan un punto para que no quemen la vista. */
+:root[data-tema='oscuro'] img {
+  filter: brightness(0.88) saturate(0.95);
+}
+
+/* =============================================================
+   Accesibilidad: tamaño del texto
+   ============================================================= */
+:root[data-fuente='grande'] {
+  --tamano-base: 21px;
+}
+:root[data-fuente='enorme'] {
+  --tamano-base: 24px;
+}
+
+/* Respeta a quien pide menos animación en su sistema. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
@@ -68,21 +122,21 @@ h2 {
 }
 
 h1 {
-  font-size: 56px;
+  font-size: 3.111rem;
   letter-spacing: -1.68px;
   margin: 32px 0;
   @media (max-width: 1024px) {
-    font-size: 36px;
+    font-size: 2rem;
     margin: 20px 0;
   }
 }
 h2 {
-  font-size: 24px;
+  font-size: 1.333rem;
   line-height: 118%;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
   @media (max-width: 1024px) {
-    font-size: 20px;
+    font-size: 1.111rem;
   }
 }
 p {
@@ -94,7 +148,7 @@ code {
   display: inline-flex;
   border-radius: 4px;
   color: var(--text-h);
-  font-size: 15px;
+  font-size: 0.833rem;
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);

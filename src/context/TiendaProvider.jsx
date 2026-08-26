@@ -1,26 +1,18 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { buscarCodigo, CODIGOS_DESCUENTO } from '../data/descuentos'
-import { PRODUCTOS } from '../data/productos'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { validarCodigo } from '../api/catalogo'
+import { crearOrden, obtenerOrdenesDeCliente } from '../api/ordenes'
 import { useAuth } from './AuthContext'
+import { useCatalogo } from './CatalogoContext'
 import { TiendaContext } from './TiendaContext'
 
-// -----------------------------------------------------------------------
-// Stock: productos.js no trae un campo "stock" propio (es un archivo que
-// se sigue editando a mano con los productos del catálogo), así que aquí
-// se define un stock inicial por defecto para todos los productos. Si en
-// el futuro un producto necesita un stock distinto, basta con agregarle
-// un campo `stock: <numero>` en productos.js y este contexto lo respeta.
-// -----------------------------------------------------------------------
-const STOCK_POR_DEFECTO = 30
-
-// El carrito, las órdenes y el código aplicado se guardan por usuario
-// (clave = su id, o "invitado" si no hay sesión) para que cada quien vea
-// solo lo suyo. El stock vendido es global: es el mismo inventario para
-// todos los usuarios.
+// El carrito sigue viviendo en el navegador: el esquema de la base no tiene
+// tabla de carritos, solo de órdenes. Se guarda por usuario (o "invitado")
+// para que cada quien vea el suyo.
+//
+// El stock, los precios, los descuentos y las órdenes YA NO están aquí:
+// vienen de la API. El total de la orden lo calcula siempre el servidor.
 const INVITADO = 'invitado'
-const CLAVE_STOCK_VENDIDO = 'rosamark:stockVendido'
 const claveCarrito = (id) => `rosamark:carrito:${id}`
-const claveOrdenes = (id) => `rosamark:ordenes:${id}`
 const claveCodigo = (id) => `rosamark:codigo:${id}`
 
 function leerLocalStorage(clave, valorPorDefecto) {
@@ -32,58 +24,76 @@ function leerLocalStorage(clave, valorPorDefecto) {
   }
 }
 
-// Stock que de verdad queda disponible para un producto: el stock base
-// menos lo que ya se descontó en órdenes generadas anteriormente.
-function calcularStockRestante(productoId, stockVendido) {
-  const producto = PRODUCTOS.find((item) => item.id === productoId)
-  const stockBase = producto?.stock ?? STOCK_POR_DEFECTO
-  const vendido = stockVendido[productoId] ?? 0
-  return Math.max(0, stockBase - vendido)
-}
+/**
+ * Vista previa del descuento por código, para pintar el resumen del carrito.
+ *
+ * Reproduce las mismas reglas que aplica el backend en POST /ordenes. El
+ * importe que de verdad se cobra es el que calcula el servidor: esto es solo
+ * para que el usuario vea el desglose antes de confirmar.
+ */
+function calcularDescuentoCodigo(carrito, codigo) {
+  if (!codigo?.descuento) return 0
 
-// Suma las cantidades de dos carritos (mismo producto = se combinan),
-// sin pasarse nunca del stock restante de cada producto.
-function fusionarCarritos(base, extra, stockVendido) {
-  const resultado = base.map((item) => ({ ...item }))
-  extra.forEach((itemExtra) => {
-    const stockRestante = calcularStockRestante(itemExtra.productoId, stockVendido)
-    const indice = resultado.findIndex((item) => item.productoId === itemExtra.productoId)
-    if (indice >= 0) {
-      resultado[indice].cantidad = Math.min(
-        resultado[indice].cantidad + itemExtra.cantidad,
-        stockRestante,
-      )
-    } else {
-      resultado.push({
-        productoId: itemExtra.productoId,
-        cantidad: Math.min(itemExtra.cantidad, stockRestante),
-      })
-    }
-  })
-  return resultado
+  const idCategoria = codigo.categoria?.ID_categoria ?? null
+  const elegibles = idCategoria
+    ? carrito.filter((item) => item.producto.categoriaId === idCategoria)
+    : carrito
+
+  const base = elegibles.reduce((acc, item) => acc + item.producto.precio * item.cantidad, 0)
+  if (base <= 0) return 0
+
+  const { tipo_normalizado: tipo, descuento_valor: valor } = codigo.descuento
+
+  if (tipo === 'porcentaje') {
+    return base * (Math.min(Math.max(Number(valor), 0), 100) / 100)
+  }
+
+  if (tipo === 'monto_fijo') {
+    return Math.min(Math.max(Number(valor), 0), base)
+  }
+
+  if (tipo === 'NxM') {
+    const lleva = Number(codigo.descuento.cantidad_lleva)
+    const paga = Number(codigo.descuento.cantidad_paga)
+    if (!lleva || paga >= lleva) return 0
+    const monto = elegibles.reduce((acc, item) => {
+      const grupos = Math.floor(item.cantidad / lleva)
+      return acc + grupos * (lleva - paga) * item.producto.precio
+    }, 0)
+    return Math.min(monto, base)
+  }
+
+  return 0
 }
 
 export function TiendaProvider({ children }) {
   const { usuario } = useAuth()
+  const { productos, buscarProducto, recargar } = useCatalogo()
   const idActual = usuario?.id ?? INVITADO
 
   const [carrito, setCarrito] = useState(() => leerLocalStorage(claveCarrito(idActual), []))
-  const [ordenes, setOrdenes] = useState(() => leerLocalStorage(claveOrdenes(idActual), []))
   const [codigoAplicado, setCodigoAplicado] = useState(() =>
     leerLocalStorage(claveCodigo(idActual), null),
   )
-  const [stockVendido, setStockVendido] = useState(() =>
-    leerLocalStorage(CLAVE_STOCK_VENDIDO, {}),
-  )
+  const [ordenes, setOrdenes] = useState([])
+  // Id del cliente al que pertenecen las órdenes que hay en memoria. Sirve
+  // para saber si lo que se está mostrando ya es del usuario actual o si
+  // todavía se están pidiendo a la API.
+  const [ordenesDe, setOrdenesDe] = useState(null)
   const [panelAbierto, setPanelAbierto] = useState(false)
 
   const idAnteriorRef = useRef(idActual)
 
-  // Al iniciar sesión, registrarse o cerrar sesión cambia el "dueño" del
-  // carrito. Si se venía de invitado, su carrito se fusiona con el del
-  // usuario que acaba de entrar (no se pierde nada al loguearse). Si se
-  // cierra sesión, simplemente se vuelve a ver el carrito de invitado
-  // (el del usuario queda guardado para la próxima vez que inicie sesión).
+  // Stock disponible según la última lectura del catálogo. Después de generar
+  // una orden el catálogo se recarga, así que refleja lo que ya descontó el
+  // backend en Productos.cantidad_producto.
+  const obtenerStockRestante = useCallback(
+    (productoId) => buscarProducto(productoId)?.stock ?? 0,
+    [buscarProducto],
+  )
+
+  // Al cambiar de usuario, el carrito del invitado se fusiona con el suyo
+  // (no se pierde nada al iniciar sesión), igual que antes.
   useEffect(() => {
     if (idAnteriorRef.current === idActual) return
     const idAnterior = idAnteriorRef.current
@@ -93,14 +103,28 @@ export function TiendaProvider({ children }) {
 
     if (idAnterior === INVITADO && idActual !== INVITADO) {
       const carritoInvitado = leerLocalStorage(claveCarrito(INVITADO), [])
-      const fusionado = fusionarCarritos(carritoDestino, carritoInvitado, stockVendido)
+      const fusionado = carritoDestino.map((item) => ({ ...item }))
+
+      carritoInvitado.forEach((itemInvitado) => {
+        const stock = obtenerStockRestante(itemInvitado.productoId)
+        const indice = fusionado.findIndex((item) => item.productoId === itemInvitado.productoId)
+        if (indice >= 0) {
+          fusionado[indice].cantidad = Math.min(
+            fusionado[indice].cantidad + itemInvitado.cantidad,
+            stock,
+          )
+        } else {
+          fusionado.push({
+            productoId: itemInvitado.productoId,
+            cantidad: Math.min(itemInvitado.cantidad, stock),
+          })
+        }
+      })
+
       localStorage.setItem(claveCarrito(idActual), JSON.stringify(fusionado))
       localStorage.removeItem(claveCarrito(INVITADO))
       setCarrito(fusionado)
 
-      // El código de descuento que el invitado ya tenía aplicado tampoco
-      // se pierde: si el usuario no traía uno propio guardado, se usa el
-      // de invitado.
       const codigoInvitado = leerLocalStorage(claveCodigo(INVITADO), null)
       const codigoUsuario = leerLocalStorage(claveCodigo(idActual), null)
       const codigoFinal = codigoUsuario ?? codigoInvitado
@@ -113,18 +137,11 @@ export function TiendaProvider({ children }) {
       setCarrito(carritoDestino)
       setCodigoAplicado(leerLocalStorage(claveCodigo(idActual), null))
     }
-
-    setOrdenes(leerLocalStorage(claveOrdenes(idActual), []))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idActual])
+  }, [idActual, obtenerStockRestante])
 
   useEffect(() => {
     localStorage.setItem(claveCarrito(idActual), JSON.stringify(carrito))
   }, [carrito, idActual])
-
-  useEffect(() => {
-    localStorage.setItem(claveOrdenes(idActual), JSON.stringify(ordenes))
-  }, [ordenes, idActual])
 
   useEffect(() => {
     if (codigoAplicado) {
@@ -134,20 +151,33 @@ export function TiendaProvider({ children }) {
     }
   }, [codigoAplicado, idActual])
 
+  // Las órdenes ya no se guardan en el navegador: se piden a la API cada vez
+  // que hay (o cambia) la sesión.
+  // El estado se actualiza dentro del callback de la promesa, nunca de forma
+  // síncrona en el cuerpo del efecto (react-hooks/set-state-in-effect).
+  const cargarOrdenes = useCallback(() => {
+    const idCliente = usuario?.id ?? null
+    const peticion = idCliente ? obtenerOrdenesDeCliente(idCliente) : Promise.resolve([])
+    return peticion
+      .catch(() => [])
+      .then((lista) => {
+        setOrdenes(lista)
+        setOrdenesDe(idCliente)
+      })
+  }, [usuario])
+
   useEffect(() => {
-    localStorage.setItem(CLAVE_STOCK_VENDIDO, JSON.stringify(stockVendido))
-  }, [stockVendido])
+    cargarOrdenes()
+  }, [cargarOrdenes])
 
-  const obtenerStockRestante = (productoId) => calcularStockRestante(productoId, stockVendido)
+  const cargandoOrdenes = Boolean(usuario) && ordenesDe !== usuario.id
 
-  // Agrega `cantidad` unidades de un producto al carrito (sin pasarse del
-  // stock restante) y abre el panel lateral de carrito.
   const agregarAlCarrito = (producto, cantidad = 1) => {
-    const stockRestante = calcularStockRestante(producto.id, stockVendido)
+    const stock = obtenerStockRestante(producto.id)
     setCarrito((actual) => {
       const existente = actual.find((item) => item.productoId === producto.id)
       const cantidadPrevia = existente?.cantidad ?? 0
-      const nuevaCantidad = Math.min(cantidadPrevia + cantidad, stockRestante)
+      const nuevaCantidad = Math.min(cantidadPrevia + cantidad, stock)
       if (nuevaCantidad <= 0) return actual
       if (existente) {
         return actual.map((item) =>
@@ -159,15 +189,13 @@ export function TiendaProvider({ children }) {
     setPanelAbierto(true)
   }
 
-  // delta positivo aumenta, negativo disminuye; si llega a 0 se quita del carrito.
   const cambiarCantidad = (productoId, delta) => {
-    const stockRestante = calcularStockRestante(productoId, stockVendido)
+    const stock = obtenerStockRestante(productoId)
     setCarrito((actual) =>
       actual
         .map((item) => {
           if (item.productoId !== productoId) return item
-          const nuevaCantidad = Math.min(Math.max(item.cantidad + delta, 0), stockRestante)
-          return { ...item, cantidad: nuevaCantidad }
+          return { ...item, cantidad: Math.min(Math.max(item.cantidad + delta, 0), stock) }
         })
         .filter((item) => item.cantidad > 0),
     )
@@ -182,38 +210,35 @@ export function TiendaProvider({ children }) {
     setCodigoAplicado(null)
   }
 
-  const aplicarCodigo = (texto) => {
-    const encontrado = buscarCodigo(texto)
-    if (!encontrado) {
-      return { ok: false, error: 'Ese código no existe o ya expiró.' }
+  // El código se valida contra la base (existe + está vigente); el descuento
+  // real se vuelve a calcular en el servidor al generar la orden.
+  const aplicarCodigo = async (texto) => {
+    try {
+      const codigo = await validarCodigo(texto)
+      setCodigoAplicado(codigo)
+      return { ok: true }
+    } catch (error) {
+      return { ok: false, error: error.message }
     }
-    setCodigoAplicado(encontrado.codigo)
-    return { ok: true }
   }
 
   const quitarCodigo = () => setCodigoAplicado(null)
 
-  // Carrito "enriquecido" con los datos del producto y el stock restante,
-  // listo para pintar en el panel lateral y en la página del carrito.
   const carritoConDetalle = useMemo(
     () =>
       carrito
         .map((item) => {
-          const producto = PRODUCTOS.find((p) => p.id === item.productoId)
+          const producto = buscarProducto(item.productoId)
           if (!producto) return null
-          return {
-            ...item,
-            producto,
-            stockRestante: calcularStockRestante(item.productoId, stockVendido),
-          }
+          return { ...item, producto, stockRestante: producto.stock }
         })
         .filter(Boolean),
-    [carrito, stockVendido],
+    // `productos` entra como dependencia para que el carrito se repinte con
+    // los precios y el stock frescos cada vez que se recarga el catálogo.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [carrito, productos],
   )
 
-  // Desglose de precios: precio de lista (por si el producto ya trae su
-  // propio descuento vía `precioOriginal`) -> subtotal real -> descuento
-  // por código aplicado -> total.
   const subtotalLista = useMemo(
     () =>
       carritoConDetalle.reduce(
@@ -228,13 +253,9 @@ export function TiendaProvider({ children }) {
   )
   const descuentoProductos = Math.max(0, subtotalLista - subtotal)
 
-  const codigoInfo = useMemo(
-    () => CODIGOS_DESCUENTO.find((c) => c.codigo === codigoAplicado) ?? null,
-    [codigoAplicado],
-  )
   const descuentoCodigo = useMemo(
-    () => (codigoInfo ? codigoInfo.calcularDescuento(carritoConDetalle) : 0),
-    [codigoInfo, carritoConDetalle],
+    () => calcularDescuentoCodigo(carritoConDetalle, codigoAplicado),
+    [carritoConDetalle, codigoAplicado],
   )
 
   const total = Math.max(0, subtotal - descuentoCodigo)
@@ -243,39 +264,34 @@ export function TiendaProvider({ children }) {
     [carritoConDetalle],
   )
 
-  // Convierte el carrito actual en una orden: descuenta el stock vendido
-  // de forma permanente y vacía el carrito (y el código aplicado).
-  const generarOrden = () => {
-    if (carritoConDetalle.length === 0) return null
-
-    const orden = {
-      id: Date.now(),
-      fecha: new Date().toISOString(),
-      items: carritoConDetalle.map((item) => ({
-        productoId: item.productoId,
-        nombre: item.producto.nombre,
-        precio: item.producto.precio,
-        cantidad: item.cantidad,
-      })),
-      subtotalLista,
-      descuentoProductos,
-      descuentoCodigo,
-      codigo: codigoInfo?.etiqueta ?? null,
-      total,
+  /**
+   * Manda el carrito a POST /ordenes. El backend valida stock, congela
+   * precios, aplica descuentos y descuenta existencias en una transacción.
+   * Si algo falla no se toca nada y se devuelve el mensaje del servidor.
+   */
+  const generarOrden = async () => {
+    if (carritoConDetalle.length === 0) {
+      return { ok: false, error: 'Tu carrito está vacío.' }
     }
 
-    setStockVendido((actual) => {
-      const nuevo = { ...actual }
-      carritoConDetalle.forEach((item) => {
-        nuevo[item.productoId] = (nuevo[item.productoId] ?? 0) + item.cantidad
-      })
-      return nuevo
-    })
-    setOrdenes((actual) => [orden, ...actual])
-    setCarrito([])
-    setCodigoAplicado(null)
+    try {
+      const orden = await crearOrden(
+        carritoConDetalle.map((item) => ({
+          productoId: item.productoId,
+          cantidad: item.cantidad,
+        })),
+        codigoAplicado?.texto ?? null,
+      )
 
-    return orden
+      setCarrito([])
+      setCodigoAplicado(null)
+      // El stock cambió en la base: volver a leer el catálogo y las órdenes.
+      await Promise.all([recargar(), cargarOrdenes()])
+
+      return { ok: true, orden }
+    } catch (error) {
+      return { ok: false, error: error.message }
+    }
   }
 
   const value = {
@@ -284,10 +300,11 @@ export function TiendaProvider({ children }) {
     subtotalLista,
     subtotal,
     descuentoProductos,
-    codigoAplicado: codigoInfo,
+    codigoAplicado,
     descuentoCodigo,
     total,
     ordenes,
+    cargandoOrdenes,
     panelAbierto,
     abrirPanel: () => setPanelAbierto(true),
     cerrarPanel: () => setPanelAbierto(false),
@@ -299,6 +316,7 @@ export function TiendaProvider({ children }) {
     aplicarCodigo,
     quitarCodigo,
     generarOrden,
+    recargarOrdenes: cargarOrdenes,
   }
 
   return <TiendaContext.Provider value={value}>{children}</TiendaContext.Provider>

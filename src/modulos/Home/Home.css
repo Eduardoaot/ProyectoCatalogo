@@ -10,43 +10,136 @@
 
 .home__intro {
   margin-bottom: 24px;
+  animation: home-intro-aparece 0.5s ease both;
 }
 
-.home__intro h1 {
-  margin: 0 0 20px;
+@keyframes home-intro-aparece {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home__intro-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding: 5px 14px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.722rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.home__intro-titulo {
+  /* line-height/padding generosos a propósito: con background-clip:text el
+     degradado queda acotado a la caja de línea, y si esta queda muy justa
+     para la fuente (acentos, "g", "j"...) se ve recortado arriba/abajo. */
+  margin: 0 0 14px;
+  padding: 0.15em 0;
+  line-height: 1.35;
   text-align: left;
+  background: linear-gradient(120deg, var(--text-h), var(--accent) 65%, var(--text-h));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.home__intro p {
+.home__intro-eslogan {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-h);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.home__intro-eslogan-punto {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.home__intro-eslogan2 {
+  margin: 6px 0 0 18px;
   color: var(--text);
 }
 
 .home__filtros {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 28px;
+
+  @media (max-width: 640px) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .filtro {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
   border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text);
-  padding: 8px 16px;
+  background: var(--card-bg);
+  color: var(--text-h);
+  padding: 8px 18px 8px 8px;
   border-radius: 999px;
-  font-size: 14px;
+  font-size: 0.778rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.1s, color 0.1s, border-color 0.1s;
+  box-shadow: 0 1px 2px rgba(58, 14, 34, 0.04);
+  transition: background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+.filtro__icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  color: var(--accent);
+  transition: background 0.15s, color 0.15s;
+}
+
+.filtro__icono svg {
+  width: 16px;
+  height: 16px;
 }
 
 .filtro:hover {
   border-color: var(--accent-border);
   color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
 }
 
 .filtro.is-active {
-  background: var(--accent);
+  background: linear-gradient(120deg, var(--accent), #ff8fbb);
   border-color: var(--accent);
+  color: #fff;
+}
+
+.filtro.is-active .filtro__icono {
+  background: rgba(255, 255, 255, 0.25);
   color: #fff;
 }
 
@@ -65,4 +158,20 @@
 .home__sin-resultados {
   color: var(--text);
   padding: 32px 0;
+}
+
+/* Estados de carga y de error del catálogo (los datos vienen de la API). */
+.home--aviso {
+  min-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.home__error {
+  max-width: 44ch;
+  color: #b3261e;
 }
