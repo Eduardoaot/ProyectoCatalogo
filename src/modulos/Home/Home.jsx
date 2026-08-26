@@ -20,7 +20,10 @@ function Home() {
   const busqueda = searchParams.get('buscar') || ''
 
   const [transicionando, setTransicionando] = useState(false)
-  const catalogoRef = useRef(null)
+  // Ancla de scroll: tanto una búsqueda nueva como un cambio de categoría
+  // llevan la vista hasta acá (el título "Catálogo Rosamark"), nunca más
+  // abajo ni más arriba, sin importar cuánto cambie de alto la grilla.
+  const introRef = useRef(null)
 
   // La categoría y la búsqueda se combinan: los filtros de categoría se
   // aplican sobre los resultados de búsqueda (y viceversa), no se
@@ -41,17 +44,27 @@ function Home() {
   // dropdown), baja la vista hacia el catálogo en vez de dejar al usuario
   // arriba del todo, tapado por el carrusel.
   useEffect(() => {
-    if (busqueda && catalogoRef.current) {
-      catalogoRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (busqueda && introRef.current) {
+      introRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   }, [busqueda])
 
   // Al cambiar de categoría desde los botones de filtro, primero se
   // desvanece la grilla (fade out) y, una vez invisible, se actualiza la
   // URL (lo que a su vez cambia productosFiltrados) y vuelve a aparecer.
-  const cambiarCategoria = (categoria) => {
+  //
+  // El scroll se dispara aparte, ya (no al terminar el timeout): antes no
+  // se movía nada a propósito, pero el foco que el navegador le deja al
+  // botón recién clickeado + el cambio de alto de la grilla hacían que el
+  // navegador "saltara" solo a posiciones raras. Forzar el scroll siempre
+  // al mismo punto (el título) deja un solo movimiento, predecible.
+  const cambiarCategoria = (categoria, boton) => {
     if (categoria === categoriaActiva) return
+    // Sin esto, el navegador intenta mantener visible el botón recién
+    // enfocado y "pelea" con nuestro scroll hacia el título de arriba.
+    boton?.blur()
     setTransicionando(true)
+    introRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     setTimeout(() => {
       const params = new URLSearchParams(searchParams)
       if (categoria === 'Todas') {
@@ -102,7 +115,7 @@ function Home() {
     <section className="home">
       <Carousel />
 
-      <div className="home__intro">
+      <div className="home__intro" ref={introRef}>
         <h1 className="home__intro-titulo">{t('home.titulo')}</h1>
         <p className="home__intro-eslogan">
           <span className="home__intro-eslogan-punto" aria-hidden="true" />
@@ -111,11 +124,11 @@ function Home() {
         {!mensajeIntro && <p className="home__intro-eslogan2">{t('home.eslogan2')}</p>}
       </div>
 
-      <div className="home__filtros" ref={catalogoRef}>
+      <div className="home__filtros">
         <button
           type="button"
           className={categoriaActiva === 'Todas' ? 'filtro is-active' : 'filtro'}
-          onClick={() => cambiarCategoria('Todas')}
+          onClick={(e) => cambiarCategoria('Todas', e.currentTarget)}
         >
           <span className="filtro__icono">
             <ICONO_TODAS />
@@ -129,7 +142,7 @@ function Home() {
               key={categoria}
               type="button"
               className={categoriaActiva === categoria ? 'filtro is-active' : 'filtro'}
-              onClick={() => cambiarCategoria(categoria)}
+              onClick={(e) => cambiarCategoria(categoria, e.currentTarget)}
             >
               <span className="filtro__icono">{Icono && <Icono />}</span>
               <span>{t(`cat.${categoria}`)}</span>

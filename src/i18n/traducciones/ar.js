@@ -25,6 +25,8 @@ export default {
   'pref.temaClaro': 'فاتح',
   'pref.temaOscuro': 'داكن',
   'pref.texto': 'حجم النص',
+  'pref.textoPequeno': 'صغير',
+
   'pref.textoNormal': 'عادي',
   'pref.textoGrande': 'كبير',
   'pref.textoEnorme': 'كبير جدًا',
@@ -127,6 +129,11 @@ export default {
     'يُحفظ حسابك في قاعدة البيانات، وتُخزَّن كلمة المرور مُشفَّرة (8 أحرف على الأقل).',
   'login.faltanDatos': 'أكمل الاسم والبريد الإلكتروني وكلمة المرور.',
   'login.faltanCredenciales': 'أدخل بريدك الإلكتروني وكلمة المرور.',
+  'login.errorNombre': 'أدخل اسمك.',
+  'login.errorCorreo': 'أدخل بريدك الإلكتروني.',
+  'login.errorCorreoInvalido': 'أدخل بريدًا إلكترونيًا صالحًا (مثال: you@example.com).',
+  'login.errorContrasena': 'أدخل كلمة المرور.',
+  'login.errorContrasenaCorta': 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.',
 
   'cuenta.titulo': 'حسابي',
   'cuenta.nombre': 'الاسم',

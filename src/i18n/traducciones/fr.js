@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': 'Clair',
   'pref.temaOscuro': 'Sombre',
   'pref.texto': 'Taille du texte',
+  'pref.textoPequeno': 'Petit',
+
   'pref.textoNormal': 'Normale',
   'pref.textoGrande': 'Grande',
   'pref.textoEnorme': 'Très grande',
@@ -127,6 +129,11 @@ export default {
     'Votre compte est enregistré dans la base de données ; le mot de passe est chiffré (8 caractères minimum).',
   'login.faltanDatos': 'Renseignez le nom, l’e-mail et le mot de passe.',
   'login.faltanCredenciales': 'Saisissez votre e-mail et votre mot de passe.',
+  'login.errorNombre': 'Saisissez votre nom.',
+  'login.errorCorreo': 'Saisissez votre e-mail.',
+  'login.errorCorreoInvalido': 'Saisissez un e-mail valide (ex. votremail@exemple.com).',
+  'login.errorContrasena': 'Saisissez votre mot de passe.',
+  'login.errorContrasenaCorta': 'Le mot de passe doit comporter au moins 8 caractères.',
 
   'cuenta.titulo': 'Mon compte',
   'cuenta.nombre': 'Nom',

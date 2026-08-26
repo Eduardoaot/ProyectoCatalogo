@@ -4,9 +4,21 @@ import { IconoLuna, IconoSol, IconoX } from './iconos'
 import './PreferenciasPanel.css'
 
 const CLAVE_TAMANO = {
+  pequeno: 'pref.textoPequeno',
   normal: 'pref.textoNormal',
   grande: 'pref.textoGrande',
   enorme: 'pref.textoEnorme',
+}
+
+// Tamaño del texto DENTRO de cada botón, relativo al tamaño base del botón
+// (0.722rem, ver PreferenciasPanel.css): así "Enorme" ya se ve más grande
+// que "Pequeño" ahí mismo, de previsualización, sin tener que aplicar el
+// cambio para saber qué tan grande queda.
+const PREVIEW_TAMANO = {
+  pequeno: '0.85em',
+  normal: '1em',
+  grande: '1.25em',
+  enorme: '1.55em',
 }
 
 // Drawer con las tres preferencias del sitio: tema, tamaño de texto e
@@ -84,7 +96,7 @@ function PreferenciasPanel({ abierto, onCerrar }) {
                   }
                   onClick={() => cambiarTamanoTexto(paso)}
                 >
-                  {t(CLAVE_TAMANO[paso])}
+                  <span style={{ fontSize: PREVIEW_TAMANO[paso] }}>{t(CLAVE_TAMANO[paso])}</span>
                 </button>
               ))}
             </div>

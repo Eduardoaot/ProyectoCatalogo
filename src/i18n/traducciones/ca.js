@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': 'Clar',
   'pref.temaOscuro': 'Fosc',
   'pref.texto': 'Mida del text',
+  'pref.textoPequeno': 'Petit',
+
   'pref.textoNormal': 'Normal',
   'pref.textoGrande': 'Gran',
   'pref.textoEnorme': 'Molt gran',
@@ -127,6 +129,11 @@ export default {
     'El teu compte es desa a la base de dades; la contrasenya es guarda xifrada (mínim 8 caràcters).',
   'login.faltanDatos': 'Omple el nom, l’adreça i la contrasenya.',
   'login.faltanCredenciales': 'Introdueix l’adreça i la contrasenya.',
+  'login.errorNombre': 'Introdueix el teu nom.',
+  'login.errorCorreo': 'Introdueix el teu correu electrònic.',
+  'login.errorCorreoInvalido': 'Introdueix un correu electrònic vàlid (ex. elteucorreu@exemple.com).',
+  'login.errorContrasena': 'Introdueix la teva contrasenya.',
+  'login.errorContrasenaCorta': 'La contrasenya ha de tenir almenys 8 caràcters.',
 
   'cuenta.titulo': 'El meu compte',
   'cuenta.nombre': 'Nom',

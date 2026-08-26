@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': '라이트',
   'pref.temaOscuro': '다크',
   'pref.texto': '글자 크기',
+  'pref.textoPequeno': '작게',
+
   'pref.textoNormal': '보통',
   'pref.textoGrande': '크게',
   'pref.textoEnorme': '아주 크게',
@@ -126,6 +128,11 @@ export default {
     '계정은 데이터베이스에 저장되며, 비밀번호는 암호화되어 보관됩니다(최소 8자).',
   'login.faltanDatos': '이름, 이메일, 비밀번호를 모두 입력하세요.',
   'login.faltanCredenciales': '이메일과 비밀번호를 입력하세요.',
+  'login.errorNombre': '이름을 입력하세요.',
+  'login.errorCorreo': '이메일을 입력하세요.',
+  'login.errorCorreoInvalido': '올바른 이메일을 입력하세요 (예: you@example.com).',
+  'login.errorContrasena': '비밀번호를 입력하세요.',
+  'login.errorContrasenaCorta': '비밀번호는 8자 이상이어야 합니다.',
 
   'cuenta.titulo': '내 계정',
   'cuenta.nombre': '이름',

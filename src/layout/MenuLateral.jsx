@@ -3,7 +3,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useCatalogo } from '../context/CatalogoContext'
 import { usePreferencias } from '../context/PreferenciasContext'
-import { IconoAjustes, IconoChevron, IconoCorazon, IconoUsuario, IconoX } from '../common/iconos'
+import {
+  IconoAjustes,
+  IconoChevron,
+  IconoCorazon,
+  IconoOrdenes,
+  IconoTodas,
+  IconoUsuario,
+  IconoX,
+} from '../common/iconos'
 import './MenuLateral.css'
 
 // Menú lateral (drawer) tipo Amazon: usuario / órdenes / catálogo con
@@ -107,7 +115,12 @@ function MenuLateral({ abierto, onCerrar, onAbrirPreferencias }) {
           </div>
 
           {/* Órdenes */}
-          <button type="button" className="menu-lateral__item" onClick={irAOrdenes}>
+          <button
+            type="button"
+            className="menu-lateral__item menu-lateral__item--icono"
+            onClick={irAOrdenes}
+          >
+            <IconoOrdenes className="menu-lateral__icono-item" />
             {t('menu.misOrdenes')}
           </button>
 
@@ -120,7 +133,12 @@ function MenuLateral({ abierto, onCerrar, onAbrirPreferencias }) {
           {/* Catálogo */}
           <div className="menu-lateral__seccion">
             <div className="menu-lateral__item-conjunto">
-              <Link to="/" className="menu-lateral__item menu-lateral__item--flex" onClick={onCerrar}>
+              <Link
+                to="/"
+                className="menu-lateral__item menu-lateral__item--flex menu-lateral__item--icono"
+                onClick={onCerrar}
+              >
+                <IconoTodas className="menu-lateral__icono-item" />
                 {t('menu.catalogo')}
               </Link>
               <button

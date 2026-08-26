@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': 'Chiaro',
   'pref.temaOscuro': 'Scuro',
   'pref.texto': 'Dimensione del testo',
+  'pref.textoPequeno': 'Piccolo',
+
   'pref.textoNormal': 'Normale',
   'pref.textoGrande': 'Grande',
   'pref.textoEnorme': 'Molto grande',
@@ -127,6 +129,11 @@ export default {
     'Il tuo account viene salvato nel database; la password è cifrata (minimo 8 caratteri).',
   'login.faltanDatos': 'Compila nome, e-mail e password.',
   'login.faltanCredenciales': 'Inserisci e-mail e password.',
+  'login.errorNombre': 'Inserisci il tuo nome.',
+  'login.errorCorreo': 'Inserisci la tua e-mail.',
+  'login.errorCorreoInvalido': 'Inserisci un’e-mail valida (es. tuaemail@esempio.com).',
+  'login.errorContrasena': 'Inserisci la tua password.',
+  'login.errorContrasenaCorta': 'La password deve avere almeno 8 caratteri.',
 
   'cuenta.titulo': 'Il mio account',
   'cuenta.nombre': 'Nome',

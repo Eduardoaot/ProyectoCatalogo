@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': 'ライト',
   'pref.temaOscuro': 'ダーク',
   'pref.texto': '文字サイズ',
+  'pref.textoPequeno': '小',
+
   'pref.textoNormal': '標準',
   'pref.textoGrande': '大',
   'pref.textoEnorme': '特大',
@@ -126,6 +128,11 @@ export default {
     'アカウントはデータベースに保存され、パスワードは暗号化されます（8文字以上）。',
   'login.faltanDatos': 'お名前、メールアドレス、パスワードを入力してください。',
   'login.faltanCredenciales': 'メールアドレスとパスワードを入力してください。',
+  'login.errorNombre': 'お名前を入力してください。',
+  'login.errorCorreo': 'メールアドレスを入力してください。',
+  'login.errorCorreoInvalido': '有効なメールアドレスを入力してください（例: you@example.com）。',
+  'login.errorContrasena': 'パスワードを入力してください。',
+  'login.errorContrasenaCorta': 'パスワードは8文字以上で入力してください。',
 
   'cuenta.titulo': 'アカウント',
   'cuenta.nombre': 'お名前',

@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': '浅色',
   'pref.temaOscuro': '深色',
   'pref.texto': '文字大小',
+  'pref.textoPequeno': '小',
+
   'pref.textoNormal': '标准',
   'pref.textoGrande': '大',
   'pref.textoEnorme': '特大',
@@ -125,6 +127,11 @@ export default {
   'login.ayudaRegistro': '账户保存在数据库中，密码以加密方式存储（至少 8 个字符）。',
   'login.faltanDatos': '请填写姓名、邮箱和密码。',
   'login.faltanCredenciales': '请输入邮箱和密码。',
+  'login.errorNombre': '请输入您的姓名。',
+  'login.errorCorreo': '请输入您的邮箱。',
+  'login.errorCorreoInvalido': '请输入有效的邮箱地址（例如 you@example.com）。',
+  'login.errorContrasena': '请输入您的密码。',
+  'login.errorContrasenaCorta': '密码至少需要8个字符。',
 
   'cuenta.titulo': '我的账户',
   'cuenta.nombre': '姓名',

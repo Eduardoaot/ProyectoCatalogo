@@ -5,6 +5,9 @@ import { useAuth } from '../../context/AuthContext'
 import { usePreferencias } from '../../context/PreferenciasContext'
 import './Login.css'
 
+const PATRON_CORREO = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const LARGO_MINIMO_PASSWORD = 8
+
 // Pantalla de acceso con dos modos: iniciar sesión (contra el seed de
 // usuarios + los registrados) o crear cuenta nueva. Si se llegó aquí desde
 // un enlace que necesitaba sesión (ej. "Órdenes" o "Generar orden" sin
@@ -25,6 +28,29 @@ function Login() {
 
   const destino = location.state?.from || '/'
 
+  // Antes esto era un solo mensaje genérico ("completa nombre, correo y
+  // contraseña") sin importar cuál faltaba o qué tenía mal. Ahora se
+  // revisa campo por campo y se dice exactamente cuál es el problema, en
+  // el mismo orden en que aparecen en el formulario.
+  const validar = () => {
+    if (modo === 'registro' && !nombre.trim()) {
+      return t('login.errorNombre')
+    }
+    if (!email.trim()) {
+      return t('login.errorCorreo')
+    }
+    if (!PATRON_CORREO.test(email.trim())) {
+      return t('login.errorCorreoInvalido')
+    }
+    if (!password) {
+      return t('login.errorContrasena')
+    }
+    if (modo === 'registro' && password.length < LARGO_MINIMO_PASSWORD) {
+      return t('login.errorContrasenaCorta')
+    }
+    return ''
+  }
+
   // Registro e inicio de sesión pegan a la API; la contraseña se hashea
   // con bcrypt en el servidor y aquí solo se guarda el token que devuelve.
   const handleSubmit = async (e) => {
@@ -32,12 +58,9 @@ function Login() {
     setError('')
     if (enviando) return
 
-    if (modo === 'registro' && !nombre.trim()) {
-      setError(t('login.faltanDatos'))
-      return
-    }
-    if (!email.trim() || !password) {
-      setError(t('login.faltanCredenciales'))
+    const errorValidacion = validar()
+    if (errorValidacion) {
+      setError(errorValidacion)
       return
     }
 
@@ -86,7 +109,12 @@ function Login() {
           {modo === 'login' ? t('login.ayudaLogin') : t('login.ayudaRegistro')}
         </p>
 
-        <form onSubmit={handleSubmit} className="login__formulario">
+        {/* noValidate: sin esto, el navegador bloquea el submit con su propio
+            aviso nativo (sin traducir, con otro estilo) apenas ve un campo
+            vacío o un correo con formato raro, y validar() de acá abajo
+            nunca llega a correr. Con noValidate, siempre gana nuestro
+            mensaje, traducido y consistente con el resto de la app. */}
+        <form onSubmit={handleSubmit} className="login__formulario" noValidate>
           {modo === 'registro' && (
             <label className="login__campo">
               {t('login.nombre')}

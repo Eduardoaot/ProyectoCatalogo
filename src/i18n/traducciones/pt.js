@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': 'Claro',
   'pref.temaOscuro': 'Escuro',
   'pref.texto': 'Tamanho do texto',
+  'pref.textoPequeno': 'Pequeno',
+
   'pref.textoNormal': 'Normal',
   'pref.textoGrande': 'Grande',
   'pref.textoEnorme': 'Muito grande',
@@ -127,6 +129,11 @@ export default {
     'Sua conta fica no banco de dados; a senha é guardada criptografada (mínimo 8 caracteres).',
   'login.faltanDatos': 'Preencha nome, e-mail e senha.',
   'login.faltanCredenciales': 'Informe seu e-mail e senha.',
+  'login.errorNombre': 'Digite seu nome.',
+  'login.errorCorreo': 'Digite seu e-mail.',
+  'login.errorCorreoInvalido': 'Digite um e-mail válido (ex. seuemail@exemplo.com).',
+  'login.errorContrasena': 'Digite sua senha.',
+  'login.errorContrasenaCorta': 'A senha deve ter pelo menos 8 caracteres.',
 
   'cuenta.titulo': 'Minha conta',
   'cuenta.nombre': 'Nome',

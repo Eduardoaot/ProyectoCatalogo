@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': 'Hell',
   'pref.temaOscuro': 'Dunkel',
   'pref.texto': 'Schriftgröße',
+  'pref.textoPequeno': 'Klein',
+
   'pref.textoNormal': 'Normal',
   'pref.textoGrande': 'Groß',
   'pref.textoEnorme': 'Sehr groß',
@@ -127,6 +129,11 @@ export default {
     'Dein Konto wird in der Datenbank gespeichert; das Passwort wird verschlüsselt abgelegt (mindestens 8 Zeichen).',
   'login.faltanDatos': 'Bitte Name, E-Mail und Passwort ausfüllen.',
   'login.faltanCredenciales': 'Gib deine E-Mail und dein Passwort ein.',
+  'login.errorNombre': 'Gib deinen Namen ein.',
+  'login.errorCorreo': 'Gib deine E-Mail-Adresse ein.',
+  'login.errorCorreoInvalido': 'Gib eine gültige E-Mail-Adresse ein (z. B. deinemail@beispiel.com).',
+  'login.errorContrasena': 'Gib dein Passwort ein.',
+  'login.errorContrasenaCorta': 'Das Passwort muss mindestens 8 Zeichen lang sein.',
 
   'cuenta.titulo': 'Mein Konto',
   'cuenta.nombre': 'Name',

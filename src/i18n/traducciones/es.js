@@ -29,6 +29,7 @@ export default {
   'pref.temaClaro': 'Claro',
   'pref.temaOscuro': 'Oscuro',
   'pref.texto': 'Tamaño del texto',
+  'pref.textoPequeno': 'Pequeño',
   'pref.textoNormal': 'Normal',
   'pref.textoGrande': 'Grande',
   'pref.textoEnorme': 'Enorme',
@@ -138,6 +139,11 @@ export default {
     'Tu cuenta se guarda en la base de datos; la contraseña se almacena cifrada (mínimo 8 caracteres).',
   'login.faltanDatos': 'Completa nombre, correo y contraseña.',
   'login.faltanCredenciales': 'Ingresa tu correo y contraseña.',
+  'login.errorNombre': 'Ingresa tu nombre.',
+  'login.errorCorreo': 'Ingresa tu correo electrónico.',
+  'login.errorCorreoInvalido': 'Ingresa un correo electrónico válido (ej. tucorreo@ejemplo.com).',
+  'login.errorContrasena': 'Ingresa tu contraseña.',
+  'login.errorContrasenaCorta': 'La contraseña debe tener al menos 8 caracteres.',
 
   // --- Cuenta ---
   'cuenta.titulo': 'Mi cuenta',

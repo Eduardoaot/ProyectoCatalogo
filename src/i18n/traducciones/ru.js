@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': 'Светлая',
   'pref.temaOscuro': 'Тёмная',
   'pref.texto': 'Размер текста',
+  'pref.textoPequeno': 'Маленький',
+
   'pref.textoNormal': 'Обычный',
   'pref.textoGrande': 'Крупный',
   'pref.textoEnorme': 'Очень крупный',
@@ -127,6 +129,11 @@ export default {
     'Аккаунт сохраняется в базе данных; пароль хранится в зашифрованном виде (минимум 8 символов).',
   'login.faltanDatos': 'Заполните имя, почту и пароль.',
   'login.faltanCredenciales': 'Введите почту и пароль.',
+  'login.errorNombre': 'Введите ваше имя.',
+  'login.errorCorreo': 'Введите вашу почту.',
+  'login.errorCorreoInvalido': 'Введите действительный адрес почты (например, you@example.com).',
+  'login.errorContrasena': 'Введите пароль.',
+  'login.errorContrasenaCorta': 'Пароль должен содержать не менее 8 символов.',
 
   'cuenta.titulo': 'Мой аккаунт',
   'cuenta.nombre': 'Имя',

@@ -132,13 +132,19 @@
 }
 
 .preferencias-panel__pasos {
-  display: flex;
+  /* Grilla 2x2 en vez de una fila de 4: con la vista previa, "Enorme" es
+     bastante más ancho que "Pequeño", y en una sola fila angosta terminaba
+     apretado o cortado. */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 
 .preferencias-panel__paso {
-  flex: 1;
-  padding: 8px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 4px;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--bg);
@@ -146,6 +152,7 @@
   font: inherit;
   font-size: 0.722rem;
   font-weight: 600;
+  line-height: 1;
   cursor: pointer;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 }

@@ -24,6 +24,11 @@
   position: absolute;
   top: 14px;
   right: 14px;
+  /* z-index explícito: en modo oscuro la imagen lleva filter (ver
+     index.css), y eso la vuelve su propio contexto de apilamiento; sin un
+     z-index aquí, ese contexto podía terminar pintándose por encima del
+     badge en vez de por debajo. */
+  z-index: 2;
   background: var(--accent);
   color: #fff;
   font-size: 0.667rem;

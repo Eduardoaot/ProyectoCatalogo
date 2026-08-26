@@ -148,11 +148,15 @@
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
   opacity: 1;
-  transition: opacity 0.1s ease;
+  transform: translateY(0) scale(1);
+  /* 0.2s para que coincida con DURACION_TRANSICION_MS en Home.jsx: el fade
+     debe terminar justo cuando el timeout cambia el contenido detrás. */
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .home__grid--transicion {
   opacity: 0;
+  transform: translateY(10px) scale(0.99);
 }
 
 .home__sin-resultados {

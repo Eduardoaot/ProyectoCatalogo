@@ -3,7 +3,10 @@ import LogoRosa from '../assets/LogoRosa.png'
 import LogoLetras from '../assets/LogoLetras.png'
 import './SplashScreen.css'
 
-const DURACION_VISIBLE_MS = 1600
+// El texto termina de subir a los 0.3s + 0.9s = 1.2s; se deja visible un
+// rato más (hasta 1900ms) para que la animación se note y no se sienta
+// como que el logo "aparece" de golpe.
+const DURACION_VISIBLE_MS = 1900
 const DURACION_SALIDA_MS = 500
 
 // Pantalla de bienvenida que se muestra una vez al cargar la app:
