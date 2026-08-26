@@ -29,6 +29,24 @@
   margin-bottom: 28px;
 }
 
+.home__filtros button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.home__filtros button:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.home__filtros svg {
+  width: 32px;
+  height: 32px;
+}
+
 .filtro-icono {
   width: 36px;
   height: 36px;
@@ -41,7 +59,7 @@
   align-items: center;
   justify-content:end;
   border: 1px solid var(--border);
-  background: transparent;
+  background: rgba(0, 0, 0, 0.05);
   color: var(--text);
   padding: 8px 16px;
   border-radius: 16px;
@@ -49,8 +67,7 @@
   font-family: 'Google Sans', sans-serif;
   font-weight: 500;
   cursor: pointer;
-  height: 78px;
-  transition: background 0.1s, color 0.1s, border-color 0.1s;
+  height: 72px;
 }
 
 .filtro:hover {
@@ -64,8 +81,219 @@
   color: #fff;
 }
 
+.filtro.is-active:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.product__catalog {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.order__side-menu {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+}
+
+.product__catalog {
+  display: flex;
+  flex-direction: row;
+}
+
+.order__side-menu {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.side-menu__card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.side-menu__card--row {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.side-menu__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-h);
+}
+
+.side-menu__label {
+  font-weight: 500;
+  color: var(--text-h);
+  font-size: 15px;
+}
+
+/* ====== SLIDER DE PRECIO DOBLE ====== */
+.side-menu__price-info {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-h);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+
+.dual-slider {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  margin-top: 0px;
+  margin-bottom: 12px;
+}
+
+/* Barra de fondo gris */
+.dual-slider__track {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--border);
+  border-radius: 999px;
+  z-index: 1;
+}
+
+/* Segmento de color resaltado entre el min y max */
+.dual-slider__progress {
+  position: absolute;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  z-index: 2;
+}
+
+/* Inputs transparentes superpuestos */
+.dual-slider__input {
+  position: absolute;
+  top: -7px; 
+  left: 0;
+  width: 100%;
+  margin: 0; /* Elimina el espacio fantasma a la izquierda */
+  padding: 0; /* Elimina el espacio fantasma interior */
+  -webkit-appearance: none;
+  background: transparent;
+  pointer-events: none; 
+  outline: none;
+  z-index: 3;
+}
+
+/* Estilos de los "puntos movibles" (Chrome, Safari, Edge) */
+.dual-slider__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: auto; /* Reactiva los clicks solo para la bolita */
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: 2px solid var(--card-bg);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.1s, z-index 0s;
+}
+
+.dual-slider__input::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  z-index: 4; /* Pone el punto seleccionado por delante si están muy juntos */
+}
+
+/* Estilos de los "puntos movibles" (Firefox) */
+.dual-slider__input::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px; /* Firefox cuenta los bordes distinto, restamos el borde */
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: 2px solid var(--card-bg);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.1s;
+}
+
+.dual-slider__input::-moz-range-thumb:hover {
+  transform: scale(1.15);
+}
+
+.side-menu__dropdown-container {
+  position: relative;
+}
+
+/* Botón que ahora muestra texto y flecha */
+.side-menu__dropdown-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px; /* Separa el texto de la flecha */
+  padding: 8px 12px; /* Más espacio a los lados para el texto */
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-h);
+  font: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 80px; /* Evita que el botón cambie mucho de tamaño */
+}
+
+.side-menu__dropdown-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+/* Opcional: Resaltar la opción actualmente seleccionada en el menú */
+.dropdown-item.is-selected {
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.side-menu__dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px;
+  width: max-content;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.side-menu__dropdown-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 .home__grid {
   display: grid;
+  width: 100%;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
   opacity: 1;
@@ -79,4 +307,269 @@
 .home__sin-resultados {
   color: var(--text);
   padding: 32px 0;
+}
+
+
+.navbar__boton-filtros {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: var(--text);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar__boton-filtros:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+/* Animación de apertura para el contenedor principal usando Grid (Despliegue) */
+.navbar__barra-filtros-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  background: var(--bg);
+  border-top: 1px solid transparent;
+}
+
+.navbar__barra-filtros-wrapper.is-open {
+  grid-template-rows: 1fr;
+  border-top-color: var(--border);
+}
+
+.navbar__barra-filtros-inner {
+  overflow: hidden;
+}
+
+.navbar__barra-filtros {
+  padding: 14px 32px;
+  max-width: 1126px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 1024px) {
+    padding: 14px 20px;
+  }
+}
+
+.navbar__filtros-botones {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Contenedor relativo clave para alinear los dropdowns con sus botones */
+.filtro-item {
+  position: relative;
+}
+
+.filtro-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Espacio entre el texto y la flecha */
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 8px 18px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+  color: var(--text-h);
+  font: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filtro-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.filtro-btn.is-active:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #fff;
+}
+
+.filtro-btn.is-active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* Flecha y su rotación animada */
+.icono-flecha {
+  transition: transform 0.3s ease;
+}
+
+.icono-flecha.activa {
+  transform: rotate(180deg);
+}
+
+.navbar__barra-filtros-wrapper {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  z-index: 50;
+  
+  /* Animación con opacidad y movimiento, sin usar grid para evitar cortes */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+.navbar__barra-filtros-wrapper.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* 2. Eliminamos el overflow: hidden para que los dropdowns salgan sin cortarse */
+.navbar__barra-filtros-inner {
+  overflow: visible;
+}
+
+.navbar__barra-filtros {
+  padding: 14px 32px;
+  max-width: 1126px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 1024px) {
+    padding: 14px 20px;
+  }
+}
+
+.navbar__subfiltros-categorias {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* Animación de despliegue para la sub-barra de Categorías */
+.navbar__subfiltros-categorias-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+
+.navbar__subfiltros-categorias-wrapper.is-open {
+  grid-template-rows: 1fr;
+  padding-top: 0px; /* Separación cuando está abierta */
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+
+.navbar__subfiltros-categorias-inner {
+  overflow: hidden;
+}
+
+.navbar__subfiltros-categorias::-webkit-scrollbar {
+  height: 6px;
+}
+
+.navbar__subfiltros-categorias::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+
+.filtro-categoria {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:end;
+  gap: 2px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  height: 72px;
+  transition: all 0.2s ease;
+}
+
+.filtro-categoria:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.filtro-categoria.is-active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.filtro-categoria svg {
+  width: 36px;
+  height: 36px;
+}
+
+/* Contenedor Dropdown Animado y Alineado a la izquierda */
+.navbar__subfiltros-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0; /* Alinea el inicio del dropdown con el inicio del botón */
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px;
+  width: max-content; /* Se ajusta al texto sin romperse */
+  box-shadow: var(--shadow);
+  z-index: 80;
+  
+  /* Animaciones de Despliegue hacia abajo y arriba */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.navbar__subfiltros-dropdown.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  text-align: left;
+  color: var(--text-h);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.dropdown-item:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
 }

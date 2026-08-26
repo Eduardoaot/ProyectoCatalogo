@@ -9,6 +9,7 @@
   --accent: #e6337f;
   --accent-bg: rgba(230, 51, 127, 0.08);
   --accent-border: rgba(230, 51, 127, 0.4);
+  --accent-hover: #d61c6f;
   --social-bg: rgba(253, 238, 244, 0.5);
   --shadow:
     rgba(230, 51, 127, 0.12) 0 10px 15px -3px, rgba(230, 51, 127, 0.08) 0 4px 6px -2px;
@@ -96,7 +97,7 @@ code {
 .font-dmsans {
   font-family: 'DM Sans', sans-serif;
 }
-.font -google-sans {
+.font-google-sans {
   font-family: 'Google Sans', sans-serif;
 }
 .font-outfit {

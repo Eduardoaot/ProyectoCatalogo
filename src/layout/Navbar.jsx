@@ -3,13 +3,12 @@ import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-do
 import rosaLogo from '../assets/RosaLogo.webp'
 import { useAuth } from '../context/AuthContext'
 import { useTienda } from '../context/TiendaContext'
-import { PRODUCTOS } from '../data/productos'
+import { PRODUCTOS, CATEGORIAS } from '../data/productos' // Agregada la importación de CATEGORIAS
+import ICONOS_CATEGORIAS from '../data/iconos' // Agregada la importación de iconos
 import { IconoBuscar, IconoCarrito, IconoMenu, IconoPanelLateral, IconoX } from '../common/iconos'
 import MenuLateral from './MenuLateral'
 import './Navbar.css'
 
-// A partir de qué tanto scroll hacia abajo empieza a poder ocultarse la
-// navbar (evita que "parpadee" con pequeños scrolls cerca del tope).
 const UMBRAL_SCROLL_PX = 80
 const MAX_SUGERENCIAS = 6
 
@@ -24,10 +23,14 @@ function Navbar() {
   const [oculta, setOculta] = useState(false)
   const [busqueda, setBusqueda] = useState('')
   const [mostrarSugerencias, setMostrarSugerencias] = useState(false)
+  
+  // Nuevos estados para los filtros
+  const [mostrarFiltros, setMostrarFiltros] = useState(false)
+  const [subFiltroActivo, setSubFiltroActivo] = useState(null) // Puede ser: 'categorias', 'precio', 'nombre' u null
+
   const ultimoScrollRef = useRef(0)
   const navRef = useRef(null)
 
-  // Comportamiento tipo Amazon: al bajar se oculta, al subir reaparece.
   useEffect(() => {
     const alHacerScroll = () => {
       const actual = window.scrollY
@@ -39,8 +42,6 @@ function Navbar() {
     return () => window.removeEventListener('scroll', alHacerScroll)
   }, [])
 
-  // Expone la altura real de la navbar como variable CSS para que el
-  // contenido de la página deje el espacio justo (la navbar es fixed).
   useEffect(() => {
     const actualizarAltura = () => {
       if (navRef.current) {
@@ -53,7 +54,7 @@ function Navbar() {
     actualizarAltura()
     window.addEventListener('resize', actualizarAltura)
     return () => window.removeEventListener('resize', actualizarAltura)
-  }, [])
+  }, [mostrarFiltros, subFiltroActivo]) // Actualizamos la altura si se abren los filtros
 
   const sugerencias = useMemo(() => {
     const texto = busqueda.trim().toLowerCase()
@@ -70,9 +71,6 @@ function Navbar() {
     navigate(`/producto/${id}`)
   }
 
-  // Enter sin elegir nada del dropdown: mantiene la búsqueda de siempre
-  // (navega a "/?buscar=..."), Home.jsx se encarga de bajar la vista hacia
-  // el catálogo cuando detecta una búsqueda nueva.
   const buscar = (e) => {
     e.preventDefault()
     setMostrarSugerencias(false)
@@ -88,6 +86,10 @@ function Navbar() {
       params.delete('buscar')
       setSearchParams(params)
     }
+  }
+
+  const toggleSubFiltro = (filtro) => {
+    setSubFiltroActivo(subFiltroActivo === filtro ? null : filtro)
   }
 
   return (
@@ -113,7 +115,6 @@ function Navbar() {
             className="navbar__busqueda"
             onSubmit={buscar}
             role="search"
-            onBlur={() => setMostrarSugerencias(false)}
           >
             <IconoBuscar className="navbar__icono-buscar" />
             <input
@@ -127,6 +128,10 @@ function Navbar() {
                 setMostrarSugerencias(true)
               }}
               onFocus={() => setMostrarSugerencias(true)}
+              onBlur={() => {
+                // Pequeño delay para permitir clic en sugerencias
+                setTimeout(() => setMostrarSugerencias(false), 150)
+              }}
             />
             {busqueda && (
               <button

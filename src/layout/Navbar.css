@@ -200,7 +200,7 @@
 .navbar__sugerencia-categoria {
   flex-shrink: 0;
   font-size: 12px;
-  color: var(--accent);
+  color: rgb(100, 100, 100);
 }
 
 .navbar__derecha {
