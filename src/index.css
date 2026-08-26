@@ -112,7 +112,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(
+ background: linear-gradient(
     140deg,
     var(--gradient-1) 0%,
     var(--gradient-2) 45%,
