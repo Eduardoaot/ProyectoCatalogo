@@ -204,23 +204,29 @@ export function TiendaProvider({ children }) {
     setCarrito((actual) => {
       const existente = actual.find((item) => item.productoId === producto.id)
       const cantidadPrevia = existente?.cantidad ?? 0
+      // Gana el kilo: si el renglón ya se agregó alguna vez por peso, se queda
+      // en kilos aunque ahora se sume por pieza (mezclar peso exacto con
+      // piezas ya no es "un número entero de piezas"). Solo se queda en
+      // piezas cuando SIEMPRE se agregó por pieza.
+      const modoExistente = existente ? (existente.modo ?? MODO_UNIDAD) : null
+      const modoResultante =
+        existente && (modoExistente === MODO_UNIDAD || modoFinal === MODO_UNIDAD)
+          ? MODO_UNIDAD
+          : modoFinal
       const nuevaCantidad = ajustarAlModo(
         Math.min(cantidadPrevia + cantidad, stock),
         producto,
-        modoFinal,
+        modoResultante,
       )
       if (nuevaCantidad <= 0) return actual
       if (existente) {
-        // Gana el modo del último agregado: si venías con 3 piezas y ahora
-        // pides 2 kilos, el renglón pasa a leerse en kilos (que es lo único
-        // honesto, porque la suma ya no es un número exacto de piezas).
         return actual.map((item) =>
           item.productoId === producto.id
-            ? { ...item, cantidad: nuevaCantidad, modo: modoFinal }
+            ? { ...item, cantidad: nuevaCantidad, modo: modoResultante }
             : item,
         )
       }
-      return [...actual, { productoId: producto.id, cantidad: nuevaCantidad, modo: modoFinal }]
+      return [...actual, { productoId: producto.id, cantidad: nuevaCantidad, modo: modoResultante }]
     })
     setPanelAbierto(true)
   }

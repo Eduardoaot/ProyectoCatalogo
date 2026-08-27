@@ -1,5 +1,5 @@
 .navbar {
- position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -8,7 +8,10 @@
   border-bottom: 1px solid var(--border);
 
   transform: translateY(0);
-  transition: transform 0.3s ease;
+  /* El desplazamiento ya no lo anima una transición CSS: Navbar.jsx lo
+     recalcula en cada evento de scroll y lo aplica directo como `style`, así
+     que la barra sigue el gesto en vez de "alcanzarlo" con retraso. */
+  will-change: transform;
 
   isolation: isolate;
   /* Sin `overflow` a propósito: el dropdown de sugerencias cuelga por debajo
@@ -32,10 +35,6 @@
   );
 
   background-attachment: fixed;
-}
-
-.navbar--oculta {
-  transform: translateY(-100%);
 }
 
 .navbar__inner {

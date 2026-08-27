@@ -2,6 +2,13 @@
 --  Migracion: unidad de compra en el detalle de la orden
 -- =============================================================
 --
+--  YA NO HACE FALTA correr esto en una base nueva: piezas_orden_producto
+--  viene incluida directo en la definicion de Maestra_orden_productos en
+--  sql/tienda.sql. Este script solo sirve para poner al dia una base que
+--  ya existia de antes de ese cambio (por eso, si lo corres sobre una base
+--  creada con el tienda.sql actual, MySQL va a marcar "Duplicate column
+--  name" — la columna ya esta ahi).
+--
 --  El carrito ahora recuerda si la persona pidio "3 piezas" o "0.54 kg".
 --  cantidad_orden_producto sigue siendo SIEMPRE la unidad de venta (es lo
 --  que cobra el servidor y lo que descuenta stock, eso no cambia); la

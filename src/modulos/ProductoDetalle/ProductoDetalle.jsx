@@ -7,12 +7,13 @@ import { useFavoritos } from '../../context/FavoritosContext'
 import { usePreferencias } from '../../context/PreferenciasContext'
 import { useTienda } from '../../context/TiendaContext'
 import {
-  esAGranel,
+  esKilogramo,
   factorPiezaDe,
   formatearCantidad,
   MODO_PIEZA,
   MODO_UNIDAD,
-  PASO_GRANEL,
+  PASO_KILOGRAMO,
+  permiteDecimales,
   permitePorPieza,
   redondearCantidad,
   tieneFactorReal,
@@ -62,19 +63,25 @@ function ProductoDetalle() {
   const favorito = esFavorito(producto.id)
 
   // ---- Unidad de compra -------------------------------------------------
-  // Lo que se vende a granel (kg, litro) admite decimales y, si la base trae
-  // un factor_pieza distinto de 1, también se puede comprar de a piezas: el
+  // Lo que se vende por kilogramo admite decimales y, si la base trae un
+  // factor_pieza distinto de 1, también se puede comprar de a piezas: el
   // factor convierte piezas -> unidad de venta (3 manzanas x 0.18 = 0.54 kg).
-  const aGranel = esAGranel(producto)
+  // Todo lo demás (litros, piezas, paquetes...) se compra siempre en enteros.
+  const esKilo = esKilogramo(producto)
   const factorPieza = factorPiezaDe(producto)
   const puedeElegirModo = permitePorPieza(producto)
   const porPieza = puedeElegirModo && modo === 'pieza'
+  const decimalesOk = permiteDecimales(producto, porPieza ? MODO_PIEZA : MODO_UNIDAD)
 
-  const paso = porPieza || !aGranel ? 1 : PASO_GRANEL
-  // Tope expresado en la unidad del modo activo (piezas o kg).
+  const paso = porPieza || !esKilo ? 1 : PASO_KILOGRAMO
+  // Tope expresado en la unidad del modo activo (piezas o kg). Fuera del
+  // kilogramo el stock también se redondea hacia abajo al entero: no tendría
+  // sentido dejar comprar hasta "4.7 piezas".
   const maximo = porPieza
     ? Math.floor(stockRestante / factorPieza)
-    : redondearCantidad(stockRestante)
+    : decimalesOk
+      ? redondearCantidad(stockRestante)
+      : Math.floor(stockRestante)
 
   const cantidad = Number(String(textoCantidad).replace(',', '.'))
   const cantidadValida = Number.isFinite(cantidad) && cantidad > 0
@@ -85,7 +92,7 @@ function ProductoDetalle() {
 
   const mensajeTope = () => {
     if (porPieza) return t('producto.soloHayPiezas', { n: maximo })
-    if (aGranel) {
+    if (esKilo) {
       return t('producto.soloHayUnidad', {
         n: formatearCantidad(maximo),
         unidad: producto.unidad,
@@ -96,15 +103,22 @@ function ProductoDetalle() {
 
   const fijarCantidad = (valor) => {
     const tope = Math.max(maximo, 0)
-    const limitada = Math.min(Math.max(redondearCantidad(valor), paso), tope)
+    // Fuera del kilogramo suelto, redondear (no truncar) al entero más
+    // cercano: los botones +/- ya avanzan de a `paso` = 1, así que esto solo
+    // protege contra un valor de arranque que llegara con decimales.
+    const base = decimalesOk ? redondearCantidad(valor) : Math.round(valor)
+    const limitada = Math.min(Math.max(base, paso), tope)
     setTextoCantidad(formatearCantidad(limitada))
     setErrorCantidad('')
   }
 
   // Deja escribir libremente y solo interviene cuando el número se pasa del
-  // stock; el redondeo final se hace al salir del campo (onBlur).
+  // stock; el redondeo final se hace al salir del campo (onBlur). El propio
+  // tecleo ya filtra caracteres que no sean números — y, si la unidad/modo no
+  // admite decimales, tampoco deja escribir el separador decimal.
   const handleCantidadInput = (e) => {
-    const bruto = e.target.value
+    const crudo = e.target.value
+    const bruto = decimalesOk ? crudo.replace(/[^0-9.,]/g, '') : crudo.replace(/[^0-9]/g, '')
     setTextoCantidad(bruto)
     const numero = Number(bruto.replace(',', '.'))
     if (bruto === '' || !Number.isFinite(numero)) {
@@ -135,7 +149,7 @@ function ProductoDetalle() {
       const piezas = Math.max(1, Math.round(enUnidad / factorPieza))
       setTextoCantidad(formatearCantidad(Math.min(piezas, Math.floor(stockRestante / factorPieza))))
     } else {
-      const kilos = Math.max(PASO_GRANEL, redondearCantidad(enUnidad))
+      const kilos = Math.max(PASO_KILOGRAMO, redondearCantidad(enUnidad))
       setTextoCantidad(formatearCantidad(Math.min(kilos, redondearCantidad(stockRestante))))
     }
     setModo(nuevo)
@@ -207,7 +221,7 @@ function ProductoDetalle() {
           <p className="detail-stock">
             {stockRestante <= 0 && t('producto.sinStockDisponible')}
             {stockRestante > 0 &&
-              (aGranel
+              (esKilo
                 ? t('producto.disponiblesUnidad', {
                     n: formatearCantidad(stockRestante),
                     unidad: producto.unidad,
@@ -263,7 +277,7 @@ function ProductoDetalle() {
               </button>
               <input
                 type="text"
-                inputMode="decimal"
+                inputMode={decimalesOk ? 'decimal' : 'numeric'}
                 className="detail-cantidad-input"
                 value={textoCantidad}
                 onChange={handleCantidadInput}

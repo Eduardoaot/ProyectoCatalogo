@@ -24,7 +24,6 @@ import './Navbar.css'
 
 // A partir de qué tanto scroll hacia abajo empieza a poder ocultarse la
 // navbar (evita que "parpadee" con pequeños scrolls cerca del tope).
-const UMBRAL_SCROLL_PX = 80
 const MAX_SUGERENCIAS = 6
 // Separador improbable de encontrar en un nombre real: sirve para partir la
 // plantilla traducida "Hola, {nombre}" en un "antes" y un "después" del
@@ -42,7 +41,10 @@ function Navbar() {
 
   const [menuAbierto, setMenuAbierto] = useState(false)
   const [preferenciasAbiertas, setPreferenciasAbiertas] = useState(false)
-  const [oculta, setOculta] = useState(false)
+  // Cuánto se corre la navbar hacia arriba (0 = del todo visible, su propia
+  // altura = del todo oculta). Es px, no un booleano, para que se mueva
+  // proporcional a lo que se scrollea en vez de aparecer/desaparecer de golpe.
+  const [desplazamientoNavbar, setDesplazamientoNavbar] = useState(0)
   const [busqueda, setBusqueda] = useState('')
   const [mostrarSugerencias, setMostrarSugerencias] = useState(false)
   // Índice de la sugerencia resaltada con el teclado (-1 = ninguna).
@@ -50,14 +52,34 @@ function Navbar() {
   const ultimoScrollRef = useRef(0)
   const navRef = useRef(null)
 
-  // Comportamiento tipo Amazon: al bajar se oculta, al subir reaparece.
+  // Comportamiento tipo Amazon: al bajar se oculta, al subir reaparece — y a
+  // diferencia de la versión anterior (un solo booleano con transición CSS),
+  // acá se corre exactamente lo que se scrolleó, así que en scrolls lentos la
+  // navbar acompaña el gesto en vez de esperar un umbral y saltar de golpe.
   useEffect(() => {
     const alHacerScroll = () => {
       const actual = window.scrollY
       const anterior = ultimoScrollRef.current
-      setOculta(actual > anterior && actual > UMBRAL_SCROLL_PX)
+      const diferencia = actual - anterior
+
+      // Al principio del todo la navbar siempre está completamente visible.
+      if (actual <= 0) {
+        setDesplazamientoNavbar(0)
+        ultimoScrollRef.current = actual
+        return
+      }
+
+      setDesplazamientoNavbar((actualDesplazamiento) => {
+        const siguiente = actualDesplazamiento + diferencia
+        // No la dejamos "subir" más allá de 0 (del todo visible) ni
+        // esconderse más allá de su propia altura.
+        const alturaNavbar = navRef.current?.offsetHeight ?? 0
+        return Math.max(0, Math.min(siguiente, alturaNavbar))
+      })
+
       ultimoScrollRef.current = actual
     }
+
     window.addEventListener('scroll', alHacerScroll, { passive: true })
     return () => window.removeEventListener('scroll', alHacerScroll)
   }, [])
@@ -149,7 +171,11 @@ function Navbar() {
 
   return (
     <>
-      <header ref={navRef} className={oculta ? 'navbar navbar--oculta' : 'navbar'}>
+      <header
+        ref={navRef}
+        className="navbar"
+        style={{ transform: `translateY(-${desplazamientoNavbar}px)` }}
+      >
         <div className="navbar__inner">
           <div className="navbar__izquierda">
             <button
