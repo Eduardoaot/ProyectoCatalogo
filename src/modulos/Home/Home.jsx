@@ -23,6 +23,7 @@ function Home() {
 
   const [precioFiltro, setPrecioFiltro] = useState(500);
   const [ordenDropdownAbierto, setOrdenDropdownAbierto] = useState(false);
+  const [ordenPrecioDropdownAbierto, setPrecioDropdownAbierto] = useState(false);
   
   const [precioMin, setPrecioMin] = useState(1);
   const [precioMax, setPrecioMax] = useState(500);
@@ -41,6 +42,7 @@ function Home() {
   };
 
   const [ordenNombre, setOrdenNombre] = useState('A-Z');
+  const [ordenPrecio, setOrdenPrecio] = useState('Mayor a menor');
 
   // La categoría y la búsqueda se combinan: los filtros de categoría se
   // aplican sobre los resultados de búsqueda (y viceversa), no se
@@ -173,7 +175,7 @@ function Home() {
             
             {/* Filtro de Rango de Precio Doble */}
             <div className="side-menu__card">
-              <h3 className="side-menu__title font-outfit">Rango de Precio</h3>
+              <h3 className="side-menu__title">Rango de Precio</h3>
               <div className="side-menu__price-info font-outfit">
                 <span>${precioMin}</span>
                 <span>${precioMax}</span>
@@ -214,9 +216,11 @@ function Home() {
               </div>
             </div>
 
+            <p className="side-menu__title-label">Ordenar por</p>
+
             {/* Ordenar por Nombre */}
             <div className="side-menu__card side-menu__card--row">
-              <span className="side-menu__label">Ordenar por nombre</span>
+              <span className="side-menu__label">Nombre</span>
               
               <div className="side-menu__dropdown-container">
                 <button 
@@ -248,6 +252,45 @@ function Home() {
                     }}
                   >
                     Z-A
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Ordenar por Precio */}
+            <div className="side-menu__card side-menu__card--row">
+              <span className="side-menu__label">Precio</span>
+              
+              <div className="side-menu__dropdown-container">
+                <button 
+                  type="button"
+                  className="side-menu__dropdown-btn"
+                  onClick={() => setPrecioDropdownAbierto(!ordenPrecioDropdownAbierto)}
+                >
+                  {ordenPrecio} {/* Aquí mostramos la opción actual */}
+                  <svg className={`icono-flecha ${ordenPrecioDropdownAbierto ? 'activa' : ''}`} xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
+                </button>
+                
+                <div className={`side-menu__dropdown-menu ${ordenPrecioDropdownAbierto ? 'is-open' : ''}`}>
+                  <button 
+                    type="button" 
+                    className={`dropdown-item ${ordenPrecio === 'Menor a mayor' ? 'is-selected' : ''}`}
+                    onClick={() => {
+                      setOrdenPrecio('Menor a mayor');
+                      setPrecioDropdownAbierto(false);
+                    }}
+                  >
+                    Menor a mayor
+                  </button>
+                  <button 
+                    type="button" 
+                    className={`dropdown-item ${ordenPrecio === 'Mayor a menor' ? 'is-selected' : ''}`}
+                    onClick={() => {
+                      setOrdenPrecio('Mayor a menor');
+                      setPrecioDropdownAbierto(false);
+                    }}
+                  >
+                    Mayor a menor
                   </button>
                 </div>
               </div>
