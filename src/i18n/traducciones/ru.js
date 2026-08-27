@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': 'Светлая',
   'pref.temaOscuro': 'Тёмная',
   'pref.texto': 'Размер текста',
+  'pref.textoPequeno': 'Маленький',
+
   'pref.textoNormal': 'Обычный',
   'pref.textoGrande': 'Крупный',
   'pref.textoEnorme': 'Очень крупный',
@@ -44,6 +46,10 @@ export default {
   'home.productos': 'Товаров: {n}',
 
   'producto.agregar': 'В корзину',
+
+  'producto.agregarCorto': 'Добавить',
+
+  'producto.agregaUnaPieza': 'Добавляет 1 шт. (≈ {cantidad} {unidad})',
   'producto.destacado': 'Рекомендуем',
   'producto.sinStock': 'Нет в наличии',
   'producto.volver': 'Назад в каталог',
@@ -57,6 +63,17 @@ export default {
   'producto.soloHay': 'Доступно только {n} шт.',
   'producto.aumentar': 'Увеличить количество',
   'producto.disminuir': 'Уменьшить количество',
+  'producto.piezas': 'Штуки',
+  'producto.piezasCorto': 'шт.',
+  'producto.comoComprar': 'Как вы хотите купить?',
+  'producto.modoUnidad': 'За {unidad}',
+  'producto.modoPieza': 'За штуку',
+  'producto.pesoPorPieza': '1 шт. ≈ {cantidad} {unidad}',
+  'producto.equivale': 'Это {cantidad} {unidad}',
+  'producto.subtotalEstimado': 'Примерно: ${monto}',
+  'producto.soloHayPiezas': 'Доступно только {n} шт.',
+  'producto.soloHayUnidad': 'Осталось только {n} {unidad}.',
+  'producto.disponiblesUnidad': 'Доступно {n} {unidad}',
 
   'fav.titulo': 'Моё избранное',
   'fav.agregar': 'Добавить в избранное',
@@ -127,6 +144,11 @@ export default {
     'Аккаунт сохраняется в базе данных; пароль хранится в зашифрованном виде (минимум 8 символов).',
   'login.faltanDatos': 'Заполните имя, почту и пароль.',
   'login.faltanCredenciales': 'Введите почту и пароль.',
+  'login.errorNombre': 'Введите ваше имя.',
+  'login.errorCorreo': 'Введите вашу почту.',
+  'login.errorCorreoInvalido': 'Введите действительный адрес почты (например, you@example.com).',
+  'login.errorContrasena': 'Введите пароль.',
+  'login.errorContrasenaCorta': 'Пароль должен содержать не менее 8 символов.',
 
   'cuenta.titulo': 'Мой аккаунт',
   'cuenta.nombre': 'Имя',

@@ -315,7 +315,10 @@ partes.push(
         txt(p.descripcion ?? null),
         p.destacado ? 'TRUE' : 'FALSE',
         num(p.stock ?? STOCK_POR_DEFECTO),
-        num(1),
+        // factor_pieza: cuanto pesa una pieza suelta en la unidad de venta
+        // (1 manzana = 0.18 kg). Es lo que usa el detalle del producto para
+        // dejar comprar por kilo o por pieza; 1 = una pieza es una unidad.
+        num(p.factorPieza ?? 1),
       ];
     }),
   ),

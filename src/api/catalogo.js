@@ -28,6 +28,10 @@ export function adaptarProducto(fila) {
     descripcion: fila.descripcion ?? '',
     destacado: Boolean(fila.destacado),
     stock: Number(fila.cantidad_producto),
+    // Cuánto pesa/mide una pieza suelta en la unidad de venta del producto
+    // (1 manzana = 0.18 kg). Es lo que usa el detalle para dejar comprar por
+    // kilo o por pieza; ver src/data/unidades.js.
+    factorPieza: Number(fila.factor_pieza ?? 1),
     descuento: fila.descuento ?? null,
   }
 }

@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': 'Claro',
   'pref.temaOscuro': 'Escuro',
   'pref.texto': 'Tamanho do texto',
+  'pref.textoPequeno': 'Pequeno',
+
   'pref.textoNormal': 'Normal',
   'pref.textoGrande': 'Grande',
   'pref.textoEnorme': 'Muito grande',
@@ -44,6 +46,10 @@ export default {
   'home.productos': '{n} produtos',
 
   'producto.agregar': 'Adicionar ao carrinho',
+
+  'producto.agregarCorto': 'Adicionar',
+
+  'producto.agregaUnaPieza': 'Adiciona 1 peça (≈ {cantidad} {unidad})',
   'producto.destacado': 'Destaque',
   'producto.sinStock': 'Sem estoque',
   'producto.volver': 'Voltar ao catálogo',
@@ -57,6 +63,17 @@ export default {
   'producto.soloHay': 'Só há {n} unidades disponíveis.',
   'producto.aumentar': 'Aumentar quantidade',
   'producto.disminuir': 'Diminuir quantidade',
+  'producto.piezas': 'Peças',
+  'producto.piezasCorto': 'pç',
+  'producto.comoComprar': 'Como você quer?',
+  'producto.modoUnidad': 'Por {unidad}',
+  'producto.modoPieza': 'Por peça',
+  'producto.pesoPorPieza': '1 peça ≈ {cantidad} {unidad}',
+  'producto.equivale': 'Equivale a {cantidad} {unidad}',
+  'producto.subtotalEstimado': 'Subtotal aprox.: ${monto}',
+  'producto.soloHayPiezas': 'Só há {n} peças disponíveis.',
+  'producto.soloHayUnidad': 'Restam apenas {n} {unidad}.',
+  'producto.disponiblesUnidad': '{n} {unidad} disponíveis',
 
   'fav.titulo': 'Meus favoritos',
   'fav.agregar': 'Adicionar aos favoritos',
@@ -127,6 +144,11 @@ export default {
     'Sua conta fica no banco de dados; a senha é guardada criptografada (mínimo 8 caracteres).',
   'login.faltanDatos': 'Preencha nome, e-mail e senha.',
   'login.faltanCredenciales': 'Informe seu e-mail e senha.',
+  'login.errorNombre': 'Digite seu nome.',
+  'login.errorCorreo': 'Digite seu e-mail.',
+  'login.errorCorreoInvalido': 'Digite um e-mail válido (ex. seuemail@exemplo.com).',
+  'login.errorContrasena': 'Digite sua senha.',
+  'login.errorContrasenaCorta': 'A senha deve ter pelo menos 8 caracteres.',
 
   'cuenta.titulo': 'Minha conta',
   'cuenta.nombre': 'Nome',

@@ -81,8 +81,17 @@ export async function pedir(ruta, { metodo = 'GET', cuerpo, query, autenticado =
   }
 
   if (!respuesta.ok || json?.ok === false) {
-    const mensaje = json?.error?.message ?? `Error ${respuesta.status}`
-    throw new ErrorApi(mensaje, respuesta.status, json?.error?.details ?? null)
+    const detalles = json?.error?.details
+    // Cuando falla la validación (422), `message` es un texto genérico
+    // ("Datos de entrada invalidos") y lo concreto viene en `details`
+    // (uno por campo). El formulario ya valida esto antes de llegar aquí,
+    // pero si algo se le escapa, mejor mostrar el detalle real que el
+    // genérico.
+    const mensaje =
+      Array.isArray(detalles) && detalles.length > 0
+        ? detalles.map((d) => d.mensaje).join(' ')
+        : (json?.error?.message ?? `Error ${respuesta.status}`)
+    throw new ErrorApi(mensaje, respuesta.status, detalles ?? null)
   }
 
   return json.data

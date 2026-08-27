@@ -1,5 +1,5 @@
 .sparkle-bg {
-  position: absolute;
+  position: fixed;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
@@ -8,7 +8,16 @@
 
 .sparkle {
   position: absolute;
-  background: radial-gradient(circle, #ffffff 0%, var(--accent) 55%, transparent 75%);
+
+  background: radial-gradient(
+    circle,
+    #ffffff 0%,
+    #ffffff 25%,
+    #e6337f 52%,
+    rgba(230, 51, 127, 0.45) 65%,
+    transparent 78%
+  );
+
   clip-path: polygon(
     50% 0%,
     62% 38%,
@@ -19,33 +28,57 @@
     0% 50%,
     38% 38%
   );
+
   opacity: 0;
-  animation-name: destello;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+
+  filter: drop-shadow(
+    0 0 4px rgba(230, 51, 127, 0.45)
+  );
+
+  animation: destello ease-in-out infinite;
 }
 
-/* La estrella pasa un tramo del ciclo totalmente apagada (0%-8% y 85%-100%):
-   ahí es donde SparkleBackground la reubica, así el salto de posición
-   ocurre mientras es invisible. */
 @keyframes destello {
-  0%,
-  8%,
-  85%,
-  100% {
+  0% {
     opacity: 0;
-    transform: scale(0.2) rotate(0deg);
+    transform: scale(0.3) rotate(0deg);
   }
-  30%,
-  60% {
-    opacity: 1;
+
+  25% {
+    opacity: 0.35;
+    transform: scale(0.7) rotate(20deg);
+  }
+
+  40% {
+    opacity: 0.75;
     transform: scale(1) rotate(45deg);
   }
+
+  55% {
+    opacity: 0.55;
+    transform: scale(0.85) rotate(60deg);
+  }
+
+  70% {
+    opacity: 0.15;
+    transform: scale(0.5) rotate(75deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.3) rotate(90deg);
+  }
+}
+
+:root[data-tema='oscuro'] .sparkle {
+  filter: drop-shadow(
+    0 0 8px rgba(255, 111, 174, 0.85)
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {
   .sparkle {
     animation: none;
-    opacity: 0.4;
+    opacity: 0.3;
   }
 }

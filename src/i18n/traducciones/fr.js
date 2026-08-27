@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': 'Clair',
   'pref.temaOscuro': 'Sombre',
   'pref.texto': 'Taille du texte',
+  'pref.textoPequeno': 'Petit',
+
   'pref.textoNormal': 'Normale',
   'pref.textoGrande': 'Grande',
   'pref.textoEnorme': 'Très grande',
@@ -44,6 +46,10 @@ export default {
   'home.productos': '{n} produits',
 
   'producto.agregar': 'Ajouter au panier',
+
+  'producto.agregarCorto': 'Ajouter',
+
+  'producto.agregaUnaPieza': 'Ajoute 1 pièce (≈ {cantidad} {unidad})',
   'producto.destacado': 'Coup de cœur',
   'producto.sinStock': 'Rupture de stock',
   'producto.volver': 'Retour au catalogue',
@@ -57,6 +63,17 @@ export default {
   'producto.soloHay': 'Il ne reste que {n} unités.',
   'producto.aumentar': 'Augmenter la quantité',
   'producto.disminuir': 'Diminuer la quantité',
+  'producto.piezas': 'Pièces',
+  'producto.piezasCorto': 'pc',
+  'producto.comoComprar': 'Comment le voulez-vous ?',
+  'producto.modoUnidad': 'Au {unidad}',
+  'producto.modoPieza': 'À la pièce',
+  'producto.pesoPorPieza': '1 pièce ≈ {cantidad} {unidad}',
+  'producto.equivale': 'Équivaut à {cantidad} {unidad}',
+  'producto.subtotalEstimado': 'Sous-total env. : {monto} $',
+  'producto.soloHayPiezas': 'Il ne reste que {n} pièces.',
+  'producto.soloHayUnidad': 'Il ne reste que {n} {unidad}.',
+  'producto.disponiblesUnidad': '{n} {unidad} disponibles',
 
   'fav.titulo': 'Mes favoris',
   'fav.agregar': 'Ajouter aux favoris',
@@ -127,6 +144,11 @@ export default {
     'Votre compte est enregistré dans la base de données ; le mot de passe est chiffré (8 caractères minimum).',
   'login.faltanDatos': 'Renseignez le nom, l’e-mail et le mot de passe.',
   'login.faltanCredenciales': 'Saisissez votre e-mail et votre mot de passe.',
+  'login.errorNombre': 'Saisissez votre nom.',
+  'login.errorCorreo': 'Saisissez votre e-mail.',
+  'login.errorCorreoInvalido': 'Saisissez un e-mail valide (ex. votremail@exemple.com).',
+  'login.errorContrasena': 'Saisissez votre mot de passe.',
+  'login.errorContrasenaCorta': 'Le mot de passe doit comporter au moins 8 caractères.',
 
   'cuenta.titulo': 'Mon compte',
   'cuenta.nombre': 'Nom',

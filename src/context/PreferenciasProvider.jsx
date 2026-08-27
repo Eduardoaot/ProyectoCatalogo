@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { crearTraductor } from '../i18n'
-import { buscarIdioma, idiomaDelNavegador, IDIOMAS } from '../i18n/idiomas'
+import { buscarIdioma, IDIOMA_POR_DEFECTO, idiomaDelNavegador, IDIOMAS } from '../i18n/idiomas'
 import { PreferenciasContext } from './PreferenciasContext'
 
 /**
@@ -14,7 +14,7 @@ import { PreferenciasContext } from './PreferenciasContext'
 const CLAVE = 'rosamark:preferencias'
 
 export const TEMAS = ['claro', 'oscuro']
-export const TAMANOS_TEXTO = ['normal', 'grande', 'enorme']
+export const TAMANOS_TEXTO = ['pequeno', 'normal', 'grande', 'enorme']
 
 function temaDelSistema() {
   if (typeof window === 'undefined' || !window.matchMedia) return 'claro'
@@ -73,11 +73,14 @@ export function PreferenciasProvider({ children }) {
         setPreferencias((p) => ({ ...p, tema: p.tema === 'oscuro' ? 'claro' : 'oscuro' })),
       cambiarTamanoTexto: (tamanoTexto) => setPreferencias((p) => ({ ...p, tamanoTexto })),
       cambiarIdioma: (codigo) => setPreferencias((p) => ({ ...p, idioma: codigo })),
+      // El idioma se fija en español a propósito (no el del navegador):
+      // "restablecer" debe volver siempre al mismo punto de partida,
+      // predecible, sin importar en qué idioma haya quedado la sesión.
       restablecer: () =>
         setPreferencias({
           tema: temaDelSistema(),
           tamanoTexto: 'normal',
-          idioma: idiomaDelNavegador(),
+          idioma: IDIOMA_POR_DEFECTO,
         }),
     }
   }, [preferencias])

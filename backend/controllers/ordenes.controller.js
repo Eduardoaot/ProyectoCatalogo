@@ -22,11 +22,28 @@ function normalizarItems(items) {
   for (const item of items) {
     const id = Number(item.ID_producto);
     const cantidad = Number(item.cantidad);
-    acumulado.set(id, redondear((acumulado.get(id) ?? 0) + cantidad, 3));
+    const piezas =
+      item.piezas === undefined || item.piezas === null ? null : Number(item.piezas);
+    const previo = acumulado.get(id);
+
+    if (previo === undefined) {
+      acumulado.set(id, { cantidad: redondear(cantidad, 3), piezas });
+      continue;
+    }
+
+    // Si dos renglones del mismo producto vinieron uno por piezas y otro por
+    // peso, la suma ya no es un numero exacto de piezas: se guarda como peso.
+    acumulado.set(id, {
+      cantidad: redondear(previo.cantidad + cantidad, 3),
+      piezas:
+        previo.piezas !== null && piezas !== null
+          ? redondear(previo.piezas + piezas, 3)
+          : null,
+    });
   }
 
   return [...acumulado.entries()]
-    .map(([ID_producto, cantidad]) => ({ ID_producto, cantidad }))
+    .map(([ID_producto, valor]) => ({ ID_producto, ...valor }))
     .sort((a, b) => a.ID_producto - b.ID_producto);
 }
 
@@ -143,6 +160,7 @@ export const crearOrden = asyncHandler(async (req, res) => {
         ID_categoria: producto.ID_categoria,
         nombre_producto: producto.nombre_producto,
         cantidad_orden_producto: item.cantidad,
+        piezas_orden_producto: item.piezas,
         // El precio se congela: se guarda el precio de lista del momento de la compra.
         precio_orden_producto: calculo.precio_unitario,
         subtotal: calculo.subtotal,
@@ -189,12 +207,15 @@ export const crearOrden = asyncHandler(async (req, res) => {
     for (const renglon of renglones) {
       await conn.execute(
         `INSERT INTO Maestra_orden_productos
-           (ID_orden, ID_producto, cantidad_orden_producto, precio_orden_producto)
-         VALUES (?, ?, ?, ?)`,
+           (ID_orden, ID_producto, cantidad_orden_producto, piezas_orden_producto,
+            precio_orden_producto)
+         VALUES (?, ?, ?, ?, ?)`,
         [
           idOrden,
           renglon.ID_producto,
           renglon.cantidad_orden_producto,
+          // mysql2 no acepta `undefined` como parametro.
+          renglon.piezas_orden_producto ?? null,
           renglon.precio_orden_producto,
         ],
       );
@@ -242,6 +263,7 @@ const SELECT_DETALLE = `
          m.ID_orden,
          m.ID_producto,
          m.cantidad_orden_producto,
+         m.piezas_orden_producto,
          m.precio_orden_producto,
          p.nombre_producto,
          p.imagen,

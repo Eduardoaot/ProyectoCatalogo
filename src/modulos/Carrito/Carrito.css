@@ -356,3 +356,20 @@
   color: #b3261e;
   font-size: 0.9rem;
 }
+
+/* Peso real de un renglón comprado de a piezas ("Equivale a 0.54 kg"): sin
+   esto, el subtotal no cuadraba con el "3 pz" que se ve al lado. */
+.carrito__item-equivale {
+  font-size: 0.667rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+/* La cantidad ahora lleva su unidad ("3 pz", "2.5 kg"), así que necesita más
+   aire que cuando era solo un número. */
+.carrito__item-cantidad-valor {
+  min-width: 62px;
+  text-align: center;
+  font-weight: 700;
+  white-space: nowrap;
+}

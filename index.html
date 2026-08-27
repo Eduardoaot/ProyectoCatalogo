@@ -2,6 +2,33 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Aplica el tema (y el tamaño de letra) ANTES de que React monte nada.
+      // Sin esto, la página siempre arranca en claro y recién cuando
+      // PreferenciasProvider corre su efecto cambia a oscuro — ese cambio a
+      // mitad de la animación del splash es justo el "aparece de repente"
+      // que se ve. Debe leer la misma clave/forma que PreferenciasProvider.jsx.
+      (function () {
+        try {
+          var guardado = JSON.parse(localStorage.getItem('rosamark:preferencias') || '{}')
+          var tema = guardado.tema
+          if (tema !== 'claro' && tema !== 'oscuro') {
+            tema =
+              window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'oscuro'
+                : 'claro'
+          }
+          var raiz = document.documentElement
+          raiz.dataset.tema = tema
+          raiz.style.colorScheme = tema === 'oscuro' ? 'dark' : 'light'
+          if (guardado.tamanoTexto === 'grande' || guardado.tamanoTexto === 'enorme') {
+            raiz.dataset.fuente = guardado.tamanoTexto
+          }
+        } catch (e) {
+          // localStorage bloqueado (modo privado, etc.): se queda en claro.
+        }
+      })()
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

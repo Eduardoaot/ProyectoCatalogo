@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': 'Light',
   'pref.temaOscuro': 'Dark',
   'pref.texto': 'Text size',
+  'pref.textoPequeno': 'Small',
+
   'pref.textoNormal': 'Normal',
   'pref.textoGrande': 'Large',
   'pref.textoEnorme': 'Extra large',
@@ -44,6 +46,10 @@ export default {
   'home.productos': '{n} products',
 
   'producto.agregar': 'Add to cart',
+
+  'producto.agregarCorto': 'Add',
+
+  'producto.agregaUnaPieza': 'Adds 1 piece (≈ {cantidad} {unidad})',
   'producto.destacado': 'Featured',
   'producto.sinStock': 'Out of stock',
   'producto.volver': 'Back to catalog',
@@ -57,6 +63,17 @@ export default {
   'producto.soloHay': 'Only {n} units available.',
   'producto.aumentar': 'Increase quantity',
   'producto.disminuir': 'Decrease quantity',
+  'producto.piezas': 'Pieces',
+  'producto.piezasCorto': 'pc',
+  'producto.comoComprar': 'How do you want it?',
+  'producto.modoUnidad': 'By {unidad}',
+  'producto.modoPieza': 'By piece',
+  'producto.pesoPorPieza': '1 piece ≈ {cantidad} {unidad}',
+  'producto.equivale': 'Equals {cantidad} {unidad}',
+  'producto.subtotalEstimado': 'Approx. subtotal: ${monto}',
+  'producto.soloHayPiezas': 'Only {n} pieces available.',
+  'producto.soloHayUnidad': 'Only {n} {unidad} left.',
+  'producto.disponiblesUnidad': '{n} {unidad} available',
 
   'fav.titulo': 'My favorites',
   'fav.agregar': 'Add to favorites',
@@ -127,6 +144,11 @@ export default {
     'Your account is stored in the database; the password is saved encrypted (8 characters minimum).',
   'login.faltanDatos': 'Please fill in name, email and password.',
   'login.faltanCredenciales': 'Enter your email and password.',
+  'login.errorNombre': 'Enter your name.',
+  'login.errorCorreo': 'Enter your email.',
+  'login.errorCorreoInvalido': 'Enter a valid email (e.g. yourmail@example.com).',
+  'login.errorContrasena': 'Enter your password.',
+  'login.errorContrasenaCorta': 'The password must be at least 8 characters long.',
 
   'cuenta.titulo': 'My account',
   'cuenta.nombre': 'Name',

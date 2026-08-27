@@ -25,6 +25,8 @@ export default {
   'pref.temaClaro': 'فاتح',
   'pref.temaOscuro': 'داكن',
   'pref.texto': 'حجم النص',
+  'pref.textoPequeno': 'صغير',
+
   'pref.textoNormal': 'عادي',
   'pref.textoGrande': 'كبير',
   'pref.textoEnorme': 'كبير جدًا',
@@ -45,6 +47,10 @@ export default {
   'home.productos': '{n} منتجًا',
 
   'producto.agregar': 'أضِف إلى السلة',
+
+  'producto.agregarCorto': 'أضف',
+
+  'producto.agregaUnaPieza': 'يضيف قطعة واحدة (≈ {cantidad} {unidad})',
   'producto.destacado': 'مميّز',
   'producto.sinStock': 'نفد المخزون',
   'producto.volver': 'العودة إلى الكتالوج',
@@ -58,6 +64,17 @@ export default {
   'producto.soloHay': 'لا يتوفّر سوى {n} وحدات.',
   'producto.aumentar': 'زيادة الكمية',
   'producto.disminuir': 'إنقاص الكمية',
+  'producto.piezas': 'قطع',
+  'producto.piezasCorto': 'قطعة',
+  'producto.comoComprar': 'كيف تريده؟',
+  'producto.modoUnidad': 'بال{unidad}',
+  'producto.modoPieza': 'بالقطعة',
+  'producto.pesoPorPieza': 'قطعة واحدة ≈ {cantidad} {unidad}',
+  'producto.equivale': 'تعادل {cantidad} {unidad}',
+  'producto.subtotalEstimado': 'المجموع التقريبي: ${monto}',
+  'producto.soloHayPiezas': 'تتوفر {n} قطع فقط.',
+  'producto.soloHayUnidad': 'بقي {n} {unidad} فقط.',
+  'producto.disponiblesUnidad': '{n} {unidad} متوفرة',
 
   'fav.titulo': 'مفضّلتي',
   'fav.agregar': 'إضافة إلى المفضّلة',
@@ -127,6 +144,11 @@ export default {
     'يُحفظ حسابك في قاعدة البيانات، وتُخزَّن كلمة المرور مُشفَّرة (8 أحرف على الأقل).',
   'login.faltanDatos': 'أكمل الاسم والبريد الإلكتروني وكلمة المرور.',
   'login.faltanCredenciales': 'أدخل بريدك الإلكتروني وكلمة المرور.',
+  'login.errorNombre': 'أدخل اسمك.',
+  'login.errorCorreo': 'أدخل بريدك الإلكتروني.',
+  'login.errorCorreoInvalido': 'أدخل بريدًا إلكترونيًا صالحًا (مثال: you@example.com).',
+  'login.errorContrasena': 'أدخل كلمة المرور.',
+  'login.errorContrasenaCorta': 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.',
 
   'cuenta.titulo': 'حسابي',
   'cuenta.nombre': 'الاسم',

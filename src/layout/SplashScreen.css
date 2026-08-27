@@ -19,16 +19,21 @@
 }
 
 .splash__logo {
-  width: 130px;
+  width: 170px;
+  max-width: 40vw;
   height: auto;
   filter: drop-shadow(0 6px 10px var(--accent-border));
-  animation: splash-logo-in 0.7s ease both;
+  animation: splash-logo-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .splash__texto {
-  width: 200px;
+  width: 300px;
+  max-width: 70vw;
   height: auto;
-  animation: splash-texto-in 0.7s ease 0.25s both;
+  /* Sube desde bastante más abajo (48px) y con una curva "ease-out" bien
+     marcada, para que el fade-in hacia arriba se note de verdad y no
+     parezca que el logo simplemente "aparece". */
+  animation: splash-texto-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
 }
 
 @keyframes splash-logo-in {
@@ -45,7 +50,7 @@
 @keyframes splash-texto-in {
   0% {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(48px);
   }
   100% {
     opacity: 1;

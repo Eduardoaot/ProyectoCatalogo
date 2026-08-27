@@ -6,7 +6,10 @@ import { pedir } from './cliente'
  * Crea la orden en la base. El total NO se manda desde aquí: lo calcula el
  * backend con los precios y descuentos vigentes, dentro de una transacción.
  *
- * @param {Array} items  [{ productoId, cantidad }]
+ * @param {Array} items  [{ productoId, cantidad, piezas }]
+ *   `cantidad` va siempre en la unidad de venta (es lo que cobra y descuenta
+ *   stock el servidor); `piezas` es opcional y solo dice cuántas piezas pidió
+ *   la persona, para poder mostrar la orden como la eligió.
  * @param {string|null} textoCodigo  Código de descuento aplicado, si hay.
  */
 export async function crearOrden(items, textoCodigo = null) {
@@ -17,6 +20,7 @@ export async function crearOrden(items, textoCodigo = null) {
       items: items.map((item) => ({
         ID_producto: item.productoId,
         cantidad: item.cantidad,
+        ...(item.piezas ? { piezas: item.piezas } : {}),
       })),
       ...(textoCodigo ? { texto_codigo: textoCodigo } : {}),
     },
@@ -50,6 +54,11 @@ export async function obtenerOrdenesDeCliente(idCliente) {
       nombre: renglon.nombre_producto,
       precio: Number(renglon.precio_orden_producto),
       cantidad: Number(renglon.cantidad_orden_producto),
+      // null cuando se compró por peso/volumen.
+      piezas:
+        renglon.piezas_orden_producto === null || renglon.piezas_orden_producto === undefined
+          ? null
+          : Number(renglon.piezas_orden_producto),
       unidad: renglon.nombre_unidad,
     })),
   }))

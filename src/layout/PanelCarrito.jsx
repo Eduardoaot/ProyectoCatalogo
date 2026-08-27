@@ -4,6 +4,7 @@ import ModalConfirmacion from '../common/ModalConfirmacion'
 import { usePreferencias } from '../context/PreferenciasContext'
 import { useTienda } from '../context/TiendaContext'
 import ImagenProducto from '../common/ImagenProducto'
+import { etiquetaCantidad, formatearCantidad } from '../data/unidades'
 import { IconoX } from '../common/iconos'
 import './PanelCarrito.css'
 
@@ -35,7 +36,7 @@ function PanelCarrito() {
         aria-hidden={!panelAbierto}
       >
         <div className="panel-carrito__cabecera">
-          <span>{t('panelCarrito.titulo', { n: totalUnidades })}</span>
+          <span>{t('panelCarrito.titulo', { n: formatearCantidad(totalUnidades) })}</span>
           <button
             type="button"
             className="panel-carrito__cerrar"
@@ -68,11 +69,13 @@ function PanelCarrito() {
                     >
                       −
                     </button>
-                    <span>{item.cantidad}</span>
+                    <span className="panel-carrito__item-cantidad">
+                      {etiquetaCantidad(item.cantidad, item.producto, item.modo, t)}
+                    </span>
                     <button
                       type="button"
                       onClick={() => cambiarCantidad(item.productoId, 1)}
-                      disabled={item.cantidad >= item.stockRestante}
+                      disabled={!item.puedeAumentar}
                       aria-label={t('producto.aumentar')}
                     >
                       +

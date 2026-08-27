@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import Footer from './layout/Footer'
 import Navbar from './layout/Navbar'
 import PanelCarrito from './layout/PanelCarrito'
+import ScrollToTop from './layout/ScrollToTop'
 import SparkleBackground from './layout/SparkleBackground'
 import SplashScreen from './layout/SplashScreen'
 import Carrito from './modulos/Carrito/Carrito'
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <>
+      <ScrollToTop />
       {mostrarSplash && <SplashScreen onFinish={() => setMostrarSplash(false)} />}
       <SparkleBackground />
       <PanelCarrito />

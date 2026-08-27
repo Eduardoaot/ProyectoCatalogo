@@ -2,10 +2,16 @@
   --text: #7a5568;
   --text-h: #3a1f2d;
   --bg: #ffe3ef;
+
+   --gradient-1: #f8cdeb;
+  --gradient-2: #f8d9e9;
+  --gradient-3: #eb5d81c2;
+
   --card-bg: #fff5fa;
   --border: #f7c9de;
   --code-bg: #fdeef4;
   --accent: #e6337f;
+  --accent-hover: #d61c6f;
   --accent-bg: rgba(230, 51, 127, 0.08);
   --accent-border: rgba(230, 51, 127, 0.4);
   --social-bg: rgba(253, 238, 244, 0.5);
@@ -21,7 +27,13 @@
      (ver [data-fuente] más abajo). Todo lo que use rem/em se ajusta solo. */
   --tamano-base: 18px;
 
-  font: var(--tamano-base) / 145% var(--sans);
+  /* Interlineado SIN unidad a propósito. Con `145%` el valor se resuelve una
+     sola vez acá (18px x 1.45 = 26.1px) y ese número fijo es el que heredan
+     todos los descendientes: un título de 48px terminaba con líneas de 26px
+     y, en cuanto el texto era largo y pasaba a dos renglones, se solapaban.
+     Con `1.45` lo que se hereda es la proporción, así que cada elemento
+     calcula su interlineado sobre su propio tamaño de letra. */
+  font: var(--tamano-base) / 1.45 var(--sans);
   letter-spacing: 0.18px;
   color-scheme: light;
   color: var(--text);
@@ -50,14 +62,34 @@
   --border: #4a3541;
   --code-bg: #2d2029;
   --accent: #ff6fae;
+  --accent-hover: #ff4f9b;
   --accent-bg: rgba(255, 111, 174, 0.14);
   --accent-border: rgba(255, 111, 174, 0.45);
   --social-bg: rgba(45, 32, 41, 0.65);
   --shadow:
-    rgba(0, 0, 0, 0.45) 0 10px 15px -3px, rgba(0, 0, 0, 0.3) 0 4px 6px -2px;
+    rgba(0, 0, 0, 0.45) 0 10px 15px -3px,
+    rgba(0, 0, 0, 0.3) 0 4px 6px -2px;
+
+  /* Dark gradient */
+  --gradient-1: #171115;
+  --gradient-2: #241a21;
+  --gradient-3: #5a2542;
 
   color-scheme: dark;
 }
+
+:root[data-tema='oscuro'] .sparkle {
+  background: radial-gradient(
+    circle,
+    #ffffff 0%,
+    #ff8fbd 35%,
+    var(--accent) 55%,
+    transparent 78%
+  );
+
+  filter: drop-shadow(0 0 8px rgba(255, 111, 174, 0.7));
+}
+
 
 /* Las fotos de producto y los banners resultan deslumbrantes sobre fondo
    oscuro; se bajan un punto para que no quemen la vista. */
@@ -68,11 +100,50 @@
 /* =============================================================
    Accesibilidad: tamaño del texto
    ============================================================= */
+:root[data-fuente='pequeno'] {
+  --tamano-base: 15px;
+}
 :root[data-fuente='grande'] {
   --tamano-base: 21px;
 }
 :root[data-fuente='enorme'] {
   --tamano-base: 24px;
+}
+
+/* =============================================================
+   Animaciones del botón de favoritos
+   Viven aquí y no en un componente porque las usan dos: la tarjeta
+   del catálogo (ProductCard) y la pantalla de detalle. Cada una
+   pone lo suyo (la onda circular, el destello de la píldora); lo
+   que comparten es cómo se mueve el corazón.
+   ============================================================= */
+@keyframes favorito-late {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.45) rotate(-10deg);
+  }
+  60% {
+    transform: scale(0.9) rotate(5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes favorito-encoge {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Respeta a quien pide menos animación en su sistema. */
@@ -85,12 +156,31 @@
     transition-duration: 0.01ms !important;
   }
 }
+/* El footer usa el truco de "width:100vw + margin-left:-50vw" para poder
+   salirse del ancho fijo de #root (ver ese comentario en Footer.css) y
+   cubrir toda la pantalla. El problema es que 100vw incluye el ancho de la
+   barra de scroll vertical del sistema operativo (en Windows son ~15-17px
+   que 100% no cuenta), así que el footer terminaba unos px más ancho que
+   la ventana real y eso volvía a la página horizontalmente "arrastrable".
+   overflow-x:hidden en html/body recorta ese sobrante invisible sin afectar
+   el efecto visual del footer (el borde que se recorta ya estaba fuera de
+   la pantalla). */
+html,
+body {
+  overflow-x: hidden;
+}
 
 body {
   margin: 0;
-  background: var(--bg);
+  min-height: 100vh;
+ background: linear-gradient(
+    140deg,
+    var(--gradient-1) 0%,
+    var(--gradient-2) 45%,
+    var(--gradient-3) 100%
+  );
+  background-attachment: fixed;
 }
-
 #root {
   position: relative;
   width: 1126px;
@@ -101,9 +191,16 @@ body {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  /* Sin overflow:hidden aquí a propósito: el fondo de destellos ya se
-     recorta a sí mismo (ver SparkleBackground.css) y el footer necesita
-     poder "salirse" de este ancho para cubrir toda la pantalla. */
+  /* Transparente a propósito: el fondo real (el degradado) vive en <body>
+     desde afuera de este ancho fijo, así se ve parejo en toda la pantalla
+     aunque #root esté centrado y limitado a 1126px. */
+  background: transparent;
+  /* Sin overflow:hidden aquí a propósito (sí lo hay en html/body, ver
+     arriba): el fondo de destellos ya se recorta a sí mismo (ver
+     SparkleBackground.css) y el footer necesita poder "salirse" de este
+     ancho para cubrir toda la pantalla — recortarlo en #root también
+     cortaría ese efecto, por eso el overflow-x:hidden vive un nivel más
+     arriba, donde solo afecta el sobrante invisible fuera de la ventana. */
 }
 
 h1,
@@ -115,6 +212,10 @@ h2 {
 
 h1 {
   font-size: 3.111rem;
+  /* Interlineado ajustado (pero proporcional, ver la nota de :root): los
+     títulos grandes se ven apretados a propósito, sin llegar a montarse
+     cuando ocupan más de un renglón. */
+  line-height: 1.1;
   letter-spacing: -1.68px;
   margin: 32px 0;
   @media (max-width: 1024px) {
@@ -124,7 +225,7 @@ h1 {
 }
 h2 {
   font-size: 1.333rem;
-  line-height: 118%;
+  line-height: 1.18;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
   @media (max-width: 1024px) {
@@ -141,7 +242,7 @@ code {
   border-radius: 4px;
   color: var(--text-h);
   font-size: 0.833rem;
-  line-height: 135%;
+  line-height: 1.35;
   padding: 4px 8px;
   background: var(--code-bg);
 }
@@ -149,7 +250,7 @@ code {
 .font-dmsans {
   font-family: 'DM Sans', sans-serif;
 }
-.font -google-sans {
+.font-google-sans {
   font-family: 'Google Sans', sans-serif;
 }
 .font-outfit {

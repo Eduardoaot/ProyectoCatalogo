@@ -19,6 +19,11 @@
 //   precioOriginal: number  -> si es mayor que "precio", el producto se
 //                              muestra con el precio original tachado (el
 //                              producto ya trae su propio descuento)
+//   factorPieza: number     -> cuanto pesa/mide UNA pieza suelta en la unidad
+//                              de venta (1 manzana = 0.18 kg). Solo tiene
+//                              sentido en lo que se vende a granel: es lo que
+//                              deja comprar "por kilo" o "por pieza" en el
+//                              detalle. Si no se define vale 1.
 // }
 
 export const CATEGORIAS = [
@@ -39,6 +44,7 @@ export const PRODUCTOS = [
     precio: 1.2,
     precioOriginal: 1.5,
     unidad: 'kg',
+    factorPieza: 0.18,
     emoji: 'https://elegifruta.com.ar/wp-content/uploads/2017/07/manzana_roja.jpg',
     descripcion:
       'Manzanas rojas frescas y crujientes, ideales para cualquier momento del día.',
@@ -50,6 +56,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 1.5,
     unidad: 'kg',
+    factorPieza: 0.12,
     emoji: 'https://saludinteractiva.mx/blog/wp-content/uploads/2022/05/beneficios_del_platano_istock.webp',
     descripcion:
       'Plátanos frescos y dulces, perfectos para desayunos y licuados.',
@@ -61,6 +68,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 1.8,
     unidad: 'kg',
+    factorPieza: 0.2,
     emoji: 'https://tse4.mm.bing.net/th/id/OIP.7uvRp-iBdY04IQa-WpeJNgHaE7?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
     descripcion:
       'Naranjas frescas y jugosas ideales para preparar deliciosos jugos.',
@@ -72,6 +80,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 2.2,
     unidad: 'kg',
+    factorPieza: 0.15,
     emoji: 'https://tse2.mm.bing.net/th/id/OIP.gi9KS8sqHTQMH_iGrjLX0wHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
     descripcion:
       'Tomates frescos para ensaladas, salsas y todo tipo de comidas.',
@@ -95,24 +104,25 @@ export const PRODUCTOS = [
   },
   {
     id: 6,
-    nombre: 'Yogur Natural',
+    nombre: 'Yogurt griego',
     categoria: 'Lácteos',
     precio: 18,
     unidad: 'pieza',
-    emoji: 'https://tse3.mm.bing.net/th/id/OIP.ic0LVusiDlRRBB_iZBIjmgHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
+    emoji: 'https://www.yoplait.com.mx/public/app/uploads/2022/07/GRIEGO_NATURAL_120g_271x300px.png',
     descripcion:
-      'Yogur natural cremoso, ideal para desayunos y snacks.',
+      'Yogur griego cremoso, ideal para desayunos y snacks.',
     destacado: false,
   },
   {
     id: 7,
-    nombre: 'Queso Manchego',
+    nombre: 'Queso Americano',
     categoria: 'Lácteos',
     precio: 85,
     unidad: 'kg',
-    emoji: 'https://i5-mx.walmartimages.com/gr/images/product-images/img_large/00750104120155L.jpg',
+    factorPieza: 0.25,
+    emoji: 'https://www.grillhouse.mx/cdn/shop/products/8147VLLTamericano175gSIM21.png?v=1753148155',
     descripcion:
-      'Queso manchego de excelente calidad y gran sabor.',
+      'Queso Americano de excelente calidad y gran sabor.',
     destacado: true,
   },
 
@@ -164,6 +174,7 @@ export const PRODUCTOS = [
     precio: 50,
     precioOriginal: 65,
     unidad: 'kg',
+    factorPieza: 0.45,
     emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/T-bone-raw-MCB.jpg/960px-T-bone-raw-MCB.jpg',
     descripcion:
       'Corte T-Bone preparado y listo para cocinar.',
@@ -171,13 +182,14 @@ export const PRODUCTOS = [
   },
   {
     id: 12,
-    nombre: 'Pechuga de Pollo',
+    nombre: 'Nuggets de Pollo',
     categoria: 'Carnes',
     precio: 75,
     unidad: 'kg',
-    emoji: 'https://kosherhouse.mx/cdn/shop/files/pechugadepollosinhueso.jpg?v=1691773142',
+    factorPieza: 0.25,
+    emoji: 'https://i5-mx.walmartimages.com/mg/gm/3pp/asr/06002a44-7bfa-4520-9e26-c3ea6d75de32.2cd88ba9d49c834deef08f47d8f0c7e8.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF',
     descripcion:
-      'Pechuga de pollo fresca y lista para preparar.',
+      'Nuggets de pollo frescos y listos para preparar.',
     destacado: false,
   },
   {
@@ -223,7 +235,7 @@ export const PRODUCTOS = [
     categoria: 'Bebidas',
     precio: 15,
     unidad: 'botella',
-    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Bottle_of_Water.jpg/960px-Bottle_of_Water.jpg',
+    emoji: 'https://chefmart.com.mx/cdn/shop/files/FRONT-AGUA-MIA_1600x.jpg?v=1751993617',
     descripcion:
       'Agua natural para mantenerte hidratado durante el día.',
     destacado: false,
@@ -245,13 +257,13 @@ export const PRODUCTOS = [
   },
   {
     id: 18,
-    nombre: 'Jabón para Trastes',
+    nombre: 'Jabón Zote',
     categoria: 'Limpieza',
     precio: 32,
     unidad: 'litro',
-    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Joy_pot_and_pan_detergent.jpg/960px-Joy_pot_and_pan_detergent.jpg',
+    emoji: 'https://cleansy.mx/wp-content/uploads/2024/08/PAGINA-WEB-PRODUCTOS-2025-09-19T094625.794.png',
     descripcion:
-      'Jabón líquido para eliminar grasa y suciedad de los trastes.',
+      'Jabón Zote en barra para eliminar grasa y suciedad.',
     destacado: false,
   },
 
@@ -286,13 +298,13 @@ export const PRODUCTOS = [
   // =========================
   {
     id: 21,
-    nombre: 'Fresa',
+    nombre: 'Mango',
     categoria: 'Frutas y Verduras',
     precio: 45,
     unidad: 'kg',
-    emoji: 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Strawberry_image.jpg',
+    emoji: 'https://www.mango.org/wp-content/uploads/2024/06/plu-honey-mango_v2.png',
     descripcion:
-      'Fresas frescas y dulces, perfectas para postres y licuados.',
+      'Mangos frescos y dulces, perfectos para postres y licuados.',
     destacado: true,
   },
   {
@@ -301,7 +313,8 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 55,
     unidad: 'kg',
-    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Grapes%2C_Rostov-on-Don%2C_Russia.jpg/960px-Grapes%2C_Rostov-on-Don%2C_Russia.jpg',
+    factorPieza: 0.5,
+    emoji: 'https://tecolotito.elsiglodedurango.com.mx/cdn-cgi/image/format=auto,width=1024/i/2018/05/694949.jpeg',
     descripcion:
       'Uvas frescas y jugosas, ideales para picar o preparar postres.',
     destacado: false,
@@ -312,6 +325,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 18,
     unidad: 'kg',
+    factorPieza: 0.2,
     emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/960px-Patates.jpg',
     descripcion:
       'Papas frescas, versátiles para freír, hornear o hacer puré.',
@@ -323,6 +337,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 16,
     unidad: 'kg',
+    factorPieza: 0.15,
     emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Mixed_onions.jpg/960px-Mixed_onions.jpg',
     descripcion:
       'Cebollas frescas, infaltables para dar sabor a tus platillos.',
@@ -353,6 +368,7 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 48,
     unidad: 'kg',
+    factorPieza: 0.05,
     emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Cervelat.jpg/960px-Cervelat.jpg',
     descripcion:
       'Salchichas ahumadas, listas para asar o cocinar.',
@@ -368,7 +384,7 @@ export const PRODUCTOS = [
     categoria: 'Bebidas',
     precio: 65,
     unidad: 'paquete',
-    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Coffee_Robusta_Arabica.jpg/960px-Coffee_Robusta_Arabica.jpg',
+    emoji: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIe_EyPH2MoqmcF-O7Jr1vcIO7eOp5naxLRCzAtYqVQ5Mplmf4f4GzaFI&s=10',
     descripcion:
       'Café en grano tostado, ideal para preparar un buen café recién molido.',
     destacado: true,
@@ -414,7 +430,7 @@ export const PRODUCTOS = [
     precio: 45,
     precioOriginal: 55,
     unidad: 'kg',
-    emoji: '🍓',
+    emoji: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWR8ZoOP52TrXBpKorMCkQA2qe4eC9MflZ7Gzd58O3xWGHrgOHyo3_XMCK&s=10',
     descripcion:
       'Fresas frescas de temporada, dulces y aromáticas.',
     destacado: true,
@@ -426,7 +442,8 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 52,
     unidad: 'kg',
-    emoji: '🍇',
+    factorPieza: 0.5,
+    emoji: 'https://snapcalorie-webflow-website.s3.us-east-2.amazonaws.com/media/food_pics_v2/medium/seedless_green_grapes.jpg',
     descripcion:
       'Uva verde sin semilla, crujiente y refrescante.',
     destacado: false,
@@ -437,7 +454,8 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 18,
     unidad: 'kg',
-    emoji: '🍉',
+    factorPieza: 4,
+    emoji: 'https://soycomocomo.es/media/2016/06/sandia-2.gif',
     descripcion:
       'Sandía jugosa, perfecta para los días de calor.',
     destacado: false,
@@ -448,7 +466,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 25,
     unidad: 'pieza',
-    emoji: '🍍',
+    emoji: 'https://dashboard.oftalvist.es/public/blog/294/pi%C3%B1a-beneficios-ojos.jpg',
     descripcion:
       'Piña miel madura, dulce y perfumada.',
     destacado: false,
@@ -459,7 +477,8 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 78,
     unidad: 'kg',
-    emoji: '🥑',
+    factorPieza: 0.2,
+    emoji: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGFksBbSslYei2H8F89H0a9YH-DXjYkwdchWgL7602DA&s=10',
     descripcion:
       'Aguacate hass cremoso, listo para el guacamole.',
     destacado: true,
@@ -471,7 +490,8 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 16,
     unidad: 'kg',
-    emoji: '🥕',
+    factorPieza: 0.1,
+    emoji: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSfzMuNKgOUrl6PGQ340cmtHmSO-92lm8xtkDaYlwrb7DDBKI1qcGTccgx&s=10',
     descripcion:
       'Zanahoria fresca, ideal para sopas y ensaladas.',
     destacado: false,
@@ -482,7 +502,8 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 32,
     unidad: 'kg',
-    emoji: '🥦',
+    factorPieza: 0.4,
+    emoji: 'https://static.nationalgeographicla.com/files/styles/image_3200/public/brocoli-2.jpg?w=1600&h=1063',
     descripcion:
       'Brócoli verde y firme, cosechado esta semana.',
     destacado: false,
@@ -498,7 +519,8 @@ export const PRODUCTOS = [
     precio: 95,
     precioOriginal: 110,
     unidad: 'kg',
-    emoji: '🧀',
+    factorPieza: 0.25,
+    emoji: 'https://supermode.com.mx/cdn/shop/products/4716_2708d1ad-9634-4e96-a520-e7e2381fd52f.jpg?v=1698796056',
     descripcion:
       'Queso manchego semicurado, ideal para gratinar.',
     destacado: true,
@@ -506,11 +528,11 @@ export const PRODUCTOS = [
   },
   {
     id: 38,
-    nombre: 'Yogur Natural',
+    nombre: 'Yogurt Natural',
     categoria: 'Lácteos',
     precio: 24,
     unidad: 'litro',
-    emoji: '🥛',
+    emoji: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDpgkNFjqdKX_OhSZ-OlR9ZEEdoUw4N58sGdekQ6vY7Vexz71Y0LdpEDY&s=10',
     descripcion:
       'Yogur natural sin azúcar añadida.',
     destacado: false,
@@ -521,7 +543,7 @@ export const PRODUCTOS = [
     categoria: 'Lácteos',
     precio: 48,
     unidad: 'paquete',
-    emoji: '🧈',
+    emoji: 'https://i5.walmartimages.com/asr/19cc3c96-5536-44e8-adb2-aaa63b82ad67.d44b8cd1eeba1a84c63d86878cd6a612.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF',
     descripcion:
       'Mantequilla sin sal de 225 g.',
     destacado: false,
@@ -532,7 +554,7 @@ export const PRODUCTOS = [
     categoria: 'Lácteos',
     precio: 36,
     unidad: 'frasco',
-    emoji: '🥣',
+    emoji: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPe0BW9RFtrW25ZQvcltEKye6nzhdlOtDoVePb30_KFm2Kl886-AnhLxZa&s=10',
     descripcion:
       'Crema ácida espesa para tus antojos.',
     destacado: false,
@@ -543,7 +565,8 @@ export const PRODUCTOS = [
     categoria: 'Lácteos',
     precio: 82,
     unidad: 'kg',
-    emoji: '🧀',
+    factorPieza: 0.4,
+    emoji: 'https://www.lyncott.mx/wp-content/uploads/2021/11/Panela.jpg',
     descripcion:
       'Queso panela fresco, bajo en grasa.',
     destacado: false,
@@ -554,7 +577,7 @@ export const PRODUCTOS = [
     categoria: 'Lácteos',
     precio: 34,
     unidad: 'litro',
-    emoji: '🥛',
+    emoji: 'https://arteli.vtexassets.com/arquivos/ids/268825-800-auto?v=638853487275430000&width=800&height=auto&aspect=true',
     descripcion:
       'Leche deslactosada entera de 1 litro.',
     destacado: false,
@@ -565,9 +588,9 @@ export const PRODUCTOS = [
     categoria: 'Lácteos',
     precio: 68,
     unidad: 'paquete',
-    emoji: '🥚',
+    emoji: 'https://static.wixstatic.com/media/de7407_31164d7e28214a8dac53b9e11990281c~mv2.png/v1/fit/w_500,h_500,q_90/file.png',
     descripcion:
-      'Paquete de 18 huevos frescos de granja.',
+      'Paquete de 12 huevos frescos de granja.',
     destacado: true,
     stock: 45,
   },
@@ -581,7 +604,7 @@ export const PRODUCTOS = [
     categoria: 'Panadería',
     precio: 18,
     unidad: 'pieza',
-    emoji: '🥐',
+    emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Croissant-Petr_Kratochvil.jpg/330px-Croissant-Petr_Kratochvil.jpg',
     descripcion:
       'Croissant de mantequilla horneado en casa.',
     destacado: true,
@@ -592,20 +615,20 @@ export const PRODUCTOS = [
     categoria: 'Panadería',
     precio: 22,
     unidad: 'pieza',
-    emoji: '🥯',
+    emoji: 'https://food.fnr.sndimg.com/content/dam/images/food/fullset/2022/02/16/0/FNM_030122-Homemade-Bagels_s4x3.jpg.rend.hgtvcom.1280.1280.suffix/1645023418907.webp',
     descripcion:
       'Bagel artesanal, perfecto para el desayuno.',
     destacado: false,
   },
   {
     id: 46,
-    nombre: 'Pan de Caja Integral',
+    nombre: 'Pan para hot dog',
     categoria: 'Panadería',
     precio: 42,
     unidad: 'paquete',
-    emoji: '🍞',
+    emoji: 'https://lagranbodega.vteximg.com.br/arquivos/ids/304201-1000-1000/7501000111503.jpg?v=638881971369770000',
     descripcion:
-      'Pan integral de caja, 680 g.',
+      'Pan para hot dog, 340 g.',
     destacado: false,
   },
   {
@@ -614,7 +637,7 @@ export const PRODUCTOS = [
     categoria: 'Panadería',
     precio: 15,
     unidad: 'pieza',
-    emoji: '🍩',
+    emoji: 'https://cdn7.kiwilimon.com/brightcove/11162/640x640/11162.jpg.webp',
     descripcion:
       'Dona glaseada recién hecha.',
     destacado: false,
@@ -626,7 +649,7 @@ export const PRODUCTOS = [
     precio: 185,
     precioOriginal: 220,
     unidad: 'pieza',
-    emoji: '🍰',
+    emoji: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn_QVcL_ale8eVTTrkG74QND3z-PXAk2K4UKb4XQgdsrNsWaR5pbqDvIk&s=10',
     descripcion:
       'Pastel de chocolate para 8 porciones.',
     destacado: true,
@@ -638,7 +661,7 @@ export const PRODUCTOS = [
     categoria: 'Panadería',
     precio: 38,
     unidad: 'paquete',
-    emoji: '🍪',
+    emoji: 'https://cuk-it.com/wp-content/uploads/2017/06/galletas-avena-04.webp',
     descripcion:
       'Galletas de avena con pasas, 300 g.',
     destacado: false,
@@ -653,7 +676,8 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 88,
     unidad: 'kg',
-    emoji: '🍗',
+    factorPieza: 0.25,
+    emoji: 'https://kosherhouse.mx/cdn/shop/files/pechugadepollosinhueso.jpg?v=1691773142',
     descripcion:
       'Pechuga de pollo sin hueso ni piel.',
     destacado: true,
@@ -665,7 +689,8 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 105,
     unidad: 'kg',
-    emoji: '🥩',
+    factorPieza: 0.2,
+    emoji: 'https://i5-mx.walmartimages.com/samsmx/images/product-images/img_large/000036423-2l.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF',
     descripcion:
       'Chuleta de cerdo con hueso, corte grueso.',
     destacado: false,
@@ -677,7 +702,8 @@ export const PRODUCTOS = [
     precio: 290,
     precioOriginal: 340,
     unidad: 'kg',
-    emoji: '🐟',
+    factorPieza: 0.25,
+    emoji: 'https://ingredienta.com/wp-content/uploads/2024/11/SALMONCANALOMO-800x800.png',
     descripcion:
       'Filete de salmón fresco del Atlántico.',
     destacado: true,
@@ -689,9 +715,9 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 245,
     unidad: 'kg',
-    emoji: '🦐',
+    emoji: 'https://theshrimpnet.com/37-large_default/camaron-mediano-del-golfo.jpg',
     descripcion:
-      'Camarón mediano limpio y sin cabeza.',
+      'Camarón mediano limpio.',
     destacado: false,
   },
   {
@@ -700,9 +726,9 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 72,
     unidad: 'paquete',
-    emoji: '🥓',
+    emoji: 'https://i5.walmartimages.com/seo/Great-Value-Hickory-Smoked-Bacon-Mega-Pack-24-oz_d974295f-18e4-4445-a61b-565a15031651.b3695a12031e158791f6870fe9a99bcc.jpeg',
     descripcion:
-      'Tocino ahumado en rebanadas, 250 g.',
+      'Tocino ahumado en rebanadas, 680 g.',
     destacado: false,
   },
   {
@@ -711,7 +737,8 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 68,
     unidad: 'kg',
-    emoji: '🌭',
+    factorPieza: 0.1,
+    emoji: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvkan_cSEm33WmYd8afcuZeBfNr1Tek9lG-skPPAED03_fWydrMedb-Oc&s=10',
     descripcion:
       'Chorizo artesanal, ideal para el desayuno.',
     destacado: false,
@@ -726,7 +753,7 @@ export const PRODUCTOS = [
     categoria: 'Bebidas',
     precio: 32,
     unidad: 'litro',
-    emoji: '🧃',
+    emoji: 'https://www.smartnfinal.com.mx/wp-content/uploads/2024/02/125416-JUGO-DE-NARANJA-ORIGINAL-SIMPLY-ORANGE-1.5-L.jpg',
     descripcion:
       'Jugo de naranja 100% natural, sin azúcar añadida.',
     destacado: true,
@@ -737,21 +764,21 @@ export const PRODUCTOS = [
     categoria: 'Bebidas',
     precio: 18,
     unidad: 'botella',
-    emoji: '💧',
+    emoji: 'https://m.media-amazon.com/images/I/81FkyrPtnHL.jpg',
     descripcion:
       'Agua mineral con gas, 1 litro.',
     destacado: false,
   },
   {
     id: 58,
-    nombre: 'Cerveza Artesanal',
+    nombre: 'Cerveza corona',
     categoria: 'Bebidas',
     precio: 48,
     precioOriginal: 58,
     unidad: 'botella',
-    emoji: '🍺',
+    emoji: 'https://mundogourmet.com.mx/tienda/wp-content/uploads/2020/09/cerveza-corona-355ml.jpg',
     descripcion:
-      'Cerveza artesanal estilo IPA, 355 ml.',
+      'Cerveza corona, 355 ml.',
     destacado: true,
     stock: 30,
   },
@@ -761,7 +788,7 @@ export const PRODUCTOS = [
     categoria: 'Bebidas',
     precio: 245,
     unidad: 'botella',
-    emoji: '🍷',
+    emoji: 'https://bodegasalianza.vtexassets.com/arquivos/ids/181489/24244-1-.jpg?v=638938217078000000',
     descripcion:
       'Vino tinto de mesa, cosecha reciente.',
     destacado: false,
@@ -772,7 +799,7 @@ export const PRODUCTOS = [
     categoria: 'Bebidas',
     precio: 26,
     unidad: 'botella',
-    emoji: '🧋',
+    emoji: 'https://media.justo.mx/products/7501055358885-1.jpg',
     descripcion:
       'Té helado de limón, 600 ml.',
     destacado: false,
@@ -783,7 +810,7 @@ export const PRODUCTOS = [
     categoria: 'Bebidas',
     precio: 125,
     unidad: 'paquete',
-    emoji: '☕',
+    emoji: 'https://supermode.com.mx/cdn/shop/products/100008467_b738477b-13bc-4f25-b143-9ebe71ceab09.jpg?v=1698802921',
     descripcion:
       'Café molido de altura, 500 g.',
     destacado: false,
@@ -798,7 +825,7 @@ export const PRODUCTOS = [
     categoria: 'Limpieza',
     precio: 85,
     unidad: 'litro',
-    emoji: '🧴',
+    emoji: 'https://i5.walmartimages.com/asr/b5d3b6d2-0824-46a2-ade8-acb97f2f5212.b974429853025a53aaa9441c84fa7f6d.jpeg',
     descripcion:
       'Detergente líquido concentrado para ropa.',
     destacado: true,
@@ -809,7 +836,7 @@ export const PRODUCTOS = [
     categoria: 'Limpieza',
     precio: 38,
     unidad: 'botella',
-    emoji: '🧽',
+    emoji: 'https://lagranbodega.vteximg.com.br/arquivos/ids/304677-1000-1000/75045838.jpg?v=638920833020530000',
     descripcion:
       'Jabón líquido para trastes con aroma a limón.',
     destacado: false,
@@ -821,9 +848,9 @@ export const PRODUCTOS = [
     precio: 96,
     precioOriginal: 115,
     unidad: 'paquete',
-    emoji: '🧻',
+    emoji: 'https://m.media-amazon.com/images/I/81cHPJM1t4L._AC_UF350,350_QL80_.jpg',
     descripcion:
-      'Paquete de 12 rollos de doble hoja.',
+      'Paquete de 12 rollos de doble hoja libre de Muros.',
     destacado: true,
     stock: 50,
   },
@@ -833,7 +860,7 @@ export const PRODUCTOS = [
     categoria: 'Limpieza',
     precio: 44,
     unidad: 'botella',
-    emoji: '🧼',
+    emoji: 'https://d1zc67o3u1epb0.cloudfront.net/media/catalog/product/1/2/1206_1__3.jpg?width=265&height=390&store=tienda&image-type=image',
     descripcion:
       'Limpiador multiusos desinfectante.',
     destacado: false,
@@ -844,9 +871,9 @@ export const PRODUCTOS = [
     categoria: 'Limpieza',
     precio: 52,
     unidad: 'paquete',
-    emoji: '🗑️',
+    emoji: 'https://cdn.homedepot.com.mx/productos/210765/210765-za1.jpg',
     descripcion:
-      'Bolsas para basura de 90 litros, 20 piezas.',
+      'Bolsas para basura, 50 piezas.',
     destacado: false,
   },
 
@@ -860,9 +887,9 @@ export const PRODUCTOS = [
     precio: 165,
     precioOriginal: 195,
     unidad: 'botella',
-    emoji: '🫒',
+    emoji: 'https://ines.com.mx/wp-content/uploads/2025/01/1_Oliva-100-puro_1L_1000x1000.jpg',
     descripcion:
-      'Aceite de oliva extra virgen, 500 ml.',
+      'Aceite de oliva extra virgen, 1 lts.',
     destacado: true,
     stock: 22,
   },
@@ -872,9 +899,9 @@ export const PRODUCTOS = [
     categoria: 'Abarrotes',
     precio: 22,
     unidad: 'paquete',
-    emoji: '🍝',
+    emoji: 'https://www.carozzimeencanta.cl/assets/img/productos/paquete-spaghetti-5-carozzi.jpg',
     descripcion:
-      'Pasta spaghetti de sémola, 500 g.',
+      'Pasta spaghetti, 400 g.',
     destacado: false,
   },
   {
@@ -883,7 +910,7 @@ export const PRODUCTOS = [
     categoria: 'Abarrotes',
     precio: 26,
     unidad: 'pieza',
-    emoji: '🐟',
+    emoji: 'https://i5-mx.walmartimages.com/mg/gm/3pp/asr/d1673453-db20-4c2e-970f-d3c5371888f4.2a6471b4d6c0ef2a95c3c65558a13c68.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF',
     descripcion:
       'Atún en agua, lata de 140 g.',
     destacado: false,
@@ -894,7 +921,7 @@ export const PRODUCTOS = [
     categoria: 'Abarrotes',
     precio: 38,
     unidad: 'kg',
-    emoji: '🫘',
+    emoji: 'https://i.blogs.es/3739cc/oferta-frijoles-verde-valle-negro-amazon-mexico/840_560.jpeg',
     descripcion:
       'Frijol negro seleccionado a granel.',
     destacado: false,
@@ -905,7 +932,7 @@ export const PRODUCTOS = [
     categoria: 'Abarrotes',
     precio: 28,
     unidad: 'kg',
-    emoji: '🍬',
+    emoji: 'https://www.costco.com.mx/medias/sys_master/products/h9a/h4f/82432991035422.jpg',
     descripcion:
       'Azúcar refinada de caña, 1 kg.',
     destacado: false,
@@ -916,7 +943,7 @@ export const PRODUCTOS = [
     categoria: 'Abarrotes',
     precio: 14,
     unidad: 'paquete',
-    emoji: '🧂',
+    emoji: 'https://i5.walmartimages.com/asr/7c7be410-732d-4bda-af41-13b94723a0a7.0ab155efadace07293d676b4355cea46.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF',
     descripcion:
       'Sal de mesa yodada, 1 kg.',
     destacado: false,
@@ -927,9 +954,9 @@ export const PRODUCTOS = [
     categoria: 'Abarrotes',
     precio: 64,
     unidad: 'paquete',
-    emoji: '🥣',
+    emoji: 'https://images.kglobalservices.com/www.kelloggs.com.mx/es_mx/product/kic-3670/kicproductimage-119149_k226083000_c1c1_es_mx.jpg',
     descripcion:
-      'Cereal de maíz tostado, 500 g.',
+      'Cereal de maíz tostado, 440 g.',
     destacado: false,
   },
 ]

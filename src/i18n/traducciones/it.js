@@ -24,6 +24,8 @@ export default {
   'pref.temaClaro': 'Chiaro',
   'pref.temaOscuro': 'Scuro',
   'pref.texto': 'Dimensione del testo',
+  'pref.textoPequeno': 'Piccolo',
+
   'pref.textoNormal': 'Normale',
   'pref.textoGrande': 'Grande',
   'pref.textoEnorme': 'Molto grande',
@@ -44,6 +46,10 @@ export default {
   'home.productos': '{n} prodotti',
 
   'producto.agregar': 'Aggiungi al carrello',
+
+  'producto.agregarCorto': 'Aggiungi',
+
+  'producto.agregaUnaPieza': 'Aggiunge 1 pezzo (≈ {cantidad} {unidad})',
   'producto.destacado': 'In evidenza',
   'producto.sinStock': 'Esaurito',
   'producto.volver': 'Torna al catalogo',
@@ -57,6 +63,17 @@ export default {
   'producto.soloHay': 'Sono disponibili solo {n} unità.',
   'producto.aumentar': 'Aumenta la quantità',
   'producto.disminuir': 'Riduci la quantità',
+  'producto.piezas': 'Pezzi',
+  'producto.piezasCorto': 'pz',
+  'producto.comoComprar': 'Come lo vuoi?',
+  'producto.modoUnidad': 'Al {unidad}',
+  'producto.modoPieza': 'Al pezzo',
+  'producto.pesoPorPieza': '1 pezzo ≈ {cantidad} {unidad}',
+  'producto.equivale': 'Equivale a {cantidad} {unidad}',
+  'producto.subtotalEstimado': 'Subtotale circa: ${monto}',
+  'producto.soloHayPiezas': 'Ci sono solo {n} pezzi disponibili.',
+  'producto.soloHayUnidad': 'Restano solo {n} {unidad}.',
+  'producto.disponiblesUnidad': '{n} {unidad} disponibili',
 
   'fav.titulo': 'I miei preferiti',
   'fav.agregar': 'Aggiungi ai preferiti',
@@ -127,6 +144,11 @@ export default {
     'Il tuo account viene salvato nel database; la password è cifrata (minimo 8 caratteri).',
   'login.faltanDatos': 'Compila nome, e-mail e password.',
   'login.faltanCredenciales': 'Inserisci e-mail e password.',
+  'login.errorNombre': 'Inserisci il tuo nome.',
+  'login.errorCorreo': 'Inserisci la tua e-mail.',
+  'login.errorCorreoInvalido': 'Inserisci un’e-mail valida (es. tuaemail@esempio.com).',
+  'login.errorContrasena': 'Inserisci la tua password.',
+  'login.errorContrasenaCorta': 'La password deve avere almeno 8 caratteri.',
 
   'cuenta.titulo': 'Il mio account',
   'cuenta.nombre': 'Nome',

@@ -1,18 +1,40 @@
 .navbar {
   position: fixed;
-
   top: 0;
   left: 0;
   right: 0;
   z-index: 60;
-  background: var(--bg);
+
   border-bottom: 1px solid var(--border);
+
   transform: translateY(0);
-  transition: transform 0.3s ease;
+  /* El desplazamiento ya no lo anima una transición CSS: Navbar.jsx lo
+     recalcula en cada evento de scroll y lo aplica directo como `style`, así
+     que la barra sigue el gesto en vez de "alcanzarlo" con retraso. */
+  will-change: transform;
+
+  isolation: isolate;
+  /* Sin `overflow` a propósito: el dropdown de sugerencias cuelga por debajo
+     de la barra, y cualquier recorte acá lo dejaba invisible o a medias (los
+     resultados no se podían ni ver ni clickear). No hace falta recortar nada:
+     ::before es `inset: 0` (no puede desbordar) y del sobrante horizontal ya
+     se encarga el overflow-x:hidden de html/body en index.css. */
 }
 
-.navbar--oculta {
-  transform: translateY(-100%);
+.navbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background: linear-gradient(
+    140deg,
+    var(--gradient-1) 0%,
+    var(--gradient-2) 45%,
+    var(--gradient-3) 170%
+  );
+
+  background-attachment: fixed;
 }
 
 .navbar__inner {
@@ -173,7 +195,11 @@
   box-shadow: var(--shadow);
   max-height: 320px;
   overflow-y: auto;
-  z-index: 70;
+  /* Que no se lleve el scroll de la página cuando la lista llega a su tope. */
+  overscroll-behavior: contain;
+  /* Por encima de cualquier cosa dentro de la navbar (que ya está en z-60
+     sobre el resto de la página). */
+  z-index: 200;
 }
 
 .navbar__sugerencia {
@@ -192,12 +218,17 @@
   cursor: pointer;
 }
 
-.navbar__sugerencia:hover {
+.navbar__sugerencia:hover,
+.navbar__sugerencia.is-activa {
   background: var(--accent-bg);
+  color: var(--accent);
 }
 
 .navbar__sugerencia-nombre {
   font-weight: 600;
+  /* min-width:0 es lo que le permite recortarse con "…": sin esto un nombre
+     largo desbordaba el botón y le sacaba scroll horizontal a la lista. */
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
