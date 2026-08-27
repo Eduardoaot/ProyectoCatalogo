@@ -23,7 +23,6 @@ import './Navbar.css'
 
 // A partir de qué tanto scroll hacia abajo empieza a poder ocultarse la
 // navbar (evita que "parpadee" con pequeños scrolls cerca del tope).
-const UMBRAL_SCROLL_PX = 80
 const MAX_SUGERENCIAS = 6
 // Separador improbable de encontrar en un nombre real: sirve para partir la
 // plantilla traducida "Hola, {nombre}" en un "antes" y un "después" del
@@ -41,23 +40,46 @@ function Navbar() {
 
   const [menuAbierto, setMenuAbierto] = useState(false)
   const [preferenciasAbiertas, setPreferenciasAbiertas] = useState(false)
-  const [oculta, setOculta] = useState(false)
+const [desplazamientoNavbar, setDesplazamientoNavbar] = useState(0)
   const [busqueda, setBusqueda] = useState('')
   const [mostrarSugerencias, setMostrarSugerencias] = useState(false)
-  const ultimoScrollRef = useRef(0)
+ const ultimoScrollRef = useRef(0)
   const navRef = useRef(null)
 
   // Comportamiento tipo Amazon: al bajar se oculta, al subir reaparece.
-  useEffect(() => {
-    const alHacerScroll = () => {
-      const actual = window.scrollY
-      const anterior = ultimoScrollRef.current
-      setOculta(actual > anterior && actual > UMBRAL_SCROLL_PX)
+useEffect(() => {
+  const alHacerScroll = () => {
+    const actual = window.scrollY
+    const anterior = ultimoScrollRef.current
+    const diferencia = actual - anterior
+
+    // Si estamos en el principio, la navbar siempre está completamente visible.
+    if (actual <= 0) {
+      setDesplazamientoNavbar(0)
       ultimoScrollRef.current = actual
+      return
     }
-    window.addEventListener('scroll', alHacerScroll, { passive: true })
-    return () => window.removeEventListener('scroll', alHacerScroll)
-  }, [])
+
+    setDesplazamientoNavbar((actualDesplazamiento) => {
+      const siguiente = actualDesplazamiento + diferencia
+
+      // No permitimos que suba más allá de 0 ni que desaparezca
+      // más allá de su propia altura.
+      const alturaNavbar = navRef.current?.offsetHeight ?? 0
+
+      return Math.max(0, Math.min(siguiente, alturaNavbar))
+    })
+
+    ultimoScrollRef.current = actual
+  }
+
+  window.addEventListener('scroll', alHacerScroll, { passive: true })
+
+  return () => {
+    window.removeEventListener('scroll', alHacerScroll)
+  }
+}, [])
+
 
   // Expone la altura real de la navbar como variable CSS para que el
   // contenido de la página deje el espacio justo (la navbar es fixed).
@@ -118,7 +140,13 @@ function Navbar() {
 
   return (
     <>
-      <header ref={navRef} className={oculta ? 'navbar navbar--oculta' : 'navbar'}>
+            <header
+        ref={navRef}
+        className="navbar"
+        style={{
+          transform: `translateY(-${desplazamientoNavbar}px)`,
+        }}
+>
         <div className="navbar__inner">
           <div className="navbar__izquierda">
             <button
