@@ -46,6 +46,10 @@ export default {
   'home.productos': '상품 {n}개',
 
   'producto.agregar': '장바구니에 담기',
+
+  'producto.agregarCorto': '담기',
+
+  'producto.agregaUnaPieza': '1개 담기 (≈ {cantidad} {unidad})',
   'producto.destacado': '추천',
   'producto.sinStock': '품절',
   'producto.volver': '카탈로그로 돌아가기',
@@ -59,6 +63,17 @@ export default {
   'producto.soloHay': '{n}개만 남아 있습니다.',
   'producto.aumentar': '수량 늘리기',
   'producto.disminuir': '수량 줄이기',
+  'producto.piezas': '개수',
+  'producto.piezasCorto': '개',
+  'producto.comoComprar': '어떻게 구매하시겠어요?',
+  'producto.modoUnidad': '{unidad} 단위',
+  'producto.modoPieza': '개 단위',
+  'producto.pesoPorPieza': '1개 ≈ {cantidad} {unidad}',
+  'producto.equivale': '{cantidad} {unidad}에 해당',
+  'producto.subtotalEstimado': '예상 소계: ${monto}',
+  'producto.soloHayPiezas': '{n}개만 남았습니다.',
+  'producto.soloHayUnidad': '{n} {unidad}만 남았습니다.',
+  'producto.disponiblesUnidad': '{n} {unidad} 재고',
 
   'fav.titulo': '내 즐겨찾기',
   'fav.agregar': '즐겨찾기에 추가',

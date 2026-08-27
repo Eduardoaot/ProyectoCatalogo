@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Carousel from './componentes/Carousel'
 import ProductCard from './componentes/ProductCard'
@@ -40,31 +40,61 @@ function Home() {
     return lista
   }, [productos, categoriaActiva, busqueda])
 
-  // Al llegar desde una búsqueda del navbar (Enter sin elegir del
-  // dropdown), baja la vista hacia el catálogo en vez de dejar al usuario
-  // arriba del todo, tapado por el carrusel.
+  // Lleva la vista al título del catálogo después de filtrar (búsqueda del
+  // navbar o botón de categoría), en vez de dejar al usuario arriba del todo
+  // tapado por el carrusel.
+  //
+  // No se usa scrollIntoView a propósito: al filtrar, la grilla se queda con
+  // muchos menos productos y la página entera se vuelve más baja. Si el
+  // destino calculado ya no existe, el navegador recorta el scroll hasta el
+  // final del documento — y el usuario terminaba mirando el footer con los
+  // resultados por encima. Se mide a mano y, si no se llega, se vuelve
+  // directamente arriba (con una página tan corta igual se ve todo).
+  const irAlCatalogo = useCallback(() => {
+    // En el frame siguiente: para entonces la grilla nueva ya está en el DOM
+    // y getBoundingClientRect devuelve la posición definitiva, no la vieja.
+    requestAnimationFrame(() => {
+      const intro = introRef.current
+      if (!intro) return
+      const navbarAlto =
+        parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue('--navbar-alto'),
+        ) || 0
+      const destino = intro.getBoundingClientRect().top + window.scrollY - navbarAlto - 12
+      const maximo = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
+      window.scrollTo({
+        top: destino > maximo ? 0 : Math.max(0, destino),
+        behavior: 'smooth',
+      })
+    })
+  }, [])
+
+  // Se dispara con el filtro ya aplicado (no al hacer clic), así la medición
+  // de arriba ve la altura real de la página. En la primera carga solo se
+  // mueve si la URL ya traía un filtro; si no, se respeta el arranque arriba.
+  const primeraVez = useRef(true)
   useEffect(() => {
-    if (busqueda && introRef.current) {
-      introRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (cargando) return
+    if (primeraVez.current) {
+      primeraVez.current = false
+      if (!busqueda && categoriaActiva === 'Todas') return
     }
-  }, [busqueda])
+    irAlCatalogo()
+  }, [busqueda, categoriaActiva, cargando, irAlCatalogo])
 
   // Al cambiar de categoría desde los botones de filtro, primero se
   // desvanece la grilla (fade out) y, una vez invisible, se actualiza la
   // URL (lo que a su vez cambia productosFiltrados) y vuelve a aparecer.
   //
-  // El scroll se dispara aparte, ya (no al terminar el timeout): antes no
-  // se movía nada a propósito, pero el foco que el navegador le deja al
-  // botón recién clickeado + el cambio de alto de la grilla hacían que el
-  // navegador "saltara" solo a posiciones raras. Forzar el scroll siempre
-  // al mismo punto (el título) deja un solo movimiento, predecible.
+  // El scroll no se dispara acá sino en el efecto de arriba, cuando la
+  // grilla nueva ya está montada: hacerlo antes significaba medir la página
+  // vieja y acabar en una posición que ya no existía.
   const cambiarCategoria = (categoria, boton) => {
     if (categoria === categoriaActiva) return
     // Sin esto, el navegador intenta mantener visible el botón recién
     // enfocado y "pelea" con nuestro scroll hacia el título de arriba.
     boton?.blur()
     setTransicionando(true)
-    introRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     setTimeout(() => {
       const params = new URLSearchParams(searchParams)
       if (categoria === 'Todas') {

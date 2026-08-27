@@ -46,6 +46,10 @@ export default {
   'home.productos': 'Товаров: {n}',
 
   'producto.agregar': 'В корзину',
+
+  'producto.agregarCorto': 'Добавить',
+
+  'producto.agregaUnaPieza': 'Добавляет 1 шт. (≈ {cantidad} {unidad})',
   'producto.destacado': 'Рекомендуем',
   'producto.sinStock': 'Нет в наличии',
   'producto.volver': 'Назад в каталог',
@@ -59,6 +63,17 @@ export default {
   'producto.soloHay': 'Доступно только {n} шт.',
   'producto.aumentar': 'Увеличить количество',
   'producto.disminuir': 'Уменьшить количество',
+  'producto.piezas': 'Штуки',
+  'producto.piezasCorto': 'шт.',
+  'producto.comoComprar': 'Как вы хотите купить?',
+  'producto.modoUnidad': 'За {unidad}',
+  'producto.modoPieza': 'За штуку',
+  'producto.pesoPorPieza': '1 шт. ≈ {cantidad} {unidad}',
+  'producto.equivale': 'Это {cantidad} {unidad}',
+  'producto.subtotalEstimado': 'Примерно: ${monto}',
+  'producto.soloHayPiezas': 'Доступно только {n} шт.',
+  'producto.soloHayUnidad': 'Осталось только {n} {unidad}.',
+  'producto.disponiblesUnidad': 'Доступно {n} {unidad}',
 
   'fav.titulo': 'Моё избранное',
   'fav.agregar': 'Добавить в избранное',

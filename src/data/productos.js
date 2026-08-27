@@ -19,6 +19,11 @@
 //   precioOriginal: number  -> si es mayor que "precio", el producto se
 //                              muestra con el precio original tachado (el
 //                              producto ya trae su propio descuento)
+//   factorPieza: number     -> cuanto pesa/mide UNA pieza suelta en la unidad
+//                              de venta (1 manzana = 0.18 kg). Solo tiene
+//                              sentido en lo que se vende a granel: es lo que
+//                              deja comprar "por kilo" o "por pieza" en el
+//                              detalle. Si no se define vale 1.
 // }
 
 export const CATEGORIAS = [
@@ -39,6 +44,7 @@ export const PRODUCTOS = [
     precio: 1.2,
     precioOriginal: 1.5,
     unidad: 'kg',
+    factorPieza: 0.18,
     emoji: 'https://elegifruta.com.ar/wp-content/uploads/2017/07/manzana_roja.jpg',
     descripcion:
       'Manzanas rojas frescas y crujientes, ideales para cualquier momento del día.',
@@ -50,6 +56,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 1.5,
     unidad: 'kg',
+    factorPieza: 0.12,
     emoji: 'https://saludinteractiva.mx/blog/wp-content/uploads/2022/05/beneficios_del_platano_istock.webp',
     descripcion:
       'Plátanos frescos y dulces, perfectos para desayunos y licuados.',
@@ -61,6 +68,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 1.8,
     unidad: 'kg',
+    factorPieza: 0.2,
     emoji: 'https://tse4.mm.bing.net/th/id/OIP.7uvRp-iBdY04IQa-WpeJNgHaE7?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
     descripcion:
       'Naranjas frescas y jugosas ideales para preparar deliciosos jugos.',
@@ -72,6 +80,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 2.2,
     unidad: 'kg',
+    factorPieza: 0.15,
     emoji: 'https://tse2.mm.bing.net/th/id/OIP.gi9KS8sqHTQMH_iGrjLX0wHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
     descripcion:
       'Tomates frescos para ensaladas, salsas y todo tipo de comidas.',
@@ -110,6 +119,7 @@ export const PRODUCTOS = [
     categoria: 'Lácteos',
     precio: 85,
     unidad: 'kg',
+    factorPieza: 0.25,
     emoji: 'https://i5-mx.walmartimages.com/gr/images/product-images/img_large/00750104120155L.jpg',
     descripcion:
       'Queso manchego de excelente calidad y gran sabor.',
@@ -164,6 +174,7 @@ export const PRODUCTOS = [
     precio: 50,
     precioOriginal: 65,
     unidad: 'kg',
+    factorPieza: 0.45,
     emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/T-bone-raw-MCB.jpg/960px-T-bone-raw-MCB.jpg',
     descripcion:
       'Corte T-Bone preparado y listo para cocinar.',
@@ -175,6 +186,7 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 75,
     unidad: 'kg',
+    factorPieza: 0.25,
     emoji: 'https://kosherhouse.mx/cdn/shop/files/pechugadepollosinhueso.jpg?v=1691773142',
     descripcion:
       'Pechuga de pollo fresca y lista para preparar.',
@@ -301,6 +313,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 55,
     unidad: 'kg',
+    factorPieza: 0.5,
     emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Grapes%2C_Rostov-on-Don%2C_Russia.jpg/960px-Grapes%2C_Rostov-on-Don%2C_Russia.jpg',
     descripcion:
       'Uvas frescas y jugosas, ideales para picar o preparar postres.',
@@ -312,6 +325,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 18,
     unidad: 'kg',
+    factorPieza: 0.2,
     emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/960px-Patates.jpg',
     descripcion:
       'Papas frescas, versátiles para freír, hornear o hacer puré.',
@@ -323,6 +337,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 16,
     unidad: 'kg',
+    factorPieza: 0.15,
     emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Mixed_onions.jpg/960px-Mixed_onions.jpg',
     descripcion:
       'Cebollas frescas, infaltables para dar sabor a tus platillos.',
@@ -353,6 +368,7 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 48,
     unidad: 'kg',
+    factorPieza: 0.05,
     emoji: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Cervelat.jpg/960px-Cervelat.jpg',
     descripcion:
       'Salchichas ahumadas, listas para asar o cocinar.',
@@ -426,6 +442,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 52,
     unidad: 'kg',
+    factorPieza: 0.5,
     emoji: '🍇',
     descripcion:
       'Uva verde sin semilla, crujiente y refrescante.',
@@ -437,6 +454,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 18,
     unidad: 'kg',
+    factorPieza: 4,
     emoji: '🍉',
     descripcion:
       'Sandía jugosa, perfecta para los días de calor.',
@@ -459,6 +477,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 78,
     unidad: 'kg',
+    factorPieza: 0.2,
     emoji: '🥑',
     descripcion:
       'Aguacate hass cremoso, listo para el guacamole.',
@@ -471,6 +490,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 16,
     unidad: 'kg',
+    factorPieza: 0.1,
     emoji: '🥕',
     descripcion:
       'Zanahoria fresca, ideal para sopas y ensaladas.',
@@ -482,6 +502,7 @@ export const PRODUCTOS = [
     categoria: 'Frutas y Verduras',
     precio: 32,
     unidad: 'kg',
+    factorPieza: 0.4,
     emoji: '🥦',
     descripcion:
       'Brócoli verde y firme, cosechado esta semana.',
@@ -498,6 +519,7 @@ export const PRODUCTOS = [
     precio: 95,
     precioOriginal: 110,
     unidad: 'kg',
+    factorPieza: 0.25,
     emoji: '🧀',
     descripcion:
       'Queso manchego semicurado, ideal para gratinar.',
@@ -543,6 +565,7 @@ export const PRODUCTOS = [
     categoria: 'Lácteos',
     precio: 82,
     unidad: 'kg',
+    factorPieza: 0.4,
     emoji: '🧀',
     descripcion:
       'Queso panela fresco, bajo en grasa.',
@@ -653,6 +676,7 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 88,
     unidad: 'kg',
+    factorPieza: 0.25,
     emoji: '🍗',
     descripcion:
       'Pechuga de pollo sin hueso ni piel.',
@@ -665,6 +689,7 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 105,
     unidad: 'kg',
+    factorPieza: 0.2,
     emoji: '🥩',
     descripcion:
       'Chuleta de cerdo con hueso, corte grueso.',
@@ -677,6 +702,7 @@ export const PRODUCTOS = [
     precio: 290,
     precioOriginal: 340,
     unidad: 'kg',
+    factorPieza: 0.25,
     emoji: '🐟',
     descripcion:
       'Filete de salmón fresco del Atlántico.',
@@ -711,6 +737,7 @@ export const PRODUCTOS = [
     categoria: 'Carnes',
     precio: 68,
     unidad: 'kg',
+    factorPieza: 0.1,
     emoji: '🌭',
     descripcion:
       'Chorizo artesanal, ideal para el desayuno.',

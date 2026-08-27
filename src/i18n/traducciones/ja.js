@@ -46,6 +46,10 @@ export default {
   'home.productos': '{n} 商品',
 
   'producto.agregar': 'カートに入れる',
+
+  'producto.agregarCorto': '追加',
+
+  'producto.agregaUnaPieza': '1個を追加（≈ {cantidad} {unidad}）',
   'producto.destacado': 'おすすめ',
   'producto.sinStock': '在庫切れ',
   'producto.volver': 'カタログに戻る',
@@ -59,6 +63,17 @@ export default {
   'producto.soloHay': '残り {n} 点のみです。',
   'producto.aumentar': '数量を増やす',
   'producto.disminuir': '数量を減らす',
+  'producto.piezas': '個数',
+  'producto.piezasCorto': '個',
+  'producto.comoComprar': 'どちらで購入しますか？',
+  'producto.modoUnidad': '{unidad}単位',
+  'producto.modoPieza': '個単位',
+  'producto.pesoPorPieza': '1個 ≈ {cantidad} {unidad}',
+  'producto.equivale': '{cantidad} {unidad} に相当',
+  'producto.subtotalEstimado': '小計（概算）：${monto}',
+  'producto.soloHayPiezas': '残り{n}個です。',
+  'producto.soloHayUnidad': '残り{n} {unidad}です。',
+  'producto.disponiblesUnidad': '{n} {unidad} 在庫あり',
 
   'fav.titulo': 'お気に入り',
   'fav.agregar': 'お気に入りに追加',

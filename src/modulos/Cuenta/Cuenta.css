@@ -71,7 +71,7 @@
 .cuenta__nota-cifrado {
   margin: 0;
   font-size: 0.722rem;
-  line-height: 145%;
+  line-height: 1.45;
   color: var(--text);
 }
 

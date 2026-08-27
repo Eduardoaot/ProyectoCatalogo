@@ -5,7 +5,7 @@
 --      cd backend && npm run seed:sql
 --  a partir de src/data/ (productos.js, ofertas.js, usuarios.js).
 --
---  Generado: 2026-08-25 05:25:38
+--  Generado: 2026-08-27 03:44:36
 --
 --  ATENCIÓN: vacía las tablas antes de insertar, incluidas Ordenes y
 --  Clientes. Es un seed de desarrollo, no lo corras sobre datos reales.
@@ -19,6 +19,7 @@ USE tienda;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
+TRUNCATE TABLE Favoritos;
 TRUNCATE TABLE Maestra_orden_productos;
 TRUNCATE TABLE Ordenes;
 TRUNCATE TABLE Ofertas;
@@ -119,18 +120,18 @@ VALUES
 INSERT INTO Productos
   (ID_producto, ID_categoria, ID_unidad, ID_Descuento, nombre_producto, precio_producto, imagen, descripcion, destacado, cantidad_producto, factor_pieza)
 VALUES
-  (1, 1, 1, 1, 'Manzana Roja', 1.5, 'https://elegifruta.com.ar/wp-content/uploads/2017/07/manzana_roja.jpg', 'Manzanas rojas frescas y crujientes, ideales para cualquier momento del día.', TRUE, 30, 1),
-  (2, 1, 1, NULL, 'Plátano', 1.5, 'https://saludinteractiva.mx/blog/wp-content/uploads/2022/05/beneficios_del_platano_istock.webp', 'Plátanos frescos y dulces, perfectos para desayunos y licuados.', FALSE, 30, 1),
-  (3, 1, 1, NULL, 'Naranja', 1.8, 'https://tse4.mm.bing.net/th/id/OIP.7uvRp-iBdY04IQa-WpeJNgHaE7?r=0&rs=1&pid=ImgDetMain&o=7&rm=3', 'Naranjas frescas y jugosas ideales para preparar deliciosos jugos.', TRUE, 30, 1),
-  (4, 1, 1, NULL, 'Tomate', 2.2, 'https://tse2.mm.bing.net/th/id/OIP.gi9KS8sqHTQMH_iGrjLX0wHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3', 'Tomates frescos para ensaladas, salsas y todo tipo de comidas.', FALSE, 30, 1),
+  (1, 1, 1, 1, 'Manzana Roja', 1.5, 'https://elegifruta.com.ar/wp-content/uploads/2017/07/manzana_roja.jpg', 'Manzanas rojas frescas y crujientes, ideales para cualquier momento del día.', TRUE, 30, 0.18),
+  (2, 1, 1, NULL, 'Plátano', 1.5, 'https://saludinteractiva.mx/blog/wp-content/uploads/2022/05/beneficios_del_platano_istock.webp', 'Plátanos frescos y dulces, perfectos para desayunos y licuados.', FALSE, 30, 0.12),
+  (3, 1, 1, NULL, 'Naranja', 1.8, 'https://tse4.mm.bing.net/th/id/OIP.7uvRp-iBdY04IQa-WpeJNgHaE7?r=0&rs=1&pid=ImgDetMain&o=7&rm=3', 'Naranjas frescas y jugosas ideales para preparar deliciosos jugos.', TRUE, 30, 0.2),
+  (4, 1, 1, NULL, 'Tomate', 2.2, 'https://tse2.mm.bing.net/th/id/OIP.gi9KS8sqHTQMH_iGrjLX0wHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3', 'Tomates frescos para ensaladas, salsas y todo tipo de comidas.', FALSE, 30, 0.15),
   (5, 2, 2, 2, 'Nutri-leche', 38, 'https://cdn.shopify.com/s/files/1/0080/1076/0255/products/LECHE-NUTRILECHE-1-LT_4fb01653-6ed2-4ad6-a784-bba71e7c0171_1200x1200_crop_center.jpg?v=1654034176', 'Leche fresca de la marca Nutri-leche.', TRUE, 30, 1),
   (6, 2, 3, NULL, 'Yogur Natural', 18, 'https://tse3.mm.bing.net/th/id/OIP.ic0LVusiDlRRBB_iZBIjmgHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3', 'Yogur natural cremoso, ideal para desayunos y snacks.', FALSE, 30, 1),
-  (7, 2, 1, NULL, 'Queso Manchego', 85, 'https://i5-mx.walmartimages.com/gr/images/product-images/img_large/00750104120155L.jpg', 'Queso manchego de excelente calidad y gran sabor.', TRUE, 30, 1),
+  (7, 2, 1, NULL, 'Queso Manchego', 85, 'https://i5-mx.walmartimages.com/gr/images/product-images/img_large/00750104120155L.jpg', 'Queso manchego de excelente calidad y gran sabor.', TRUE, 30, 0.25),
   (8, 3, 3, 3, 'Pan Francés', 12, 'https://media.istockphoto.com/id/485821784/photo/various-of-french-baguette-isolated-on-white-background.jpg?s=170667a&w=0&k=20&c=HYhQoHiNnS5HpHEQZQSsD05yNLwJ-97bjgII7_46jws=', 'Pan francés recién horneado y crujiente.', TRUE, 30, 1),
   (9, 3, 4, NULL, 'Pan de Caja', 42, 'https://tse2.mm.bing.net/th/id/OIP.R4BDVq4Vsy1vz2ai2unP9AHaE6?r=0&rs=1&pid=ImgDetMain&o=7&rm=3', 'Pan de caja suave, perfecto para preparar sandwiches.', FALSE, 30, 1),
   (10, 3, 3, NULL, 'Dona de Chocolate', 15, 'https://www.chocolatesturin.com.mx/cdn-cgi/image/width=1360,height=583,f=auto,quality=90/sites/g/files/fnmzdf5476/files/2024-12/06%20Donas%20de%20choclate11476_retoque.jpg', 'Dona esponjosa cubierta con delicioso chocolate.', TRUE, 30, 1),
-  (11, 4, 1, 4, 'Carne T-Bone', 65, 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/T-bone-raw-MCB.jpg/960px-T-bone-raw-MCB.jpg', 'Corte T-Bone preparado y listo para cocinar.', TRUE, 30, 1),
-  (12, 4, 1, NULL, 'Pechuga de Pollo', 75, 'https://kosherhouse.mx/cdn/shop/files/pechugadepollosinhueso.jpg?v=1691773142', 'Pechuga de pollo fresca y lista para preparar.', FALSE, 30, 1),
+  (11, 4, 1, 4, 'Carne T-Bone', 65, 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/T-bone-raw-MCB.jpg/960px-T-bone-raw-MCB.jpg', 'Corte T-Bone preparado y listo para cocinar.', TRUE, 30, 0.45),
+  (12, 4, 1, NULL, 'Pechuga de Pollo', 75, 'https://kosherhouse.mx/cdn/shop/files/pechugadepollosinhueso.jpg?v=1691773142', 'Pechuga de pollo fresca y lista para preparar.', FALSE, 30, 0.25),
   (13, 4, 1, NULL, 'Carne Molida', 95, 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Hackfleisch-1.jpg/960px-Hackfleisch-1.jpg', 'Carne molida de res fresca para hamburguesas y guisos.', TRUE, 30, 1),
   (14, 5, 5, NULL, 'Champagne', 100, 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Champagne_bottles_in_a_bucket_-_8439.jpg/960px-Champagne_bottles_in_a_bucket_-_8439.jpg', 'Champagne para disfrutar en una ocasión especial.', TRUE, 30, 1),
   (15, 5, 2, NULL, 'Refresco de Cola', 25, 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Big-Cola-3L.jpg', 'Refresco de cola frío y refrescante.', FALSE, 30, 1),
@@ -140,58 +141,58 @@ VALUES
   (19, 7, 1, NULL, 'Arroz', 28, 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Ceramic_bowl_full_of_white_rice.jpg/960px-Ceramic_bowl_full_of_white_rice.jpg', 'Arroz blanco de grano largo para acompañar tus comidas.', TRUE, 30, 1),
   (20, 7, 1, NULL, 'Frijol', 35, 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Black_beans_%281126927794%29.jpg/960px-Black_beans_%281126927794%29.jpg', 'Frijol de excelente calidad para preparar tus comidas favoritas.', FALSE, 30, 1),
   (21, 1, 1, NULL, 'Fresa', 45, 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Strawberry_image.jpg', 'Fresas frescas y dulces, perfectas para postres y licuados.', TRUE, 30, 1),
-  (22, 1, 1, NULL, 'Uva', 55, 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Grapes%2C_Rostov-on-Don%2C_Russia.jpg/960px-Grapes%2C_Rostov-on-Don%2C_Russia.jpg', 'Uvas frescas y jugosas, ideales para picar o preparar postres.', FALSE, 30, 1),
-  (23, 1, 1, NULL, 'Papa', 18, 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/960px-Patates.jpg', 'Papas frescas, versátiles para freír, hornear o hacer puré.', FALSE, 30, 1),
-  (24, 1, 1, NULL, 'Cebolla', 16, 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Mixed_onions.jpg/960px-Mixed_onions.jpg', 'Cebollas frescas, infaltables para dar sabor a tus platillos.', FALSE, 30, 1),
+  (22, 1, 1, NULL, 'Uva', 55, 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Grapes%2C_Rostov-on-Don%2C_Russia.jpg/960px-Grapes%2C_Rostov-on-Don%2C_Russia.jpg', 'Uvas frescas y jugosas, ideales para picar o preparar postres.', FALSE, 30, 0.5),
+  (23, 1, 1, NULL, 'Papa', 18, 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/960px-Patates.jpg', 'Papas frescas, versátiles para freír, hornear o hacer puré.', FALSE, 30, 0.2),
+  (24, 1, 1, NULL, 'Cebolla', 16, 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Mixed_onions.jpg/960px-Mixed_onions.jpg', 'Cebollas frescas, infaltables para dar sabor a tus platillos.', FALSE, 30, 0.15),
   (25, 3, 4, NULL, 'Galletas de Chispas de Chocolate', 22, 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Choc-Chip-Cookie.jpg/960px-Choc-Chip-Cookie.jpg', 'Galletas horneadas con chispas de chocolate, crujientes por fuera y suaves por dentro.', TRUE, 30, 1),
-  (26, 4, 1, NULL, 'Salchicha', 48, 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Cervelat.jpg/960px-Cervelat.jpg', 'Salchichas ahumadas, listas para asar o cocinar.', FALSE, 30, 1),
+  (26, 4, 1, NULL, 'Salchicha', 48, 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Cervelat.jpg/960px-Cervelat.jpg', 'Salchichas ahumadas, listas para asar o cocinar.', FALSE, 30, 0.05),
   (27, 5, 4, NULL, 'Café en Grano', 65, 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Coffee_Robusta_Arabica.jpg/960px-Coffee_Robusta_Arabica.jpg', 'Café en grano tostado, ideal para preparar un buen café recién molido.', TRUE, 30, 1),
   (28, 6, 2, NULL, 'Cloro', 24, 'https://upload.wikimedia.org/wikipedia/commons/d/d3/Clorox_Bleach_products.jpg', 'Cloro desinfectante para limpieza y desinfección del hogar.', FALSE, 30, 1),
   (29, 7, 6, NULL, 'Miel de Abeja', 60, 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Runny_hunny.jpg/960px-Runny_hunny.jpg', 'Miel de abeja pura, natural y endulzante ideal para tus recetas.', TRUE, 30, 1),
-  (30, 1, 1, 5, 'Fresa', 55, 'https://loremflickr.com/400/400/strawberry,food/all', 'Fresas frescas de temporada, dulces y aromáticas.', TRUE, 40, 1),
-  (31, 1, 1, NULL, 'Uva Verde', 52, 'https://loremflickr.com/400/400/green-grapes,food/all', 'Uva verde sin semilla, crujiente y refrescante.', FALSE, 30, 1),
-  (32, 1, 1, NULL, 'Sandía', 18, 'https://loremflickr.com/400/400/watermelon,food/all', 'Sandía jugosa, perfecta para los días de calor.', FALSE, 30, 1),
-  (33, 1, 3, NULL, 'Piña', 25, 'https://loremflickr.com/400/400/pineapple,food/all', 'Piña miel madura, dulce y perfumada.', FALSE, 30, 1),
-  (34, 1, 1, NULL, 'Aguacate Hass', 78, 'https://loremflickr.com/400/400/avocado,food/all', 'Aguacate hass cremoso, listo para el guacamole.', TRUE, 25, 1),
-  (35, 1, 1, NULL, 'Zanahoria', 16, 'https://loremflickr.com/400/400/carrot,food/all', 'Zanahoria fresca, ideal para sopas y ensaladas.', FALSE, 30, 1),
-  (36, 1, 1, NULL, 'Brócoli', 32, 'https://loremflickr.com/400/400/broccoli,food/all', 'Brócoli verde y firme, cosechado esta semana.', FALSE, 30, 1),
-  (37, 2, 1, 4, 'Queso Manchego', 110, 'https://loremflickr.com/400/400/cheese,food/all', 'Queso manchego semicurado, ideal para gratinar.', TRUE, 20, 1),
-  (38, 2, 2, NULL, 'Yogur Natural', 24, 'https://loremflickr.com/400/400/yogurt,food/all', 'Yogur natural sin azúcar añadida.', FALSE, 30, 1),
-  (39, 2, 4, NULL, 'Mantequilla', 48, 'https://loremflickr.com/400/400/butter,food/all', 'Mantequilla sin sal de 225 g.', FALSE, 30, 1),
-  (40, 2, 6, NULL, 'Crema Ácida', 36, 'https://loremflickr.com/400/400/sour-cream,food/all', 'Crema ácida espesa para tus antojos.', FALSE, 30, 1),
-  (41, 2, 1, NULL, 'Queso Panela', 82, 'https://loremflickr.com/400/400/fresh-cheese,food/all', 'Queso panela fresco, bajo en grasa.', FALSE, 30, 1),
-  (42, 2, 2, NULL, 'Leche Deslactosada', 34, 'https://loremflickr.com/400/400/milk,food/all', 'Leche deslactosada entera de 1 litro.', FALSE, 30, 1),
-  (43, 2, 4, NULL, 'Huevo Blanco', 68, 'https://loremflickr.com/400/400/white-egg,food/all', 'Paquete de 18 huevos frescos de granja.', TRUE, 45, 1),
-  (44, 3, 3, NULL, 'Croissant', 18, 'https://loremflickr.com/400/400/croissant,food/all', 'Croissant de mantequilla horneado en casa.', TRUE, 30, 1),
-  (45, 3, 3, NULL, 'Bagel', 22, 'https://loremflickr.com/400/400/bagel,food/all', 'Bagel artesanal, perfecto para el desayuno.', FALSE, 30, 1),
-  (46, 3, 4, NULL, 'Pan de Caja Integral', 42, 'https://loremflickr.com/400/400/sliced-bread,food/all', 'Pan integral de caja, 680 g.', FALSE, 30, 1),
-  (47, 3, 3, NULL, 'Dona Glaseada', 15, 'https://loremflickr.com/400/400/donut,food/all', 'Dona glaseada recién hecha.', FALSE, 30, 1),
-  (48, 3, 3, 6, 'Pastel de Chocolate', 220, 'https://loremflickr.com/400/400/chocolate-cake,food/all', 'Pastel de chocolate para 8 porciones.', TRUE, 12, 1),
-  (49, 3, 4, NULL, 'Galletas de Avena', 38, 'https://loremflickr.com/400/400/oatmeal-cookie,food/all', 'Galletas de avena con pasas, 300 g.', FALSE, 30, 1),
-  (50, 4, 1, NULL, 'Pechuga de Pollo', 88, 'https://loremflickr.com/400/400/raw-chicken-breast,food/all', 'Pechuga de pollo sin hueso ni piel.', TRUE, 35, 1),
-  (51, 4, 1, NULL, 'Chuleta de Cerdo', 105, 'https://loremflickr.com/400/400/pork-chop,food/all', 'Chuleta de cerdo con hueso, corte grueso.', FALSE, 30, 1),
-  (52, 4, 1, 7, 'Salmón Fresco', 340, 'https://loremflickr.com/400/400/raw-salmon,food/all', 'Filete de salmón fresco del Atlántico.', TRUE, 15, 1),
-  (53, 4, 1, NULL, 'Camarón Mediano', 245, 'https://loremflickr.com/400/400/raw-shrimp,food/all', 'Camarón mediano limpio y sin cabeza.', FALSE, 30, 1),
-  (54, 4, 4, NULL, 'Tocino', 72, 'https://loremflickr.com/400/400/bacon,food/all', 'Tocino ahumado en rebanadas, 250 g.', FALSE, 30, 1),
-  (55, 4, 1, NULL, 'Chorizo', 68, 'https://loremflickr.com/400/400/chorizo,food/all', 'Chorizo artesanal, ideal para el desayuno.', FALSE, 30, 1),
-  (56, 5, 2, NULL, 'Jugo de Naranja', 32, 'https://loremflickr.com/400/400/orange-juice,drink/all', 'Jugo de naranja 100% natural, sin azúcar añadida.', TRUE, 30, 1),
-  (57, 5, 5, NULL, 'Agua Mineral', 18, 'https://loremflickr.com/400/400/mineral-water,drink/all', 'Agua mineral con gas, 1 litro.', FALSE, 30, 1),
-  (58, 5, 5, 5, 'Cerveza Artesanal', 58, 'https://loremflickr.com/400/400/craft-beer,drink/all', 'Cerveza artesanal estilo IPA, 355 ml.', TRUE, 30, 1),
-  (59, 5, 5, NULL, 'Vino Tinto', 245, 'https://loremflickr.com/400/400/red-wine,drink/all', 'Vino tinto de mesa, cosecha reciente.', FALSE, 30, 1),
-  (60, 5, 5, NULL, 'Té Helado', 26, 'https://loremflickr.com/400/400/iced-tea,drink/all', 'Té helado de limón, 600 ml.', FALSE, 30, 1),
-  (61, 5, 4, NULL, 'Café Molido', 125, 'https://loremflickr.com/400/400/ground-coffee,drink/all', 'Café molido de altura, 500 g.', FALSE, 30, 1),
-  (62, 6, 2, NULL, 'Detergente Líquido', 85, 'https://loremflickr.com/400/400/laundry-detergent/all', 'Detergente líquido concentrado para ropa.', TRUE, 30, 1),
-  (63, 6, 5, NULL, 'Jabón para Trastes', 38, 'https://loremflickr.com/400/400/dish-soap/all', 'Jabón líquido para trastes con aroma a limón.', FALSE, 30, 1),
-  (64, 6, 4, 8, 'Papel Higiénico', 115, 'https://loremflickr.com/400/400/toilet-paper/all', 'Paquete de 12 rollos de doble hoja.', TRUE, 50, 1),
-  (65, 6, 5, NULL, 'Limpiador Multiusos', 44, 'https://loremflickr.com/400/400/cleaning-spray/all', 'Limpiador multiusos desinfectante.', FALSE, 30, 1),
-  (66, 6, 4, NULL, 'Bolsas para Basura', 52, 'https://loremflickr.com/400/400/trash-bag/all', 'Bolsas para basura de 90 litros, 20 piezas.', FALSE, 30, 1),
-  (67, 7, 5, 9, 'Aceite de Oliva', 195, 'https://loremflickr.com/400/400/olive-oil,food/all', 'Aceite de oliva extra virgen, 500 ml.', TRUE, 22, 1),
-  (68, 7, 4, NULL, 'Pasta Spaghetti', 22, 'https://loremflickr.com/400/400/raw-spaghetti,food/all', 'Pasta spaghetti de sémola, 500 g.', FALSE, 30, 1),
-  (69, 7, 3, NULL, 'Atún en Lata', 26, 'https://loremflickr.com/400/400/canned-tuna,food/all', 'Atún en agua, lata de 140 g.', FALSE, 30, 1),
-  (70, 7, 1, NULL, 'Frijol Negro', 38, 'https://loremflickr.com/400/400/black-beans,food/all', 'Frijol negro seleccionado a granel.', FALSE, 30, 1),
-  (71, 7, 1, NULL, 'Azúcar Refinada', 28, 'https://loremflickr.com/400/400/white-sugar,food/all', 'Azúcar refinada de caña, 1 kg.', FALSE, 30, 1),
-  (72, 7, 4, NULL, 'Sal de Mesa', 14, 'https://loremflickr.com/400/400/salt-shaker,food/all', 'Sal de mesa yodada, 1 kg.', FALSE, 30, 1),
-  (73, 7, 4, NULL, 'Cereal de Maíz', 64, 'https://loremflickr.com/400/400/corn-flakes,food/all', 'Cereal de maíz tostado, 500 g.', FALSE, 30, 1);
+  (30, 1, 1, 5, 'Fresa', 55, '🍓', 'Fresas frescas de temporada, dulces y aromáticas.', TRUE, 40, 1),
+  (31, 1, 1, NULL, 'Uva Verde', 52, '🍇', 'Uva verde sin semilla, crujiente y refrescante.', FALSE, 30, 0.5),
+  (32, 1, 1, NULL, 'Sandía', 18, '🍉', 'Sandía jugosa, perfecta para los días de calor.', FALSE, 30, 4),
+  (33, 1, 3, NULL, 'Piña', 25, '🍍', 'Piña miel madura, dulce y perfumada.', FALSE, 30, 1),
+  (34, 1, 1, NULL, 'Aguacate Hass', 78, '🥑', 'Aguacate hass cremoso, listo para el guacamole.', TRUE, 25, 0.2),
+  (35, 1, 1, NULL, 'Zanahoria', 16, '🥕', 'Zanahoria fresca, ideal para sopas y ensaladas.', FALSE, 30, 0.1),
+  (36, 1, 1, NULL, 'Brócoli', 32, '🥦', 'Brócoli verde y firme, cosechado esta semana.', FALSE, 30, 0.4),
+  (37, 2, 1, 4, 'Queso Manchego', 110, '🧀', 'Queso manchego semicurado, ideal para gratinar.', TRUE, 20, 0.25),
+  (38, 2, 2, NULL, 'Yogur Natural', 24, '🥛', 'Yogur natural sin azúcar añadida.', FALSE, 30, 1),
+  (39, 2, 4, NULL, 'Mantequilla', 48, '🧈', 'Mantequilla sin sal de 225 g.', FALSE, 30, 1),
+  (40, 2, 6, NULL, 'Crema Ácida', 36, '🥣', 'Crema ácida espesa para tus antojos.', FALSE, 30, 1),
+  (41, 2, 1, NULL, 'Queso Panela', 82, '🧀', 'Queso panela fresco, bajo en grasa.', FALSE, 30, 0.4),
+  (42, 2, 2, NULL, 'Leche Deslactosada', 34, '🥛', 'Leche deslactosada entera de 1 litro.', FALSE, 30, 1),
+  (43, 2, 4, NULL, 'Huevo Blanco', 68, '🥚', 'Paquete de 18 huevos frescos de granja.', TRUE, 45, 1),
+  (44, 3, 3, NULL, 'Croissant', 18, '🥐', 'Croissant de mantequilla horneado en casa.', TRUE, 30, 1),
+  (45, 3, 3, NULL, 'Bagel', 22, '🥯', 'Bagel artesanal, perfecto para el desayuno.', FALSE, 30, 1),
+  (46, 3, 4, NULL, 'Pan de Caja Integral', 42, '🍞', 'Pan integral de caja, 680 g.', FALSE, 30, 1),
+  (47, 3, 3, NULL, 'Dona Glaseada', 15, '🍩', 'Dona glaseada recién hecha.', FALSE, 30, 1),
+  (48, 3, 3, 6, 'Pastel de Chocolate', 220, '🍰', 'Pastel de chocolate para 8 porciones.', TRUE, 12, 1),
+  (49, 3, 4, NULL, 'Galletas de Avena', 38, '🍪', 'Galletas de avena con pasas, 300 g.', FALSE, 30, 1),
+  (50, 4, 1, NULL, 'Pechuga de Pollo', 88, '🍗', 'Pechuga de pollo sin hueso ni piel.', TRUE, 35, 0.25),
+  (51, 4, 1, NULL, 'Chuleta de Cerdo', 105, '🥩', 'Chuleta de cerdo con hueso, corte grueso.', FALSE, 30, 0.2),
+  (52, 4, 1, 7, 'Salmón Fresco', 340, '🐟', 'Filete de salmón fresco del Atlántico.', TRUE, 15, 0.25),
+  (53, 4, 1, NULL, 'Camarón Mediano', 245, '🦐', 'Camarón mediano limpio y sin cabeza.', FALSE, 30, 1),
+  (54, 4, 4, NULL, 'Tocino', 72, '🥓', 'Tocino ahumado en rebanadas, 250 g.', FALSE, 30, 1),
+  (55, 4, 1, NULL, 'Chorizo', 68, '🌭', 'Chorizo artesanal, ideal para el desayuno.', FALSE, 30, 0.1),
+  (56, 5, 2, NULL, 'Jugo de Naranja', 32, '🧃', 'Jugo de naranja 100% natural, sin azúcar añadida.', TRUE, 30, 1),
+  (57, 5, 5, NULL, 'Agua Mineral', 18, '💧', 'Agua mineral con gas, 1 litro.', FALSE, 30, 1),
+  (58, 5, 5, 5, 'Cerveza Artesanal', 58, '🍺', 'Cerveza artesanal estilo IPA, 355 ml.', TRUE, 30, 1),
+  (59, 5, 5, NULL, 'Vino Tinto', 245, '🍷', 'Vino tinto de mesa, cosecha reciente.', FALSE, 30, 1),
+  (60, 5, 5, NULL, 'Té Helado', 26, '🧋', 'Té helado de limón, 600 ml.', FALSE, 30, 1),
+  (61, 5, 4, NULL, 'Café Molido', 125, '☕', 'Café molido de altura, 500 g.', FALSE, 30, 1),
+  (62, 6, 2, NULL, 'Detergente Líquido', 85, '🧴', 'Detergente líquido concentrado para ropa.', TRUE, 30, 1),
+  (63, 6, 5, NULL, 'Jabón para Trastes', 38, '🧽', 'Jabón líquido para trastes con aroma a limón.', FALSE, 30, 1),
+  (64, 6, 4, 8, 'Papel Higiénico', 115, '🧻', 'Paquete de 12 rollos de doble hoja.', TRUE, 50, 1),
+  (65, 6, 5, NULL, 'Limpiador Multiusos', 44, '🧼', 'Limpiador multiusos desinfectante.', FALSE, 30, 1),
+  (66, 6, 4, NULL, 'Bolsas para Basura', 52, '🗑️', 'Bolsas para basura de 90 litros, 20 piezas.', FALSE, 30, 1),
+  (67, 7, 5, 9, 'Aceite de Oliva', 195, '🫒', 'Aceite de oliva extra virgen, 500 ml.', TRUE, 22, 1),
+  (68, 7, 4, NULL, 'Pasta Spaghetti', 22, '🍝', 'Pasta spaghetti de sémola, 500 g.', FALSE, 30, 1),
+  (69, 7, 3, NULL, 'Atún en Lata', 26, '🐟', 'Atún en agua, lata de 140 g.', FALSE, 30, 1),
+  (70, 7, 1, NULL, 'Frijol Negro', 38, '🫘', 'Frijol negro seleccionado a granel.', FALSE, 30, 1),
+  (71, 7, 1, NULL, 'Azúcar Refinada', 28, '🍬', 'Azúcar refinada de caña, 1 kg.', FALSE, 30, 1),
+  (72, 7, 4, NULL, 'Sal de Mesa', 14, '🧂', 'Sal de mesa yodada, 1 kg.', FALSE, 30, 1),
+  (73, 7, 4, NULL, 'Cereal de Maíz', 64, '🥣', 'Cereal de maíz tostado, 500 g.', FALSE, 30, 1);
 
 -- ============================================================
 --  Ofertas del carrusel
@@ -224,9 +225,9 @@ VALUES
 INSERT INTO Clientes
   (ID_cliente, nombre_cliente, correo_cliente, contrasena_cliente)
 VALUES
-  (1, 'Diana Wiling', 'diana@rosamark.com', '$2b$10$1HOdDYypUQj9TP9zaylF.OnQ3sXBghj17H7lLayyi8usR1Qhz1AYK'),
-  (2, 'Eduardo Ortiz', 'eduardo@rosamark.com', '$2b$10$jtnEM7oN1RqlnViEbcoGteCZFTaPO6kfWy8P5hx4rsoScvHD7JkA2'),
-  (3, 'Usuaria Demo', 'demo@rosamark.com', '$2b$10$g5SlTfnuc532EralXeU.i.H8yqDcvkdomepuSbXLnRARD.gpvDy7O');
+  (1, 'Diana Wiling', 'diana@rosamark.com', '$2b$10$7N8eAC2o7/Bay96YalHELegHOr.PylXJWZ0MeQNOg2z.ILMk.wGTC'),
+  (2, 'Eduardo Ortiz', 'eduardo@rosamark.com', '$2b$10$//6kBvNWrFK5I5sUcQaYA.yuiv.MnSzGyu2rlcuQ61rJ3ufdb4AWG'),
+  (3, 'Usuaria Demo', 'demo@rosamark.com', '$2b$10$VPzUAOolx4X36VOwXCeYcOeSQB57QtCH2IvoU3OkzEHaL3zjXaya.');
 
 
 -- =============================================================

@@ -46,6 +46,10 @@ export default {
   'home.productos': '{n} prodotti',
 
   'producto.agregar': 'Aggiungi al carrello',
+
+  'producto.agregarCorto': 'Aggiungi',
+
+  'producto.agregaUnaPieza': 'Aggiunge 1 pezzo (≈ {cantidad} {unidad})',
   'producto.destacado': 'In evidenza',
   'producto.sinStock': 'Esaurito',
   'producto.volver': 'Torna al catalogo',
@@ -59,6 +63,17 @@ export default {
   'producto.soloHay': 'Sono disponibili solo {n} unità.',
   'producto.aumentar': 'Aumenta la quantità',
   'producto.disminuir': 'Riduci la quantità',
+  'producto.piezas': 'Pezzi',
+  'producto.piezasCorto': 'pz',
+  'producto.comoComprar': 'Come lo vuoi?',
+  'producto.modoUnidad': 'Al {unidad}',
+  'producto.modoPieza': 'Al pezzo',
+  'producto.pesoPorPieza': '1 pezzo ≈ {cantidad} {unidad}',
+  'producto.equivale': 'Equivale a {cantidad} {unidad}',
+  'producto.subtotalEstimado': 'Subtotale circa: ${monto}',
+  'producto.soloHayPiezas': 'Ci sono solo {n} pezzi disponibili.',
+  'producto.soloHayUnidad': 'Restano solo {n} {unidad}.',
+  'producto.disponiblesUnidad': '{n} {unidad} disponibili',
 
   'fav.titulo': 'I miei preferiti',
   'fav.agregar': 'Aggiungi ai preferiti',

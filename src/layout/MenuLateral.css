@@ -13,6 +13,22 @@
   pointer-events: auto;
 }
 
+/* CAUSA RAÍZ de la barra de scroll horizontal que salía en el menú: varias
+   filas (.menu-lateral__item, .menu-lateral__usuario) combinan width:100% con
+   padding lateral de 20px, y este proyecto NO declara border-box global (solo
+   lo tiene #root, ver index.css). Con content-box cada fila medía 100% + 40px,
+   y como .menu-lateral__cuerpo lleva overflow-y:auto —lo que hace que
+   overflow-x compute a auto también— esos 40px sobrantes aparecían como barra.
+   Se arregla el tamaño en vez de tapar el desbordamiento con overflow:hidden,
+   que solo lo escondería. Va acotado al menú a propósito: cambiar el
+   box-sizing de toda la app tocaría pantallas que no vienen al caso. */
+.menu-lateral,
+.menu-lateral *,
+.menu-lateral *::before,
+.menu-lateral *::after {
+  box-sizing: border-box;
+}
+
 .menu-lateral {
   position: fixed;
   top: 0;
@@ -61,6 +77,9 @@
 .menu-lateral__cuerpo {
   flex: 1;
   overflow-y: auto;
+  /* Contiene el scroll: al llegar al tope de la lista, la rueda no se pone a
+     mover la página de atrás. */
+  overscroll-behavior: contain;
   padding: 4px 0;
 }
 
@@ -98,6 +117,12 @@
 
 .menu-lateral__usuario-nombre {
   font-weight: 600;
+  /* Un nombre largo tampoco puede ensanchar el menú: se recorta con "…".
+     min-width:0 es lo que le permite encogerse siendo un flex-item. */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .menu-lateral__usuario-nombre:hover {
@@ -156,6 +181,9 @@
   align-items: center;
   gap: 10px;
   width: 100%;
+  /* El texto se parte en dos renglones si hace falta, pero nunca desborda. */
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .menu-lateral__icono-item {

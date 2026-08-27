@@ -32,6 +32,19 @@ router.post(
         if (decimales.length > 3) throw new Error('cantidad admite maximo 3 decimales');
         return true;
       }),
+    // Opcional: cuantas piezas eran, cuando el cliente compro de a piezas en
+    // vez de por peso. No influye en el precio ni en el stock (para eso esta
+    // `cantidad`), solo se guarda para poder mostrar la orden como se pidio.
+    body('items.*.piezas')
+      .optional({ nullable: true })
+      .isFloat({ gt: 0 })
+      .withMessage('piezas debe ser un numero mayor a cero')
+      .bail()
+      .custom((valor) => {
+        const decimales = String(valor).split('.')[1] ?? '';
+        if (decimales.length > 3) throw new Error('piezas admite maximo 3 decimales');
+        return true;
+      }),
   ],
   validate,
   crearOrden,

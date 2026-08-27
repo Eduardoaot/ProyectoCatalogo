@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-do
 import LogoRosa from '../assets/LogoRosa.png'
 import LogoLetras from '../assets/LogoLetras.png'
 import PreferenciasPanel from '../common/PreferenciasPanel'
+import { formatearCantidad } from '../data/unidades'
 import { useAuth } from '../context/AuthContext'
 import { useCatalogo } from '../context/CatalogoContext'
 import { usePreferencias } from '../context/PreferenciasContext'
@@ -44,6 +45,8 @@ function Navbar() {
   const [oculta, setOculta] = useState(false)
   const [busqueda, setBusqueda] = useState('')
   const [mostrarSugerencias, setMostrarSugerencias] = useState(false)
+  // Índice de la sugerencia resaltada con el teclado (-1 = ninguna).
+  const [indiceActivo, setIndiceActivo] = useState(-1)
   const ultimoScrollRef = useRef(0)
   const navRef = useRef(null)
 
@@ -83,10 +86,38 @@ function Navbar() {
       .slice(0, MAX_SUGERENCIAS)
   }, [productos, busqueda])
 
+  const hayDropdown = mostrarSugerencias && sugerencias.length > 0
+
   const irAProducto = (id) => {
     setBusqueda('')
     setMostrarSugerencias(false)
+    setIndiceActivo(-1)
     navigate(`/producto/${id}`)
+  }
+
+  // Teclado: flechas para recorrer la lista, Enter para abrir la sugerencia
+  // resaltada (si no hay ninguna, Enter cae en el submit de siempre) y Escape
+  // para cerrar sin perder lo escrito.
+  const teclaEnBusqueda = (e) => {
+    if (e.key === 'Escape') {
+      setMostrarSugerencias(false)
+      setIndiceActivo(-1)
+      return
+    }
+    if (!hayDropdown) {
+      if (e.key === 'ArrowDown') setMostrarSugerencias(true)
+      return
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setIndiceActivo((i) => (i + 1) % sugerencias.length)
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setIndiceActivo((i) => (i <= 0 ? sugerencias.length : i) - 1)
+    } else if (e.key === 'Enter' && indiceActivo >= 0 && sugerencias[indiceActivo]) {
+      e.preventDefault()
+      irAProducto(sugerencias[indiceActivo].id)
+    }
   }
 
   // Enter sin elegir nada del dropdown: mantiene la búsqueda de siempre
@@ -139,7 +170,15 @@ function Navbar() {
             className="navbar__busqueda"
             onSubmit={buscar}
             role="search"
-            onBlur={() => setMostrarSugerencias(false)}
+            onBlur={(e) => {
+              // Solo se cierra si el foco se fue del buscador entero: con el
+              // `onBlur` pelado, mover el foco al botón de limpiar (o a una
+              // sugerencia) cerraba la lista antes de poder usarla.
+              if (!e.currentTarget.contains(e.relatedTarget)) {
+                setMostrarSugerencias(false)
+                setIndiceActivo(-1)
+              }
+            }}
           >
             <IconoBuscar className="navbar__icono-buscar" />
             <input
@@ -151,8 +190,16 @@ function Navbar() {
               onChange={(e) => {
                 setBusqueda(e.target.value)
                 setMostrarSugerencias(true)
+                setIndiceActivo(-1)
               }}
               onFocus={() => setMostrarSugerencias(true)}
+              onKeyDown={teclaEnBusqueda}
+              role="combobox"
+              aria-expanded={hayDropdown}
+              aria-controls="navbar-sugerencias"
+              aria-activedescendant={
+                indiceActivo >= 0 ? `navbar-sugerencia-${indiceActivo}` : undefined
+              }
             />
             {busqueda && (
               <button
@@ -166,17 +213,32 @@ function Navbar() {
               </button>
             )}
 
-            {mostrarSugerencias && sugerencias.length > 0 && (
-              <ul className="navbar__sugerencias">
-                {sugerencias.map((producto) => (
-                  <li key={producto.id}>
+            {hayDropdown && (
+              <ul className="navbar__sugerencias" id="navbar-sugerencias" role="listbox">
+                {sugerencias.map((producto, indice) => (
+                  <li key={producto.id} role="presentation">
                     <button
                       type="button"
-                      className="navbar__sugerencia"
-                      onMouseDown={(e) => {
+                      id={`navbar-sugerencia-${indice}`}
+                      role="option"
+                      aria-selected={indice === indiceActivo}
+                      className={
+                        indice === indiceActivo
+                          ? 'navbar__sugerencia is-activa'
+                          : 'navbar__sugerencia'
+                      }
+                      // onPointerDown cubre ratón, dedo y lápiz de una sola
+                      // vez, y el preventDefault evita que el botón robe el
+                      // foco (si lo robaba, el onBlur del form cerraba la
+                      // lista y el clic se perdía en el aire). El onClick
+                      // queda de respaldo por si el navegador no manda
+                      // eventos de puntero.
+                      onPointerDown={(e) => {
                         e.preventDefault()
                         irAProducto(producto.id)
                       }}
+                      onClick={() => irAProducto(producto.id)}
+                      onMouseEnter={() => setIndiceActivo(indice)}
                     >
                       <span className="navbar__sugerencia-nombre">{producto.nombre}</span>
                       <span className="navbar__sugerencia-categoria">
@@ -218,7 +280,11 @@ function Navbar() {
             </Link>
             <Link to="/carrito" className="navbar__carrito" aria-label={t('nav.carrito')}>
               <IconoCarrito className="navbar__icono" />
-              {totalUnidades > 0 && <span className="navbar__carrito-badge">{totalUnidades}</span>}
+              {totalUnidades > 0 && (
+                <span className="navbar__carrito-badge">
+                  {formatearCantidad(totalUnidades)}
+                </span>
+              )}
             </Link>
             <button
               type="button"

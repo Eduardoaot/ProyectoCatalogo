@@ -180,3 +180,10 @@
   font-weight: 700;
   color: var(--text-h);
 }
+
+/* Peso real de un renglón que se compró de a piezas ("Equivale a 0.54 kg"). */
+.ordenes__detalle-equivale {
+  font-size: 0.667rem;
+  line-height: 1.4;
+  color: var(--text);
+}

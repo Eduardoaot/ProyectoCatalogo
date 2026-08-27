@@ -150,7 +150,12 @@ CREATE TABLE Maestra_orden_productos (
     ID_maestra_orden_producto INT UNSIGNED  NOT NULL AUTO_INCREMENT,
     ID_orden                  INT UNSIGNED  NOT NULL,
     ID_producto               INT UNSIGNED  NOT NULL,
-    cantidad_orden_producto   DECIMAL(10,3) NOT NULL,
+    cantidad_orden_producto   DECIMAL(10,3) NOT NULL,  -- SIEMPRE en la unidad de venta
+    -- Cuantas piezas pidio el cliente, si compro de a piezas (NULL = compro
+    -- por peso/volumen). Se guarda el numero de piezas y no solo un "modo"
+    -- porque factor_pieza puede cambiar despues y la orden no debe cambiar
+    -- con el: es un documento historico.
+    piezas_orden_producto     DECIMAL(10,3) NULL DEFAULT NULL,
     precio_orden_producto     DECIMAL(10,2) NOT NULL,   -- precio en el momento de la compra
     PRIMARY KEY (ID_maestra_orden_producto),
     CONSTRAINT fk_det_orden

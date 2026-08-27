@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import ImagenProducto from '../../common/ImagenProducto'
+import { formatearCantidad } from '../../data/unidades'
 import { useAuth } from '../../context/AuthContext'
 import { useCatalogo } from '../../context/CatalogoContext'
 import { usePreferencias } from '../../context/PreferenciasContext'
@@ -47,6 +48,15 @@ function Ordenes() {
     setOrdenAbierta((actual) => (actual === id ? null : id))
   }
 
+  // La orden guarda la cantidad SIEMPRE en unidad de venta y, aparte, cuántas
+  // piezas se pidieron (null si se compró por peso). Se muestra como se
+  // compró, no como se almacenó: quien pidió 3 manzanas espera leer "3 pz",
+  // no "0.54 kg".
+  const textoCantidad = (item) =>
+    item.piezas
+      ? `${formatearCantidad(item.piezas)} ${t('producto.piezasCorto')}`
+      : `${formatearCantidad(item.cantidad)} ${item.unidad ?? ''}`.trim()
+
   return (
     <section className="ordenes">
       <h1>{t('ordenes.titulo')}</h1>
@@ -86,8 +96,18 @@ function Ordenes() {
                               <span className="ordenes__detalle-nombre">{item.nombre}</span>
                             )}
                             <span className="ordenes__detalle-precio">
-                              {item.cantidad}× ${item.precio.toFixed(2)}
+                              {textoCantidad(item)} &times; ${item.precio.toFixed(2)}
                             </span>
+                            {/* Comprado de a piezas, el peso real no se ve por
+                                ningún lado y el subtotal no cuadraría solo. */}
+                            {item.piezas && (
+                              <span className="ordenes__detalle-equivale">
+                                {t('producto.equivale', {
+                                  cantidad: formatearCantidad(item.cantidad),
+                                  unidad: item.unidad,
+                                })}
+                              </span>
+                            )}
                           </div>
                           <div className="ordenes__detalle-subtotal">
                             ${(item.precio * item.cantidad).toFixed(2)}
@@ -101,7 +121,7 @@ function Ordenes() {
                     {orden.items.map((item) => (
                       <li key={item.productoId} className="ordenes__item">
                         <span>
-                          {item.cantidad}× {item.nombre}
+                          {textoCantidad(item)} &times; {item.nombre}
                         </span>
                         <span>${(item.precio * item.cantidad).toFixed(2)}</span>
                       </li>

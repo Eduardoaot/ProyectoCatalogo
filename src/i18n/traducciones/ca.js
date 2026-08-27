@@ -46,6 +46,10 @@ export default {
   'home.productos': '{n} productes',
 
   'producto.agregar': 'Afegeix a la cistella',
+
+  'producto.agregarCorto': 'Afegir',
+
+  'producto.agregaUnaPieza': 'Afegeix 1 peça (≈ {cantidad} {unidad})',
   'producto.destacado': 'Destacat',
   'producto.sinStock': 'Sense estoc',
   'producto.volver': 'Torna al catàleg',
@@ -59,6 +63,17 @@ export default {
   'producto.soloHay': 'Només hi ha {n} unitats disponibles.',
   'producto.aumentar': 'Augmenta la quantitat',
   'producto.disminuir': 'Redueix la quantitat',
+  'producto.piezas': 'Peces',
+  'producto.piezasCorto': 'pç',
+  'producto.comoComprar': 'Com el vols?',
+  'producto.modoUnidad': 'Per {unidad}',
+  'producto.modoPieza': 'Per peça',
+  'producto.pesoPorPieza': '1 peça ≈ {cantidad} {unidad}',
+  'producto.equivale': 'Equival a {cantidad} {unidad}',
+  'producto.subtotalEstimado': 'Subtotal aprox.: ${monto}',
+  'producto.soloHayPiezas': 'Només hi ha {n} peces disponibles.',
+  'producto.soloHayUnidad': 'Només queden {n} {unidad}.',
+  'producto.disponiblesUnidad': '{n} {unidad} disponibles',
 
   'fav.titulo': 'Els meus preferits',
   'fav.agregar': 'Afegeix als preferits',

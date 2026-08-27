@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import ImagenProducto from '../../common/ImagenProducto'
+import {
+  cantidadEnModo,
+  etiquetaCantidad,
+  formatearCantidad,
+  MODO_PIEZA,
+} from '../../data/unidades'
 import ModalConfirmacion from '../../common/ModalConfirmacion'
 import { useAuth } from '../../context/AuthContext'
 import { usePreferencias } from '../../context/PreferenciasContext'
@@ -135,7 +141,19 @@ function Carrito() {
                       </span>
                     )}
                   </span>
-                  {item.cantidad >= item.stockRestante && (
+                  {/* Comprado de a piezas, el peso real no es evidente: se
+                      dice explícitamente para que cuadre con el subtotal. */}
+                  {item.modo === MODO_PIEZA && (
+                    <span className="carrito__item-equivale">
+                      {t('producto.equivale', {
+                        cantidad: formatearCantidad(
+                          cantidadEnModo(item.cantidad, item.producto, 'unidad'),
+                        ),
+                        unidad: item.producto.unidad,
+                      })}
+                    </span>
+                  )}
+                  {!item.puedeAumentar && (
                     <span className="carrito__item-stock">{t('carrito.maximo')}</span>
                   )}
                 </div>
@@ -148,11 +166,13 @@ function Carrito() {
                   >
                     −
                   </button>
-                  <span>{item.cantidad}</span>
+                  <span className="carrito__item-cantidad-valor">
+                    {etiquetaCantidad(item.cantidad, item.producto, item.modo, t)}
+                  </span>
                   <button
                     type="button"
                     onClick={() => cambiarCantidad(item.productoId, 1)}
-                    disabled={item.cantidad >= item.stockRestante}
+                    disabled={!item.puedeAumentar}
                     aria-label={t('producto.aumentar')}
                   >
                     +

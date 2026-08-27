@@ -47,6 +47,10 @@ export default {
   'home.productos': '{n} منتجًا',
 
   'producto.agregar': 'أضِف إلى السلة',
+
+  'producto.agregarCorto': 'أضف',
+
+  'producto.agregaUnaPieza': 'يضيف قطعة واحدة (≈ {cantidad} {unidad})',
   'producto.destacado': 'مميّز',
   'producto.sinStock': 'نفد المخزون',
   'producto.volver': 'العودة إلى الكتالوج',
@@ -60,6 +64,17 @@ export default {
   'producto.soloHay': 'لا يتوفّر سوى {n} وحدات.',
   'producto.aumentar': 'زيادة الكمية',
   'producto.disminuir': 'إنقاص الكمية',
+  'producto.piezas': 'قطع',
+  'producto.piezasCorto': 'قطعة',
+  'producto.comoComprar': 'كيف تريده؟',
+  'producto.modoUnidad': 'بال{unidad}',
+  'producto.modoPieza': 'بالقطعة',
+  'producto.pesoPorPieza': 'قطعة واحدة ≈ {cantidad} {unidad}',
+  'producto.equivale': 'تعادل {cantidad} {unidad}',
+  'producto.subtotalEstimado': 'المجموع التقريبي: ${monto}',
+  'producto.soloHayPiezas': 'تتوفر {n} قطع فقط.',
+  'producto.soloHayUnidad': 'بقي {n} {unidad} فقط.',
+  'producto.disponiblesUnidad': '{n} {unidad} متوفرة',
 
   'fav.titulo': 'مفضّلتي',
   'fav.agregar': 'إضافة إلى المفضّلة',

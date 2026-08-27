@@ -20,23 +20,72 @@
   border-color: var(--accent-border);
 }
 
-.product-card__badge {
+/* =============================================================
+   Etiqueta colgante "Destacado"
+   Forma de etiqueta de precio real (cuerpo con la punta hacia la
+   izquierda, ojal y cordón) hecha con clip-path + un SVG inline.
+   Cuelga de la esquina superior derecha y sobresale un poco de la
+   tarjeta para que se lea como algo enganchado a ella.
+   ============================================================= */
+.product-card__etiqueta {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  /* z-index explícito: en modo oscuro la imagen lleva filter (ver
-     index.css), y eso la vuelve su propio contexto de apilamiento; sin un
-     z-index aquí, ese contexto podía terminar pintándose por encima del
-     badge en vez de por debajo. */
-  z-index: 2;
-  background: var(--accent);
-  color: #fff;
-  font-size: 0.667rem;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 999px;
+  top: 16px;
+  right: -10px;
+  z-index: 3;
+  pointer-events: none;
 }
 
+.product-card__etiqueta-cuerpo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 28px;
+  /* El padding izquierdo deja libre la zona de la punta y del ojal. */
+  padding: 0 12px 0 26px;
+  background: linear-gradient(115deg, var(--accent), #ff6fae);
+  color: #fff;
+  font-size: 0.611rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  /* La punta: el vértice izquierdo se clava a media altura. */
+  clip-path: polygon(14px 0, 100% 0, 100% 100%, 14px 100%, 0 50%);
+  filter: drop-shadow(0 3px 6px rgba(58, 14, 34, 0.3));
+}
+
+/* El agujerito por donde pasa el cordón. */
+.product-card__etiqueta-ojal {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  width: 7px;
+  height: 7px;
+  margin-top: -3.5px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  box-shadow: inset 0 1px 1px rgba(58, 14, 34, 0.35);
+}
+
+.product-card__etiqueta-cordon {
+  position: absolute;
+  /* Arranca en el ojal (16,27 del viewBox) y sube en curva hasta el borde
+     de la tarjeta, que es lo que la hace parecer colgada y no pegada. */
+  left: 2px;
+  bottom: 8px;
+  width: 40px;
+  height: 32px;
+  fill: none;
+  stroke: var(--text-h);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.5;
+}
+
+/* =============================================================
+   Botón de favorito (con animación al poner / quitar)
+   ============================================================= */
 .product-card__favorito {
   position: absolute;
   top: 12px;
@@ -52,7 +101,7 @@
   border-radius: 50%;
   color: var(--text);
   cursor: pointer;
-  z-index: 1;
+  z-index: 3;
   transition: color 0.2s, border-color 0.2s, transform 0.15s;
 }
 
@@ -72,19 +121,117 @@
   height: 16px;
 }
 
+/* Al ponerlo: el corazón salta y suelta una onda que se expande. */
+.product-card__favorito.is-animando-agregar .product-card__favorito-icono {
+  animation: favorito-late 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.product-card__favorito.is-animando-agregar::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  /* Misma duración que el latido: el onAnimationEnd del botón limpia el
+     estado, así que las dos animaciones tienen que terminar juntas. */
+  animation: favorito-onda 0.45s ease-out forwards;
+}
+
+/* Al quitarlo: se encoge y vuelve, sin onda. */
+.product-card__favorito.is-animando-quitar .product-card__favorito-icono {
+  animation: favorito-encoge 0.45s ease;
+}
+
+/* `favorito-late` y `favorito-encoge` viven en index.css: los comparte con la
+   pantalla de detalle. La onda circular sí es solo de la tarjeta, porque allá
+   el botón es redondo. */
+@keyframes favorito-onda {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+/* =============================================================
+   Imagen (ahora es la protagonista de la tarjeta)
+   ============================================================= */
 .product-card__image {
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2.667rem;
-  height: 84px;
+  /* Cuadrada en vez de la franja de 84px de antes: al mudar el botón de
+     "Agregar" encima de la foto, ese alto quedó libre para la imagen. */
+  aspect-ratio: 1 / 1;
+  font-size: 3.556rem;
   border-radius: 12px;
   background: var(--accent-bg);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   overflow: hidden;
 }
 
+/* Velo inferior: sin él, el botón se pierde sobre fotos claras. */
+.product-card__image::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 46%;
+  background: linear-gradient(to top, rgba(58, 14, 34, 0.45), transparent);
+  pointer-events: none;
+}
+
+.product-card__agregar {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: calc(100% - 20px);
+  padding: 8px 14px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.667rem;
+  line-height: 1;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(58, 14, 34, 0.3);
+  transition: transform 0.18s, filter 0.18s, background 0.18s;
+}
+
+.product-card__agregar-mas {
+  font-size: 1rem;
+  line-height: 0.7;
+  font-weight: 700;
+}
+
+.product-card__agregar:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.product-card__agregar:disabled {
+  background: var(--border);
+  color: var(--text);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* =============================================================
+   Textos
+   ============================================================= */
 .product-card__categoria {
   font-size: 0.667rem;
   text-transform: uppercase;
@@ -120,29 +267,4 @@
   color: #d92d20;
   opacity: 0.65;
   text-decoration: line-through;
-}
-
-.product-card__agregar {
-  width: 100%;
-  margin-top: 10px;
-  padding: 9px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 999px;
-  font: inherit;
-  font-size: 0.778rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: filter 0.2s;
-}
-
-.product-card__agregar:hover:not(:disabled) {
-  filter: brightness(1.08);
-}
-
-.product-card__agregar:disabled {
-  background: var(--border);
-  color: var(--text);
-  cursor: not-allowed;
 }

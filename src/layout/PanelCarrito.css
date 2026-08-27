@@ -192,3 +192,11 @@
 .panel-carrito__ver:hover {
   filter: brightness(1.08);
 }
+
+/* Igual que en la página del carrito: la cantidad lleva su unidad. */
+.panel-carrito__item-cantidad {
+  min-width: 54px;
+  text-align: center;
+  font-weight: 700;
+  white-space: nowrap;
+}

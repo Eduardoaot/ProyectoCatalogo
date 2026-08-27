@@ -46,6 +46,10 @@ export default {
   'home.productos': '{n} 件商品',
 
   'producto.agregar': '加入购物车',
+
+  'producto.agregarCorto': '加入',
+
+  'producto.agregaUnaPieza': '加入 1 件（≈ {cantidad} {unidad}）',
   'producto.destacado': '精选',
   'producto.sinStock': '缺货',
   'producto.volver': '返回目录',
@@ -59,6 +63,17 @@ export default {
   'producto.soloHay': '仅剩 {n} 件。',
   'producto.aumentar': '增加数量',
   'producto.disminuir': '减少数量',
+  'producto.piezas': '件数',
+  'producto.piezasCorto': '件',
+  'producto.comoComprar': '您想怎么买？',
+  'producto.modoUnidad': '按{unidad}',
+  'producto.modoPieza': '按件',
+  'producto.pesoPorPieza': '1 件 ≈ {cantidad} {unidad}',
+  'producto.equivale': '相当于 {cantidad} {unidad}',
+  'producto.subtotalEstimado': '预计小计：${monto}',
+  'producto.soloHayPiezas': '仅剩 {n} 件。',
+  'producto.soloHayUnidad': '仅剩 {n} {unidad}。',
+  'producto.disponiblesUnidad': '有 {n} {unidad}',
 
   'fav.titulo': '我的收藏',
   'fav.agregar': '加入收藏',

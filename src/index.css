@@ -26,7 +26,13 @@
      (ver [data-fuente] más abajo). Todo lo que use rem/em se ajusta solo. */
   --tamano-base: 18px;
 
-  font: var(--tamano-base) / 145% var(--sans);
+  /* Interlineado SIN unidad a propósito. Con `145%` el valor se resuelve una
+     sola vez acá (18px x 1.45 = 26.1px) y ese número fijo es el que heredan
+     todos los descendientes: un título de 48px terminaba con líneas de 26px
+     y, en cuanto el texto era largo y pasaba a dos renglones, se solapaban.
+     Con `1.45` lo que se hereda es la proporción, así que cada elemento
+     calcula su interlineado sobre su propio tamaño de letra. */
+  font: var(--tamano-base) / 1.45 var(--sans);
   letter-spacing: 0.18px;
   color-scheme: light;
   color: var(--text);
@@ -102,6 +108,42 @@
   --tamano-base: 24px;
 }
 
+/* =============================================================
+   Animaciones del botón de favoritos
+   Viven aquí y no en un componente porque las usan dos: la tarjeta
+   del catálogo (ProductCard) y la pantalla de detalle. Cada una
+   pone lo suyo (la onda circular, el destello de la píldora); lo
+   que comparten es cómo se mueve el corazón.
+   ============================================================= */
+@keyframes favorito-late {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.45) rotate(-10deg);
+  }
+  60% {
+    transform: scale(0.9) rotate(5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes favorito-encoge {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 /* Respeta a quien pide menos animación en su sistema. */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -168,6 +210,10 @@ h2 {
 
 h1 {
   font-size: 3.111rem;
+  /* Interlineado ajustado (pero proporcional, ver la nota de :root): los
+     títulos grandes se ven apretados a propósito, sin llegar a montarse
+     cuando ocupan más de un renglón. */
+  line-height: 1.1;
   letter-spacing: -1.68px;
   margin: 32px 0;
   @media (max-width: 1024px) {
@@ -177,7 +223,7 @@ h1 {
 }
 h2 {
   font-size: 1.333rem;
-  line-height: 118%;
+  line-height: 1.18;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
   @media (max-width: 1024px) {
@@ -194,7 +240,7 @@ code {
   border-radius: 4px;
   color: var(--text-h);
   font-size: 0.833rem;
-  line-height: 135%;
+  line-height: 1.35;
   padding: 4px 8px;
   background: var(--code-bg);
 }
